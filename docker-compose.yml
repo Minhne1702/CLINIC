@@ -1,0 +1,23 @@
+services:
+  app:
+    image: php:8.2-apache
+    container_name: Clinic
+    ports:
+      - "3000:80"
+    volumes:
+      - .:/var/www/html
+    command: >
+      sh -c "apt-get update && apt-get install -y libcurl4-openssl-dev pkg-config libssl-dev git unzip && 
+             pecl install mongodb && docker-php-ext-enable mongodb &&
+             curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+             apache2-foreground"
+  mongodb:
+    image: mongo:latest
+    container_name: projects
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
