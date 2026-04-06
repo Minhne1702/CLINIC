@@ -1,58 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quên mật khẩu | Hệ thống Y tế</title>
-    <link rel="stylesheet" href="assets/css/login.css">
-</head>
-<body>
-    {include file="../layout/header.tpl"}
+{include file="layout/header.tpl" page_title="Quên mật khẩu — MediCare" active_page=""}
 
-<div class="container py-5">
-    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
-        <div class="col-md-5">
-            <div class="login-card p-4 p-md-5 border-0 shadow-sm">
-                <div class="text-center mb-4">
-                    <div class="icon-box mb-3 d-inline-block p-3 rounded-circle bg-light">
-                        <i class="fa-solid fa-key fa-2x text-primary"></i>
-                    </div>
-                    <h3 class="fw-bold">Khôi phục mật khẩu</h3>
-                    <p class="text-muted small">Nhập email đã đăng ký, chúng tôi sẽ gửi mật khẩu mới cho bạn.</p>
-                </div>
+<section class="auth-section auth-section--center">
+  <div class="auth-single-wrap" data-animate="fade-up">
+    <div class="form-card">
+      <div class="auth-icon-top">
+        <i class="fa-solid fa-lock-open"></i>
+      </div>
+      <div class="form-card__header" style="text-align:center">
+        <h2>Quên mật khẩu?</h2>
+        <p>Nhập email của bạn, chúng tôi sẽ gửi link đặt lại mật khẩu.</p>
+      </div>
 
-                {if isset($message)}
-                    {if isset($message)}
-    <div class="alert {if isset($status) && $status == 'success'}alert-success{else}alert-danger{/if} border-0 small text-center mb-4">
-        <i class="fa-solid {if isset($status) && $status == 'success'}fa-circle-check{else}fa-circle-exclamation{/if} me-2"></i>
-        {$message}
-    </div>
-{/if}
-                {/if}
+      {if $success_message}
+      <div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>
+      {else}
 
-                <form action="index.php?page=forgot-password" method="POST">
-                    <div class="mb-4">
-                        <label class="form-label">Email Tài Khoản</label>
-                        <div class="input-group">
-                            <input type="email" name="email" class="form-control" placeholder="example@gmail.com" required>
-                        </div>
-                    </div>
+        {if $error_message}
+        <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>
+        {/if}
 
-                    <button type="submit" name="btn_forgot" class="btn btn-primary w-100 shadow-sm btn-login-custom mb-3">
-                        Gửi Mật Khẩu Mới
-                    </button>
-                    
-                    <div class="text-center mt-3">
-                        <a href="index.php?page=login" class="forgot-password-link">
-                            <i class="fa-solid fa-arrow-left me-1"></i> Quay lại đăng nhập
-                        </a>
-                    </div>
-                </form>
+        <form action="/CLINIC/public/?page=forgot-password" method="POST" class="appt-form">
+          <div class="form-group">
+            <label>Email đã đăng ký <span class="required">*</span></label>
+            <div class="input-icon-wrap">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" name="email" placeholder="email@example.com" required autocomplete="email">
             </div>
-        </div>
-    </div>
-</div>
+          </div>
+          <button type="submit" class="btn-submit">
+            <i class="fa-solid fa-paper-plane"></i>
+            Gửi link đặt lại mật khẩu
+          </button>
+        </form>
 
-{include file="../layout/footer.tpl"}
-</body>
-</html>
+      {/if}
+
+      <div class="auth-back-link">
+        <a href="/CLINIC/public/?page=login"><i class="fa-solid fa-arrow-left"></i> Quay lại đăng nhập</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{include file="layout/footer.tpl"}

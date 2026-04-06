@@ -1,33 +1,120 @@
-</div> <footer class="bg-dark text-white pt-5 pb-3 mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h5 class="fw-bold">CLINIC-SYSTEM</h5>
-                <p class="small text-secondary">Hệ thống quản lý phòng khám thông minh, đặt lịch nhanh chóng, chăm sóc tận tâm.</p>
-            </div>
-            <div class="col-md-4">
-                <h5>Liên kết nhanh</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-secondary text-decoration-none small">Dịch vụ y tế</a></li>
-                    <li><a href="#" class="text-secondary text-decoration-none small">Đội ngũ bác sĩ</a></li>
-                    <li><a href="#" class="text-secondary text-decoration-none small">Chính sách bảo mật</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4 text-md-end">
-                <h5>Liên hệ</h5>
-                <p class="small text-secondary">
-                    <i class="fa-solid fa-location-dot"></i> TP. Hồ Chí Minh, Việt Nam<br>
-                    <i class="fa-solid fa-phone"></i> 0123 456 789
-                </p>
-            </div>
-        </div>
-        <hr class="border-secondary">
-        <div class="text-center">
-            <p class="small text-secondary mb-0">&copy; 2026 Huy Project - Student ID: 225052864</p>
-        </div>
-    </div>
-</footer>
+{assign var="current_role" value=$smarty.session.user.role|default:'guest'}
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{if $current_role == 'admin' || $current_role == 'doctor' || $current_role == 'receptionist' || $current_role == 'cashier' || $current_role == 'pharmacist'}
+
+  </div><!-- /.admin-content -->
+</div><!-- /.admin-main -->
+
+<script src="/CLINIC/public/assets/js/admin.js"></script>
+{block name="extra_js"}{/block}
 </body>
 </html>
+
+{else}
+
+</main><!-- /.main-content -->
+
+<footer class="footer">
+
+  <div class="footer-newsletter">
+    <div class="container footer-newsletter__inner">
+      <div class="footer-newsletter__text">
+        <h3>Nhận thông tin sức khỏe hữu ích</h3>
+        <p>Cập nhật lịch khám, tin tức y tế và ưu đãi mới nhất từ MediCare</p>
+      </div>
+      <form class="footer-newsletter__form" action="/subscribe" method="POST">
+        <input type="email" name="email" placeholder="Nhập email của bạn..." required>
+        <button type="submit">Đăng ký</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-main">
+    <div class="container footer-main__grid">
+
+      <div class="footer-col footer-col--brand">
+        <div class="footer-logo">
+          <div class="logo-icon logo-icon--sm"><i class="fa-solid fa-heart-pulse"></i></div>
+          <span class="logo-name">MediCare</span>
+        </div>
+        <p class="footer-tagline">Nền tảng đặt lịch khám bệnh và chăm sóc sức khỏe toàn diện — nhanh chóng, tiện lợi, đáng tin cậy.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Zalo"><i class="fa-brands fa-facebook-messenger"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Dịch vụ</h4>
+        <ul>
+          <li><a href="/CLINIC/public/?page=services">Khám chuyên khoa</a></li>
+          <li><a href="/CLINIC/public/?page=services">Khám từ xa</a></li>
+          <li><a href="/CLINIC/public/?page=services">Khám tổng quát</a></li>
+          <li><a href="/CLINIC/public/?page=services">Xét nghiệm y học</a></li>
+          <li><a href="/CLINIC/public/?page=services">Nha khoa</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Thông tin</h4>
+        <ul>
+          <li><a href="/CLINIC/public/?page=about">Về chúng tôi</a></li>
+          <li><a href="/CLINIC/public/?page=doctors">Đội ngũ bác sĩ</a></li>
+          <li><a href="/CLINIC/public/?page=contact">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col--contact">
+        <h4>Liên hệ</h4>
+        <ul class="footer-contact-list">
+          <li><i class="fa-solid fa-location-dot"></i><span>123 Nguyễn Thị Minh Khai, Quận 1, TP. HCM</span></li>
+          <li><i class="fa-solid fa-phone"></i><span><a href="tel:1900xxxx">1900 xxxx</a></span></li>
+          <li><i class="fa-regular fa-envelope"></i><span><a href="mailto:info@medicare.vn">info@medicare.vn</a></span></li>
+          <li><i class="fa-regular fa-clock"></i><span>Thứ 2 – Thứ 7: 07:30 – 17:00</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom__inner">
+      <p>&copy; {$smarty.now|date_format:"%Y"} MediCare. Bảo lưu mọi quyền.</p>
+      <div class="footer-bottom__links">
+        <a href="#">Chính sách bảo mật</a>
+        <a href="#">Điều khoản sử dụng</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+<script src="/CLINIC/public/assets/js/main.js"></script>
+{block name="extra_js"}{/block}
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  const overlay   = document.getElementById('mobile-overlay');
+  const closeBtn  = document.getElementById('mobile-close');
+  if (hamburger) {
+    function openNav()  { mobileNav.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeNav() { mobileNav.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; }
+    hamburger.addEventListener('click', openNav);
+    closeBtn.addEventListener('click', closeNav);
+    overlay.addEventListener('click', closeNav);
+  }
+  const header = document.getElementById('main-header');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  }
+</script>
+</body>
+</html>
+
+{/if}
