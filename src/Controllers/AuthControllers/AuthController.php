@@ -85,7 +85,7 @@ class AuthController
     {
         require_once __DIR__ . '/../../../vendor/autoload.php';
 
-        $client = new Google\Client();
+        $client = new \Google\Client();
         $client->setClientId(GOOGLE_CLIENT_ID);
         $client->setClientSecret(GOOGLE_CLIENT_SECRET);
         $client->setRedirectUri(GOOGLE_REDIRECT_URL);
@@ -122,7 +122,7 @@ class AuthController
                     'email' => $email,
                     'googleId' => $googleId,
                     'role' => 'patient',
-                    'createdAt' => new MongoDB\BSON\UTCDateTime()
+                    'createdAt' => new \MongoDB\BSON\UTCDateTime()
                 ];
                 $this->userModel->registerUser($newUser);
                 $user = $this->userModel->findUserByEmail($email);

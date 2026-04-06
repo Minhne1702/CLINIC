@@ -123,7 +123,7 @@
             </div>
             <div class="form-group">
               <label class="checkbox-label">
-                <input type="checkbox" name="auto_confirm" {if $settings.auto_confirm}checked{/if}> Tự động xác nhận lịch hẹn
+                <input type="checkbox" name="auto_confirm" {if $settings.auto_confirm|default:false}checked{/if}> Tự động xác nhận lịch hẹn
               </label>
             </div>
             <button type="submit" class="btn-admin-primary" style="margin-top:.5rem"><i class="fa-solid fa-floppy-disk"></i> Lưu cài đặt</button>
@@ -142,20 +142,20 @@
           <div class="admin-card__header"><h3>Cấu hình thông báo</h3></div>
           <div class="admin-card__body">
             <div class="form-group">
-              <label class="checkbox-label"><input type="checkbox" name="notify_sms" {if $settings.notify_sms}checked{/if}> Gửi SMS xác nhận lịch hẹn</label>
+              <label class="checkbox-label"><input type="checkbox" name="notify_sms" {if $settings.notify_sms|default:false}checked{/if}> Gửi SMS xác nhận lịch hẹn</label>
             </div>
             <div class="form-group">
-              <label class="checkbox-label"><input type="checkbox" name="notify_email" {if $settings.notify_email}checked{/if}> Gửi Email xác nhận lịch hẹn</label>
+              <label class="checkbox-label"><input type="checkbox" name="notify_email" {if $settings.notify_email|default:false}checked{/if}> Gửi Email xác nhận lịch hẹn</label>
             </div>
             <div class="form-group">
-              <label class="checkbox-label"><input type="checkbox" name="reminder_1h" {if $settings.reminder_1h}checked{/if}> Nhắc lịch trước 1 giờ</label>
+              <label class="checkbox-label"><input type="checkbox" name="reminder_1h" {if $settings.reminder_1h|default:false}checked{/if}> Nhắc lịch trước 1 giờ</label>
             </div>
             <div class="form-group">
-              <label class="checkbox-label"><input type="checkbox" name="reminder_24h" {if $settings.reminder_24h}checked{/if}> Nhắc lịch trước 24 giờ</label>
+              <label class="checkbox-label"><input type="checkbox" name="reminder_24h" {if $settings.reminder_24h|default:false}checked{/if}> Nhắc lịch trước 24 giờ</label>
             </div>
             <div class="form-group">
               <label>SMS API Key</label>
-              <input type="text" name="sms_api_key" value="{$settings.sms_api_key|default:''}" placeholder="Nhập API key SMS gateway">
+              <input type="text" name="sms_api_key" value="{$settings.sms_api_key|default:false}" placeholder="Nhập API key SMS gateway">
             </div>
             <button type="submit" class="btn-admin-primary" style="margin-top:.5rem"><i class="fa-solid fa-floppy-disk"></i> Lưu cài đặt</button>
           </div>
@@ -173,18 +173,18 @@
             <input type="hidden" name="page" value="settings">
             <input type="hidden" name="tab" value="security">
             <div class="form-group">
-              <label class="checkbox-label"><input type="checkbox" name="mfa_admin" {if $settings.mfa_admin}checked{/if}> Bật MFA cho Admin</label>
+              <label class="checkbox-label"><input type="checkbox" name="mfa_admin" {if $settings.mfa_admin|default:false}checked{/if}> Bật MFA cho Admin</label>
             </div>
             <div class="form-group">
-              <label class="checkbox-label"><input type="checkbox" name="mfa_doctor" {if $settings.mfa_doctor}checked{/if}> Bật MFA cho Bác sĩ</label>
+              <label class="checkbox-label"><input type="checkbox" name="mfa_doctor" {if $settings.mfa_doctor|default:false}checked{/if}> Bật MFA cho Bác sĩ</label>
             </div>
             <div class="form-group">
               <label>Thời gian hết phiên (phút)</label>
-              <input type="number" name="session_timeout" value="{$settings.session_timeout|default:60}" min="10">
+              <input type="number" name="session_timeout" value="{$settings.session_timeout|default:false}" min="10">
             </div>
             <div class="form-group">
               <label>Số lần đăng nhập sai tối đa</label>
-              <input type="number" name="max_login_attempts" value="{$settings.max_login_attempts|default:5}" min="3">
+              <input type="number" name="max_login_attempts" value="{$settings.max_login_attempts|default:false}" min="3">
             </div>
             <button type="submit" class="btn-admin-primary" style="margin-top:.5rem"><i class="fa-solid fa-floppy-disk"></i> Lưu cài đặt</button>
           </form>
