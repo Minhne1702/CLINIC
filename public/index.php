@@ -21,7 +21,7 @@ $smarty->setCompileDir(__DIR__ . '/../templates_c/');
 $db = (new Database())->getDb();
 $userModel    = new UserModel($db);
 $authController = new AuthController($userModel, $smarty);
-$homeController = new HomeController($smarty);
+$homeController = new HomeController($smarty, $db);
 
 // --- Logout ---
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
@@ -42,8 +42,7 @@ if (isset($_SESSION['user'])) {
             require_once __DIR__ . '/../src/Controllers/DoctorControllers/DoctorController.php';
             break;
         case 'patient':
-            require_once __DIR__ . '/../src/Controllers/PatientControllers/PatientController.php';
-            break;
+            require_once __DIR__ . '/../src/Controllers/PatientControllers/PatientController.php';            break;
         case 'receptionist':
             require_once __DIR__ . '/../src/Controllers/ReceptionistControllers/ReceptionistController.php';
             break;
