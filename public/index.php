@@ -21,7 +21,7 @@ $smarty->setCompileDir(__DIR__ . '/../templates_c/');
 $db = (new Database())->getDb();
 $userModel    = new UserModel($db);
 $authController = new AuthController($userModel, $smarty);
-$homeController = new HomeController($smarty, $db);
+$homeController = new HomeController($smarty);
 
 // --- Logout ---
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
@@ -40,17 +40,28 @@ if (isset($_SESSION['user'])) {
             break;
         case 'doctor':
             require_once __DIR__ . '/../src/Controllers/DoctorControllers/DoctorController.php';
+            $ctrl = new DoctorController($smarty, $db);
+            $ctrl->run();
             break;
         case 'patient':
-            require_once __DIR__ . '/../src/Controllers/PatientControllers/PatientController.php';            break;
+            require_once __DIR__ . '/../src/Controllers/PatientControllers/PatientController.php';
+            $patientController = new PatientController($smarty, $db);
+            $patientController->run();
+            break;
         case 'receptionist':
             require_once __DIR__ . '/../src/Controllers/ReceptionistControllers/ReceptionistController.php';
+            $ctrl = new ReceptionistController($smarty, $db);
+            $ctrl->run();
             break;
         case 'cashier':
             require_once __DIR__ . '/../src/Controllers/CashierControllers/CashierController.php';
+            $ctrl = new CashierController($smarty, $db);
+            $ctrl->run();
             break;
         case 'pharmacist':
             require_once __DIR__ . '/../src/Controllers/PharmacyControllers/PharmacyController.php';
+            $ctrl = new PharmacyController($smarty, $db);
+            $ctrl->run();
             break;
     }
     exit;
