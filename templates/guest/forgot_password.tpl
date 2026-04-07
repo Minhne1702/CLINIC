@@ -8,18 +8,23 @@
       </div>
       <div class="form-card__header" style="text-align:center">
         <h2>Quên mật khẩu?</h2>
-        <p>Nhập email của bạn, chúng tôi sẽ gửi link đặt lại mật khẩu.</p>
+        <p>Nhập email của bạn, chúng tôi sẽ gửi mật khẩu mới trực tiếp qua mail.</p>
       </div>
 
-      {if $success_message}
-      <div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>
-      {else}
+      {if $status === 'success'}
+        <div class="alert alert--success">
+          <i class="fa-solid fa-circle-check"></i> {$message}
+        </div>
+      {/if}
 
-        {if $error_message}
-        <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>
-        {/if}
+      {if $status === 'error'}
+        <div class="alert alert--danger">
+          <i class="fa-solid fa-circle-exclamation"></i> {$message}
+        </div>
+      {/if}
 
-        <form action="{$base_url}/?page=forgot-password" method="POST" class="appt-form">
+      {if $status !== 'success'}
+        <form action="{$BASE_URL}/index.php?page=forgot-password" method="POST" class="appt-form">
           <div class="form-group">
             <label>Email đã đăng ký <span class="required">*</span></label>
             <div class="input-icon-wrap">
@@ -27,16 +32,15 @@
               <input type="email" name="email" placeholder="email@example.com" required autocomplete="email">
             </div>
           </div>
-          <button type="submit" class="btn-submit">
-            <i class="fa-solid fa-paper-plane"></i>
-            Gửi link đặt lại mật khẩu
+
+          <button type="submit" name="btn_forgot" class="btn-submit">
+            <i class="fa-solid fa-paper-plane"></i> Gửi mật khẩu mới
           </button>
         </form>
-
       {/if}
 
       <div class="auth-back-link">
-        <a href="{$base_url}/?page=login"><i class="fa-solid fa-arrow-left"></i> Quay lại đăng nhập</a>
+        <a href="{$BASE_URL}/index.php?page=login"><i class="fa-solid fa-arrow-left"></i> Quay lại đăng nhập</a>
       </div>
     </div>
   </div>

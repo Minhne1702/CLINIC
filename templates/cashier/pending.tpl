@@ -14,7 +14,7 @@
       <td>{$bill.drug_fee|number_format:0:',':'.'}đ</td>
       <td><strong style="color:var(--admin-success)">{$bill.total_amount|number_format:0:',':'.'}đ</strong></td>
       <td><span class="text-muted" style="font-size:13px">{$bill.wait_time|default:'—'}</span></td>
-      <td><a href="{$base_url}/?role=cashier&page=billing&id={$bill._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .8rem"><i class="fa-solid fa-cash-register"></i> Thanh toán</a></td>
+      <td><a href="{$BASE_URL}/?role=cashier&page=billing&id={$bill._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .8rem"><i class="fa-solid fa-cash-register"></i> Thanh toán</a></td>
     </tr>
     {foreachelse}<tr><td colspan="8" class="table-empty">Không có hóa đơn nào chờ thanh toán</td></tr>
     {/foreach}

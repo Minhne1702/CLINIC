@@ -5,7 +5,7 @@
     <h2>Xin chào, <span style="color:#fef3c7">{$current_user_name|default:"Thu ngân"}</span> 💰</h2>
     <p>Hôm nay {$smarty.now|date_format:"%d/%m/%Y"} — Doanh thu: <strong style="color:#fff">{$stats.today_revenue|default:"0đ"}</strong></p>
   </div>
-  <a href="{$base_url}/?role=cashier&page=billing" class="btn-admin-primary" style="background:#fff;color:#92400e">
+  <a href="{$BASE_URL}/?role=cashier&page=billing" class="btn-admin-primary" style="background:#fff;color:#92400e">
     <i class="fa-solid fa-file-invoice-dollar"></i> Lập hóa đơn
   </a>
 </div>
@@ -19,7 +19,7 @@
 
 <div class="dashboard-grid">
   <div class="admin-card admin-card--lg">
-    <div class="admin-card__header"><h3><i class="fa-solid fa-clock"></i> Chờ thanh toán</h3><a href="{$base_url}/?role=cashier&page=pending" class="btn-link">Xem tất cả</a></div>
+    <div class="admin-card__header"><h3><i class="fa-solid fa-clock"></i> Chờ thanh toán</h3><a href="{$BASE_URL}/?role=cashier&page=pending" class="btn-link">Xem tất cả</a></div>
     <div class="admin-card__body p-0">
       <table class="admin-table">
         <thead><tr><th>Bệnh nhân</th><th>Bác sĩ</th><th>Dịch vụ</th><th>Tổng tiền</th><th>Thao tác</th></tr></thead>
@@ -30,7 +30,7 @@
             <td>{$bill.doctor_name}</td>
             <td><small>{$bill.services|truncate:40:'...'}</small></td>
             <td><strong style="color:var(--admin-success)">{$bill.total_amount}</strong></td>
-            <td><a href="{$base_url}/?role=cashier&page=billing&id={$bill._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .8rem"><i class="fa-solid fa-cash-register"></i> Thanh toán</a></td>
+            <td><a href="{$BASE_URL}/?role=cashier&page=billing&id={$bill._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .8rem"><i class="fa-solid fa-cash-register"></i> Thanh toán</a></td>
           </tr>
           {foreachelse}<tr><td colspan="5" class="table-empty">Không có hóa đơn chờ thanh toán</td></tr>
           {/foreach}

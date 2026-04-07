@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 07:15:38
+/* Smarty version 5.8.0, created on 2026-04-07 07:26:43
   from 'file:guest/home.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d492fa8937f5_30711845',
+  'unifunc' => 'content_69d4b1b369c5e4_41254962',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '1da98eb2ec9d1c8638c93d8cecd54b04d6624b18' => 
+    'ad837e6f6098ffff2c454e905e53cba07082631b' => 
     array (
       0 => 'guest/home.tpl',
-      1 => 1775538584,
+      1 => 1775546534,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d492fa8937f5_30711845 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\guest';
+function content_69d4b1b369c5e4_41254962 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
 $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"MediCare — Đặt lịch khám bệnh",'active_page'=>"home"), (int) 0, $_smarty_current_dir);
 ?>
 
@@ -49,7 +49,7 @@ $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id
         Kết nối bạn với hàng trăm bác sĩ chuyên khoa giàu kinh nghiệm.
         Đặt lịch trực tuyến 24/7, nhận xác nhận ngay lập tức.
       </p>
-      <form class="hero__search" action="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <form class="hero__search" action="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /" method="GET">
         <div class="search-group">
           <div class="search-field">
@@ -72,15 +72,15 @@ $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id
       </form>
       <div class="hero__chips">
         <span>Tìm nhanh:</span>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors&amp;spec=tim-mach" class="chip">Tim mạch</a>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors&amp;spec=nhi-khoa" class="chip">Nhi khoa</a>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors&amp;spec=da-lieu" class="chip">Da liễu</a>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors&amp;spec=nha-khoa" class="chip">Nha khoa</a>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors&amp;spec=mat" class="chip">Mắt</a>
       </div>
     </div>
@@ -173,7 +173,7 @@ $foreach1DoElse = false;
 $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     </div>
     <div class="text-center mt-3">
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors" class="btn-outline">Xem tất cả chuyên khoa <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
@@ -194,7 +194,7 @@ $foreach2DoElse = true;
 foreach ($_from ?? [] as $_smarty_tpl->getVariable('doc')->value) {
 $foreach2DoElse = false;
 ?>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=appointments&amp;id=<?php echo $_smarty_tpl->getValue('doc')['_id'];?>
 " class="doctor-card">
         <div class="doctor-card__img">
@@ -232,7 +232,7 @@ $foreach2DoElse = false;
 $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     </div>
     <div class="text-center mt-3">
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors" class="btn-outline">Xem tất cả bác sĩ <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
@@ -318,11 +318,11 @@ $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
       <p>Đặt lịch khám ngay hôm nay — nhanh chóng, dễ dàng, không phải chờ đợi lâu.</p>
     </div>
     <div class="cta-banner__actions">
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=appointments" class="btn-cta-primary">
         <i class="fa-regular fa-calendar-check"></i> Đặt lịch ngay
       </a>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors" class="btn-cta-outline">
         <i class="fa-solid fa-user-doctor"></i> Xem bác sĩ
       </a>

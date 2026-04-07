@@ -6,7 +6,7 @@
     <p class="page-subtitle">Theo dõi và quản lý tất cả lịch hẹn khám</p>
   </div>
   <div class="page-toolbar__right">
-    <a href="{$base_url}/?role=admin&page=appointments&action=create" class="btn-admin-primary">
+    <a href="{$BASE_URL}/?role=admin&page=appointments&action=create" class="btn-admin-primary">
       <i class="fa-solid fa-plus"></i> Tạo lịch hẹn
     </a>
   </div>
@@ -15,26 +15,26 @@
 <!-- Summary tabs -->
 <div class="status-tabs mb-1">
   {assign var="cur_status" value=$filter.status|default:''}
-  <a href="{$base_url}/?role=admin&page=appointments" class="status-tab {if $cur_status == ''}active{/if}">
+  <a href="{$BASE_URL}/?role=admin&page=appointments" class="status-tab {if $cur_status == ''}active{/if}">
     Tất cả <span class="tab-count">{$count.all|default:0}</span>
   </a>
-  <a href="{$base_url}/?role=admin&page=appointments&status=pending" class="status-tab {if $cur_status == 'pending'}active{/if}">
+  <a href="{$BASE_URL}/?role=admin&page=appointments&status=pending" class="status-tab {if $cur_status == 'pending'}active{/if}">
     Chờ xác nhận <span class="tab-count tab-count--warning">{$count.pending|default:0}</span>
   </a>
-  <a href="{$base_url}/?role=admin&page=appointments&status=confirmed" class="status-tab {if $cur_status == 'confirmed'}active{/if}">
+  <a href="{$BASE_URL}/?role=admin&page=appointments&status=confirmed" class="status-tab {if $cur_status == 'confirmed'}active{/if}">
     Đã xác nhận <span class="tab-count tab-count--blue">{$count.confirmed|default:0}</span>
   </a>
-  <a href="{$base_url}/?role=admin&page=appointments&status=completed" class="status-tab {if $cur_status == 'completed'}active{/if}">
+  <a href="{$BASE_URL}/?role=admin&page=appointments&status=completed" class="status-tab {if $cur_status == 'completed'}active{/if}">
     Hoàn thành <span class="tab-count tab-count--success">{$count.completed|default:0}</span>
   </a>
-  <a href="{$base_url}/?role=admin&page=appointments&status=cancelled" class="status-tab {if $cur_status == 'cancelled'}active{/if}">
+  <a href="{$BASE_URL}/?role=admin&page=appointments&status=cancelled" class="status-tab {if $cur_status == 'cancelled'}active{/if}">
     Đã hủy <span class="tab-count tab-count--danger">{$count.cancelled|default:0}</span>
   </a>
 </div>
 
 <div class="admin-card mb-1">
   <div class="admin-card__body">
-    <form method="GET" action="{$base_url}/" class="filter-bar">
+    <form method="GET" action="{$BASE_URL}/" class="filter-bar">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="appointments">
       <div class="filter-bar__group">
@@ -106,11 +106,11 @@
           </td>
           <td>
             <div class="table-actions">
-              <a href="{$base_url}/?role=admin&page=appointments&action=view&id={$apt._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=appointments&action=view&id={$apt._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
               {if $apt.status == 'pending'}
-              <a href="{$base_url}/?role=admin&page=appointments&action=confirm&id={$apt._id}" class="action-btn action-btn--success" title="Xác nhận"><i class="fa-solid fa-check"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=appointments&action=confirm&id={$apt._id}" class="action-btn action-btn--success" title="Xác nhận"><i class="fa-solid fa-check"></i></a>
               {/if}
-              <a href="{$base_url}/?role=admin&page=appointments&action=cancel&id={$apt._id}" class="action-btn action-btn--danger" title="Hủy" onclick="return confirm('Hủy lịch hẹn này?')"><i class="fa-solid fa-ban"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=appointments&action=cancel&id={$apt._id}" class="action-btn action-btn--danger" title="Hủy" onclick="return confirm('Hủy lịch hẹn này?')"><i class="fa-solid fa-ban"></i></a>
             </div>
           </td>
         </tr>

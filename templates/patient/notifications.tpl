@@ -7,7 +7,7 @@
   </div>
   {if $unread_count > 0}
   <div class="page-toolbar__right">
-    <a href="{$base_url}/?page=notifications&action=mark-all-read" class="btn-admin-secondary">
+    <a href="{$BASE_URL}/?page=notifications&action=mark-all-read" class="btn-admin-secondary">
       <i class="fa-solid fa-check-double"></i> Đánh dấu tất cả đã đọc
     </a>
   </div>

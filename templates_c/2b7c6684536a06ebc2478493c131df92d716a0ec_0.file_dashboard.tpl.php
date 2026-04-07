@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 07:15:57
+/* Smarty version 5.8.0, created on 2026-04-07 07:40:10
   from 'file:admin/dashboard.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d4930d965fe4_27515585',
+  'unifunc' => 'content_69d4b4dabd0ab4_60243996',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '3029163e76595ed25a93271af9d7d456ce2dff66' => 
+    '2b7c6684536a06ebc2478493c131df92d716a0ec' => 
     array (
       0 => 'admin/dashboard.tpl',
-      1 => 1775538582,
+      1 => 1775546578,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d4930d965fe4_27515585 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\admin';
+function content_69d4b4dabd0ab4_60243996 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\admin';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Dashboard",'active_page'=>"dashboard"), (int) 0, $_smarty_current_dir);
 ?>
 
@@ -106,7 +106,7 @@ $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_i
   <div class="admin-card admin-card--lg">
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-clock-rotate-left"></i> Lịch hẹn gần đây</h3>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?role=admin&page=appointments" class="btn-link">Xem tất cả</a>
     </div>
     <div class="admin-card__body p-0">

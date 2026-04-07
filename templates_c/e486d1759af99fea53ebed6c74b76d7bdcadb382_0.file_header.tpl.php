@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 07:15:40
+/* Smarty version 5.8.0, created on 2026-04-07 07:21:11
   from 'file:layout/header.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d492fc0f1ca9_58492823',
+  'unifunc' => 'content_69d4b0679c9383_73819023',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '11f2a8dc472a3fd4f898e7d02d8a9832e37ae520' => 
+    'e486d1759af99fea53ebed6c74b76d7bdcadb382' => 
     array (
       0 => 'layout/header.tpl',
-      1 => 1775538585,
+      1 => 1775546460,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_69d492fc0f1ca9_58492823 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+function content_69d4b0679c9383_73819023 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
 <!DOCTYPE html>
@@ -34,10 +34,10 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="<?php echo $_smarty_tpl->getValue('base_url');?>
+<link rel="stylesheet" href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /assets/css/main.css">
   <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_136029635069d492fbd891a5_67261995', "extra_css");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_124122277969d4b0679a8e95_51928310', "extra_css");
 ?>
 
 </head>
@@ -48,9 +48,9 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_136029635069d
 <div class="topbar">
   <div class="container topbar__inner">
     <div class="topbar__links">
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=about"><i class="fa-regular fa-building"></i> Về chúng tôi</a>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=contact"><i class="fa-regular fa-envelope"></i> Liên hệ</a>
       <a href="tel:1900xxxx"><i class="fa-solid fa-phone-volume"></i> Hotline: 1900 xxxx</a>
     </div>
@@ -58,12 +58,12 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_136029635069d
       <?php if ((true && (true && null !== ($_SESSION['user'] ?? null))) && $_SESSION['user']) {?>
         <span class="topbar__welcome">Xin chào, <strong><?php echo $_SESSION['user']['full_name'];?>
 </strong></span>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?action=logout" class="btn-topbar btn-topbar--outline">Đăng xuất</a>
       <?php } else { ?>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=login" class="btn-topbar">Đăng nhập</a>
-        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=register" class="btn-topbar btn-topbar--primary">Đăng ký</a>
       <?php }?>
     </div>
@@ -75,7 +75,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_136029635069d
   <div class="container header__inner">
 
     <!-- Logo -->
-    <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /" class="header__logo">
       <div class="logo-icon">
         <i class="fa-solid fa-heart-pulse"></i>
@@ -88,21 +88,21 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_136029635069d
 
     <!-- Nav links -->
     <nav class="header__nav" id="main-nav">
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /" class="nav-link <?php if ($_smarty_tpl->getValue('active_page') == 'home') {?>active<?php }?>">Trang chủ</a>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors" class="nav-link <?php if ($_smarty_tpl->getValue('active_page') == 'doctors') {?>active<?php }?>">Bác sĩ</a>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=services" class="nav-link <?php if ($_smarty_tpl->getValue('active_page') == 'services') {?>active<?php }?>">Dịch vụ</a>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=appointments" class="nav-link <?php if ($_smarty_tpl->getValue('active_page') == 'appointments') {?>active<?php }?>">Đặt lịch</a>
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=contact" class="nav-link <?php if ($_smarty_tpl->getValue('active_page') == 'contact') {?>active<?php }?>">Liên hệ</a>
     </nav>
 
     <!-- CTA + Hamburger -->
     <div class="header__actions">
-      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+      <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=appointments" class="btn-book">
         <i class="fa-regular fa-calendar-check"></i>
         Đặt lịch ngay
@@ -123,17 +123,17 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_136029635069d
     <button class="mobile-nav__close" id="mobile-close"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <div class="mobile-nav__links">
-    <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /">Trang chủ</a>
-    <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors">Bác sĩ</a>
-    <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=services">Dịch vụ</a>
-    <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=appointments">Đặt lịch</a>
-    <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=contact">Liên hệ</a>
-    <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=appointments" class="mobile-nav__cta">Đặt lịch ngay</a>
   </div>
 </nav>
@@ -141,10 +141,10 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_136029635069d
 <main class="main-content">
 <?php }
 /* {block "extra_css"} */
-class Block_136029635069d492fbd891a5_67261995 extends \Smarty\Runtime\Block
+class Block_124122277969d4b0679a8e95_51928310 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 }
 }
 /* {/block "extra_css"} */

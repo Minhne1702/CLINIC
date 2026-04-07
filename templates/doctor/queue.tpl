@@ -37,7 +37,7 @@
           {elseif $q.priority == 'child'}<span class="badge badge--blue" style="font-size:11px">Trẻ em</span>{/if}
         </div>
         <div class="queue-card__actions">
-          <a href="{$base_url}/?role=doctor&page=examination&patient_id={$q.patient_id}&queue_id={$q._id}" class="btn-admin-primary" style="font-size:12px;padding:.4rem .85rem;white-space:nowrap">
+          <a href="{$BASE_URL}/?role=doctor&page=examination&patient_id={$q.patient_id}&queue_id={$q._id}" class="btn-admin-primary" style="font-size:12px;padding:.4rem .85rem;white-space:nowrap">
             <i class="fa-solid fa-stethoscope"></i> Khám ngay
           </a>
         </div>
@@ -67,7 +67,7 @@
           <p style="font-size:12px;color:var(--admin-primary)"><i class="fa-solid fa-clock"></i> Bắt đầu: {$q.start_time|default:'—'}</p>
         </div>
         <div class="queue-card__actions">
-          <a href="{$base_url}/?role=doctor&page=examination&patient_id={$q.patient_id}&queue_id={$q._id}" class="btn-admin-secondary" style="font-size:12px;padding:.4rem .85rem">
+          <a href="{$BASE_URL}/?role=doctor&page=examination&patient_id={$q.patient_id}&queue_id={$q._id}" class="btn-admin-secondary" style="font-size:12px;padding:.4rem .85rem">
             <i class="fa-solid fa-notes-medical"></i> Tiếp tục
           </a>
         </div>
@@ -91,7 +91,7 @@
           <strong>{$q.patient_name}</strong>
           <p style="font-size:12px;color:var(--admin-text-muted)">{$q.patient_code} · Xong lúc {$q.end_time|default:'—'}</p>
         </div>
-        <a href="{$base_url}/?role=doctor&page=records&patient_id={$q.patient_id}" class="action-btn" title="Xem hồ sơ"><i class="fa-solid fa-eye"></i></a>
+        <a href="{$BASE_URL}/?role=doctor&page=records&patient_id={$q.patient_id}" class="action-btn" title="Xem hồ sơ"><i class="fa-solid fa-eye"></i></a>
       </div>
       {/if}
       {/foreach}

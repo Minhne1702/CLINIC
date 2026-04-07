@@ -3,7 +3,7 @@
   <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-prescription"></i> Đơn thuốc đã kê</h2><p class="page-subtitle">Lịch sử đơn thuốc bác sĩ đã kê</p></div>
 </div>
 <div class="admin-card mb-1"><div class="admin-card__body">
-  <form method="GET" action="{$base_url}/" class="filter-bar"><input type="hidden" name="role" value="doctor"><input type="hidden" name="page" value="prescriptions">
+  <form method="GET" action="{$BASE_URL}/" class="filter-bar"><input type="hidden" name="role" value="doctor"><input type="hidden" name="page" value="prescriptions">
     <div class="filter-bar__group">
       <div class="filter-input"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="q" placeholder="Tên bệnh nhân, mã đơn..." value="{$filter.q|default:''}"></div>
       <input type="date" name="date_from" value="{$filter.date_from|default:''}">
@@ -28,7 +28,7 @@
         {else}<span class="badge badge--neutral">Chờ thanh toán</span>{/if}
       </td>
       <td><div class="table-actions">
-        <a href="{$base_url}/?role=doctor&page=prescriptions&id={$rx._id}" class="action-btn" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
+        <a href="{$BASE_URL}/?role=doctor&page=prescriptions&id={$rx._id}" class="action-btn" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
       </div></td>
     </tr>
     {foreachelse}<tr><td colspan="7" class="table-empty">Chưa có đơn thuốc nào</td></tr>

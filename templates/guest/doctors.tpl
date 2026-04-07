@@ -58,7 +58,7 @@
     {if $doctors}
     <div class="doctors__grid" data-animate="stagger">
       {foreach from=$doctors item=doc}
-      <a href="{$base_url}/?page=doctors&amp;id={$doc._id}" class="doctor-card">
+      <a href="{$BASE_URL}/?page=doctors&amp;id={$doc._id}" class="doctor-card">
         <div class="doctor-card__img">
           {if $doc.avatar}
             <img src="{$doc.avatar}" alt="{$doc.full_name}" loading="lazy">
@@ -89,7 +89,7 @@
       <i class="fa-solid fa-user-doctor"></i>
       <h3>Không tìm thấy bác sĩ</h3>
       <p>Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.</p>
-      <a href="{$base_url}/?page=doctors" class="btn-outline" style="margin-top:1rem">Xem tất cả bác sĩ</a>
+      <a href="{$BASE_URL}/?page=doctors" class="btn-outline" style="margin-top:1rem">Xem tất cả bác sĩ</a>
     </div>
     {/if}
   </div>

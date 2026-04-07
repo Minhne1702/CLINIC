@@ -19,7 +19,7 @@
 
 <div class="admin-card mb-1">
   <div class="admin-card__body">
-    <form method="GET" action="{$base_url}/" class="filter-bar">
+    <form method="GET" action="{$BASE_URL}/" class="filter-bar">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="diseases">
       <div class="filter-bar__group">
@@ -63,7 +63,7 @@
           <td>
             <div class="table-actions">
               <button class="action-btn" onclick="editDisease('{$d._id}')" title="Sửa"><i class="fa-solid fa-pen"></i></button>
-              <a href="{$base_url}/?role=admin&page=diseases&action=delete&id={$d._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa bệnh này?')"><i class="fa-solid fa-trash"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=diseases&action=delete&id={$d._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa bệnh này?')"><i class="fa-solid fa-trash"></i></a>
             </div>
           </td>
         </tr>
@@ -82,7 +82,7 @@
       <h3 id="modalDiseaseTitle">Thêm bệnh</h3>
       <button class="modal__close" onclick="closeModal('modalDisease')"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <form action="{$base_url}/" method="POST" class="modal__body">
+    <form action="{$BASE_URL}/" method="POST" class="modal__body">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="diseases">
       <input type="hidden" name="action" value="save">

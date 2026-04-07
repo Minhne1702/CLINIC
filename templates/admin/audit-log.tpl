@@ -6,7 +6,7 @@
     <p class="page-subtitle">Theo dõi toàn bộ hoạt động hệ thống — ai làm gì, khi nào, ở đâu</p>
   </div>
   <div class="page-toolbar__right">
-    <button class="btn-admin-secondary" onclick="window.location.href='{$base_url}/?role=admin&page=audit-log&action=export'">
+    <button class="btn-admin-secondary" onclick="window.location.href='{$BASE_URL}/?role=admin&page=audit-log&action=export'">
       <i class="fa-solid fa-file-export"></i> Xuất log
     </button>
   </div>
@@ -14,7 +14,7 @@
 
 <div class="admin-card mb-1">
   <div class="admin-card__body">
-    <form method="GET" action="{$base_url}/" class="filter-bar">
+    <form method="GET" action="{$BASE_URL}/" class="filter-bar">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="audit-log">
       <div class="filter-bar__group">

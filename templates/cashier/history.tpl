@@ -2,11 +2,11 @@
 <div class="page-toolbar">
   <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử thanh toán</h2><p class="page-subtitle">Tất cả giao dịch đã hoàn thành</p></div>
   <div class="page-toolbar__right">
-    <a href="{$base_url}/?role=cashier&page=history&action=export" class="btn-admin-secondary"><i class="fa-solid fa-file-excel"></i> Xuất Excel</a>
+    <a href="{$BASE_URL}/?role=cashier&page=history&action=export" class="btn-admin-secondary"><i class="fa-solid fa-file-excel"></i> Xuất Excel</a>
   </div>
 </div>
 <div class="admin-card mb-1"><div class="admin-card__body">
-  <form method="GET" action="{$base_url}/" class="filter-bar"><input type="hidden" name="role" value="cashier"><input type="hidden" name="page" value="history">
+  <form method="GET" action="{$BASE_URL}/" class="filter-bar"><input type="hidden" name="role" value="cashier"><input type="hidden" name="page" value="history">
     <div class="filter-bar__group">
       <div class="filter-input"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="q" placeholder="Tên BN, mã hóa đơn..." value="{$filter.q|default:''}"></div>
       <input type="date" name="date_from" value="{$filter.date_from|default:''}">
@@ -33,7 +33,7 @@
       </td>
       <td><strong style="color:var(--admin-success)">{$bill.total_amount|number_format:0:',':'.'}đ</strong></td>
       <td>{$bill.cashier_name}</td>
-      <td><a href="{$base_url}/?role=cashier&page=history&id={$bill._id}" class="action-btn" title="Xem & In"><i class="fa-solid fa-print"></i></a></td>
+      <td><a href="{$BASE_URL}/?role=cashier&page=history&id={$bill._id}" class="action-btn" title="Xem & In"><i class="fa-solid fa-print"></i></a></td>
     </tr>
     {foreachelse}<tr><td colspan="8" class="table-empty">Chưa có giao dịch nào</td></tr>
     {/foreach}

@@ -5,7 +5,7 @@
     <h2>Xin chào, <span style="color:#ede9fe">{$current_user_name|default:"Dược sĩ"}</span> 💊</h2>
     <p>Có <strong style="color:#fff">{$stats.new_rx|default:0}</strong> đơn thuốc mới cần xử lý hôm nay</p>
   </div>
-  <a href="{$base_url}/?role=pharmacist&page=prescriptions" class="btn-admin-primary" style="background:#fff;color:#4c1d95">
+  <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions" class="btn-admin-primary" style="background:#fff;color:#4c1d95">
     <i class="fa-solid fa-prescription"></i> Xử lý đơn thuốc
   </a>
 </div>
@@ -18,12 +18,12 @@
 </div>
 
 {if $stats.low_stock > 0}
-<div class="alert alert--warning mb-1"><i class="fa-solid fa-triangle-exclamation"></i> Có <strong>{$stats.low_stock}</strong> loại thuốc sắp hết hàng. <a href="{$base_url}/?role=pharmacist&page=low-stock">Xem ngay →</a></div>
+<div class="alert alert--warning mb-1"><i class="fa-solid fa-triangle-exclamation"></i> Có <strong>{$stats.low_stock}</strong> loại thuốc sắp hết hàng. <a href="{$BASE_URL}/?role=pharmacist&page=low-stock">Xem ngay →</a></div>
 {/if}
 
 <div class="dashboard-grid">
   <div class="admin-card admin-card--lg">
-    <div class="admin-card__header"><h3><i class="fa-solid fa-prescription"></i> Đơn thuốc mới nhất</h3><a href="{$base_url}/?role=pharmacist&page=prescriptions" class="btn-link">Xem tất cả</a></div>
+    <div class="admin-card__header"><h3><i class="fa-solid fa-prescription"></i> Đơn thuốc mới nhất</h3><a href="{$BASE_URL}/?role=pharmacist&page=prescriptions" class="btn-link">Xem tất cả</a></div>
     <div class="admin-card__body p-0">
       <table class="admin-table">
         <thead><tr><th>Mã đơn</th><th>Bệnh nhân</th><th>Bác sĩ kê</th><th>Thời gian</th><th>Số thuốc</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
@@ -41,7 +41,7 @@
               {elseif $rx.status=='done'}<span class="badge badge--success">Đã phát</span>
               {else}<span class="badge badge--neutral">{$rx.status}</span>{/if}
             </td>
-            <td><a href="{$base_url}/?role=pharmacist&page=dispensing&id={$rx._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-capsules"></i> Phát thuốc</a></td>
+            <td><a href="{$BASE_URL}/?role=pharmacist&page=dispensing&id={$rx._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-capsules"></i> Phát thuốc</a></td>
           </tr>
           {foreachelse}<tr><td colspan="7" class="table-empty">Không có đơn thuốc mới</td></tr>
           {/foreach}
@@ -50,7 +50,7 @@
     </div>
   </div>
   <div class="admin-card">
-    <div class="admin-card__header"><h3><i class="fa-solid fa-boxes-stacking"></i> Tồn kho thấp</h3><a href="{$base_url}/?role=pharmacist&page=low-stock" class="btn-link">Xem tất cả</a></div>
+    <div class="admin-card__header"><h3><i class="fa-solid fa-boxes-stacking"></i> Tồn kho thấp</h3><a href="{$BASE_URL}/?role=pharmacist&page=low-stock" class="btn-link">Xem tất cả</a></div>
     <div class="admin-card__body p-0">
       {foreach from=$low_stock_drugs item=drug}
       <div class="record-item">

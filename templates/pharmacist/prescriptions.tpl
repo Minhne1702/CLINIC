@@ -4,13 +4,13 @@
 </div>
 <div class="status-tabs mb-1">
   {assign var="cur" value=$filter.status|default:''}
-  <a href="{$base_url}/?role=pharmacist&page=prescriptions" class="status-tab {if $cur==''}active{/if}">Tất cả <span class="tab-count">{$count.all|default:0}</span></a>
-  <a href="{$base_url}/?role=pharmacist&page=prescriptions&status=pending" class="status-tab {if $cur=='pending'}active{/if}">Chờ phát <span class="tab-count tab-count--warning">{$count.pending|default:0}</span></a>
-  <a href="{$base_url}/?role=pharmacist&page=prescriptions&status=dispensing" class="status-tab {if $cur=='dispensing'}active{/if}">Đang bốc <span class="tab-count tab-count--blue">{$count.dispensing|default:0}</span></a>
-  <a href="{$base_url}/?role=pharmacist&page=prescriptions&status=done" class="status-tab {if $cur=='done'}active{/if}">Đã phát <span class="tab-count tab-count--success">{$count.done|default:0}</span></a>
+  <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions" class="status-tab {if $cur==''}active{/if}">Tất cả <span class="tab-count">{$count.all|default:0}</span></a>
+  <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions&status=pending" class="status-tab {if $cur=='pending'}active{/if}">Chờ phát <span class="tab-count tab-count--warning">{$count.pending|default:0}</span></a>
+  <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions&status=dispensing" class="status-tab {if $cur=='dispensing'}active{/if}">Đang bốc <span class="tab-count tab-count--blue">{$count.dispensing|default:0}</span></a>
+  <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions&status=done" class="status-tab {if $cur=='done'}active{/if}">Đã phát <span class="tab-count tab-count--success">{$count.done|default:0}</span></a>
 </div>
 <div class="admin-card mb-1"><div class="admin-card__body">
-  <form method="GET" action="{$base_url}/" class="filter-bar">
+  <form method="GET" action="{$BASE_URL}/" class="filter-bar">
     <input type="hidden" name="role" value="pharmacist"><input type="hidden" name="page" value="prescriptions">
     <div class="filter-bar__group">
       <div class="filter-input"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="q" placeholder="Tên BN, mã đơn..." value="{$filter.q|default:''}"></div>
@@ -38,8 +38,8 @@
           {else}<span class="badge badge--neutral">{$rx.status}</span>{/if}
         </td>
         <td><div class="table-actions">
-          <a href="{$base_url}/?role=pharmacist&page=dispensing&id={$rx._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-capsules"></i> Phát thuốc</a>
-          <a href="{$base_url}/?role=pharmacist&page=prescriptions&action=view&id={$rx._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
+          <a href="{$BASE_URL}/?role=pharmacist&page=dispensing&id={$rx._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-capsules"></i> Phát thuốc</a>
+          <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions&action=view&id={$rx._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
         </div></td>
       </tr>
       {foreachelse}<tr><td colspan="8" class="table-empty">Không có đơn thuốc nào</td></tr>

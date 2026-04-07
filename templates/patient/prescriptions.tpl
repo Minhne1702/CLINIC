@@ -7,7 +7,7 @@
   </div>
   {if $prescription}
   <div class="page-toolbar__right">
-    <a href="{$base_url}/?page=prescriptions" class="btn-admin-ghost">
+    <a href="{$BASE_URL}/?page=prescriptions" class="btn-admin-ghost">
       <i class="fa-solid fa-arrow-left"></i> Quay lại
     </a>
     <button class="btn-admin-secondary" onclick="window.print()">
@@ -144,7 +144,7 @@
             {/if}
           </td>
           <td>
-            <a href="{$base_url}/?page=prescriptions&id={$rx._id}" class="action-btn" title="Xem & In">
+            <a href="{$BASE_URL}/?page=prescriptions&id={$rx._id}" class="action-btn" title="Xem & In">
               <i class="fa-solid fa-eye"></i>
             </a>
           </td>

@@ -22,7 +22,7 @@
         Kết nối bạn với hàng trăm bác sĩ chuyên khoa giàu kinh nghiệm.
         Đặt lịch trực tuyến 24/7, nhận xác nhận ngay lập tức.
       </p>
-      <form class="hero__search" action="{$base_url}/" method="GET">
+      <form class="hero__search" action="{$BASE_URL}/" method="GET">
         <div class="search-group">
           <div class="search-field">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -44,11 +44,11 @@
       </form>
       <div class="hero__chips">
         <span>Tìm nhanh:</span>
-        <a href="{$base_url}/?page=doctors&amp;spec=tim-mach" class="chip">Tim mạch</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=nhi-khoa" class="chip">Nhi khoa</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=da-lieu" class="chip">Da liễu</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=nha-khoa" class="chip">Nha khoa</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=mat" class="chip">Mắt</a>
+        <a href="{$BASE_URL}/?page=doctors&amp;spec=tim-mach" class="chip">Tim mạch</a>
+        <a href="{$BASE_URL}/?page=doctors&amp;spec=nhi-khoa" class="chip">Nhi khoa</a>
+        <a href="{$BASE_URL}/?page=doctors&amp;spec=da-lieu" class="chip">Da liễu</a>
+        <a href="{$BASE_URL}/?page=doctors&amp;spec=nha-khoa" class="chip">Nha khoa</a>
+        <a href="{$BASE_URL}/?page=doctors&amp;spec=mat" class="chip">Mắt</a>
       </div>
     </div>
     <div class="hero__visual" data-animate="fade-left">
@@ -118,7 +118,7 @@
       {/foreach}
     </div>
     <div class="text-center mt-3">
-      <a href="{$base_url}/?page=doctors" class="btn-outline">Xem tất cả chuyên khoa <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="{$BASE_URL}/?page=doctors" class="btn-outline">Xem tất cả chuyên khoa <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
@@ -133,7 +133,7 @@
     </div>
     <div class="doctors__grid" data-animate="stagger">
       {foreach from=$featured_doctors item=doc}
-      <a href="{$base_url}/?page=appointments&amp;id={$doc._id}" class="doctor-card">
+      <a href="{$BASE_URL}/?page=appointments&amp;id={$doc._id}" class="doctor-card">
         <div class="doctor-card__img">
           {if $doc.avatar}
             <img src="{$doc.avatar}" alt="{$doc.full_name}" loading="lazy">
@@ -160,7 +160,7 @@
       {/foreach}
     </div>
     <div class="text-center mt-3">
-      <a href="{$base_url}/?page=doctors" class="btn-outline">Xem tất cả bác sĩ <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="{$BASE_URL}/?page=doctors" class="btn-outline">Xem tất cả bác sĩ <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
@@ -234,10 +234,10 @@
       <p>Đặt lịch khám ngay hôm nay — nhanh chóng, dễ dàng, không phải chờ đợi lâu.</p>
     </div>
     <div class="cta-banner__actions">
-      <a href="{$base_url}/?page=appointments" class="btn-cta-primary">
+      <a href="{$BASE_URL}/?page=appointments" class="btn-cta-primary">
         <i class="fa-regular fa-calendar-check"></i> Đặt lịch ngay
       </a>
-      <a href="{$base_url}/?page=doctors" class="btn-cta-outline">
+      <a href="{$BASE_URL}/?page=doctors" class="btn-cta-outline">
         <i class="fa-solid fa-user-doctor"></i> Xem bác sĩ
       </a>
     </div>

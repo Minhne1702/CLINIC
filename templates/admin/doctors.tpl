@@ -6,7 +6,7 @@
     <p class="page-subtitle">Quản lý hồ sơ và lịch làm việc của bác sĩ</p>
   </div>
   <div class="page-toolbar__right">
-    <a href="{$base_url}/?role=admin&page=doctors&action=create" class="btn-admin-primary">
+    <a href="{$BASE_URL}/?role=admin&page=doctors&action=create" class="btn-admin-primary">
       <i class="fa-solid fa-plus"></i> Thêm bác sĩ
     </a>
   </div>
@@ -16,7 +16,7 @@
 
 <div class="admin-card mb-1">
   <div class="admin-card__body">
-    <form method="GET" action="{$base_url}/" class="filter-bar">
+    <form method="GET" action="{$BASE_URL}/" class="filter-bar">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="doctors">
       <div class="filter-bar__group">
@@ -87,10 +87,10 @@
           </td>
           <td>
             <div class="table-actions">
-              <a href="{$base_url}/?role=admin&page=doctors&action=view&id={$doc._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
-              <a href="{$base_url}/?role=admin&page=doctors&action=edit&id={$doc._id}" class="action-btn" title="Sửa"><i class="fa-solid fa-pen"></i></a>
-              <a href="{$base_url}/?role=admin&page=doctors&action=schedule&id={$doc._id}" class="action-btn" title="Lịch làm"><i class="fa-regular fa-calendar"></i></a>
-              <a href="{$base_url}/?role=admin&page=doctors&action=delete&id={$doc._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa bác sĩ này?')"><i class="fa-solid fa-trash"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=doctors&action=view&id={$doc._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=doctors&action=edit&id={$doc._id}" class="action-btn" title="Sửa"><i class="fa-solid fa-pen"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=doctors&action=schedule&id={$doc._id}" class="action-btn" title="Lịch làm"><i class="fa-regular fa-calendar"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=doctors&action=delete&id={$doc._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa bác sĩ này?')"><i class="fa-solid fa-trash"></i></a>
             </div>
           </td>
         </tr>

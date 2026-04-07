@@ -37,42 +37,52 @@ class AuthController
     }
 
     public function register()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_register'])) {
-            $email = trim($_POST['email'] ?? '');
-            $fullName = $_POST['fullName'] ?? '';
-            $phone = $_POST['phone'] ?? '';
-            $password = $_POST['password'] ?? '';
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_register'])) {
+        $email = trim($_POST['email'] ?? '');
+        $fullName = $_POST['fullName'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $confirm_password = $_POST['confirm_password'] ?? '';
 
-            if ($this->userModel->checkEmailExists($email)) {
-                $this->smarty->assign('error_message', 'Email này đã tồn tại!');
-                $this->smarty->assign('post_data', $_POST);
-            } else {
-                $userData = [
-                    'fullName' => $fullName,
-                    'phone'    => $phone,
+        if ($password !== $confirm_password) {
+            $this->smarty->assign('error_message', 'Mật khẩu xác nhận không khớp!');
+            $this->smarty->display('guest/register.tpl');
+            return;
+        }
+
+        if ($this->userModel->checkEmailExists($email)) {
+            $this->smarty->assign('error_message', 'Email này đã tồn tại!');
+            $this->smarty->assign('form', $_POST); 
+        } else {
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            $userData = [
+                'fullName' => $fullName,
+                'phone'    => $phone,
+                'email'    => $email,
+                'password' => $hashedPassword,
+                'role'     => 'patient',
+                'createdAt' => new MongoDB\BSON\UTCDateTime()
+            ];
+
+            $userId = $this->userModel->createUser($userData);
+
+            if ($userId) {
+                $_SESSION['user'] = [
+                    'id'       => (string) $userId,
                     'email'    => $email,
-                    'password' => $password,
-                    'role'     => 'patient'
+                    'fullName' => $fullName,
+                    'role'     => 'patient',
                 ];
 
-                $userId = $this->userModel->createUser($userData);
-
-                if ($userId) {
-                    $_SESSION['user'] = [
-                        'id'       => (string) $userId,
-                        'email'    => $userData['email'],
-                        'fullName' => $userData['fullName'],
-                        'role'     => $userData['role'],
-                    ];
-
-                    header("Location: index.php");
-                    exit;
-                }
+                header("Location: index.php");
+                exit;
             }
         }
-        $this->smarty->display('guest/register.tpl');
     }
+    $this->smarty->display('guest/register.tpl');
+}
 
     public function logout()
     {
@@ -86,9 +96,9 @@ class AuthController
         require_once __DIR__ . '/../../../vendor/autoload.php';
 
         $client = new \Google\Client();
-        $client->setClientId(GOOGLE_CLIENT_ID);
-        $client->setClientSecret(GOOGLE_CLIENT_SECRET);
-        $client->setRedirectUri(GOOGLE_REDIRECT_URL);
+        $client->setClientId($_ENV['GOOGLE_CLIENT_ID']);
+        $client->setClientSecret($_ENV['GOOGLE_CLIENT_SECRET']);
+        $client->setRedirectUri($_ENV['GOOGLE_REDIRECT_URL']);
         $client->addScope("email");
         $client->addScope("profile");
 
@@ -139,68 +149,91 @@ class AuthController
             exit;
         }
     }
-    public function forgotPassword() {
+    public function forgotPassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_forgot'])) {
+            $email = trim($_POST['email'] ?? '');
+            $user = $this->userModel->findUserByEmail($email);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_forgot'])) {
-        $email = trim($_POST['email']);
-        $user = $this->userModel->findUserByEmail($email);
-
-        if ($user) {
-            if (!isset($user['password'])) {
-                $message = "Tài khoản này đăng nhập bằng Google!";
-                $status = 'error';
-            } else {
-
-                $newPassword = substr(str_shuffle('abcdefghjkmnpqrstuvwxyz23456789'), 0, 8);
-                
-                $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-                
-                $this->userModel->updateProfile((string)$user['_id'], ['password' => $hashedPassword]);
-
-                if ($this->sendEmail($email, $newPassword)) {
-                    $message = "Mật khẩu mới đã được gửi thành công!";
-                    $status = 'success';
-                } else {
-                    $message = "Lỗi gửi mail!";
+            if ($user) {
+                if (!isset($user['password'])) {
+                    $message = "Tài khoản này đăng nhập bằng Google!";
                     $status = 'error';
-                }
+                } else {
+                    // Tạo mật khẩu mới ngẫu nhiên 8 ký tự
+                    $newPassword = substr(str_shuffle('abcdefghjkmnpqrstuvwxyz23456789'), 0, 8);
+                    $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
 
+                    // Cập nhật vào Database
+                    $this->userModel->updateProfile((string)$user['_id'], ['password' => $hashedPassword]);
+
+                    // Gửi Mail
+                    if ($this->sendEmail($email, $newPassword)) {
+                        $message = "Mật khẩu mới đã được gửi vào Email của bạn!";
+                        $status = 'success';
+                    } else {
+                        $message = "Lỗi hệ thống không thể gửi mail. Vui lòng thử lại sau!";
+                        $status = 'error';
+                    }
+                }
+            } else {
+                $message = "Email này không tồn tại trên hệ thống!";
+                $status = 'error';
             }
-        } else {
-            $message = "Email không tồn tại!";
-            $status = 'error';
+
+            $this->smarty->assign('message', $message);
+            $this->smarty->assign('status', $status);
+        }
+        $this->smarty->display('guest/forgot_password.tpl');
+    }
+
+    private function sendEmail($toEmail, $newPass)
+    {
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            
+            // Dùng $_SERVER thay vì $_ENV để đảm bảo lúc nào cũng lấy được dữ liệu
+            $mail->Username   = $_SERVER['EMAIL_ACCOUNT'] ?? getenv('EMAIL_ACCOUNT');
+            $mail->Password   = $_SERVER['EMAIL_PASSWORD'] ?? getenv('EMAIL_PASSWORD');
+            
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
+            $mail->CharSet    = "UTF-8";
+
+            // Fix lỗi SSL trên Localhost
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+
+            // Dùng lại biến thay cho $_ENV
+            $mail->setFrom($mail->Username, 'MediCare Clinic');
+            $mail->addAddress($toEmail);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Khôi phục mật khẩu - MediCare Clinic';
+            $mail->Body    = "
+            <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                <h2 style='color: #007bff;'>Mật khẩu mới của bạn</h2>
+                <p>Hệ thống vừa cấp lại mật khẩu cho tài khoản <b>$toEmail</b></p>
+                <p style='font-size: 20px; background: #f8f9fa; padding: 10px; display: inline-block; border: 1px dashed #ccc;'>
+                    Mật khẩu: <b style='color: #d9534f;'>$newPass</b>
+                </p>
+                <p>Vui lòng đăng nhập và thay đổi mật khẩu ngay để bảo mật.</p>
+            </div>";
+
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            // Tui tạm đóng cái echo lỗi này lại để không bị in ra trên màn hình làm xấu web
+            // error_log($mail->ErrorInfo); 
+            return false;
         }
     }
-    if (isset($message)) {
-    $this->smarty->assign('message', $message);
-    $this->smarty->assign('status', $status);
-}
-    $this->smarty->display('guest/forgot_password.tpl');
-}
-
-private function sendEmail($toEmail, $newPass) {
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $_ENV['EMAIL_ACCOUNT'];
-        $mail->Password   = $_ENV['EMAIL_PASSWORD']; 
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
-        $mail->CharSet    = "UTF-8";
-
-        $mail->setFrom('no-reply@clinic.com', 'Clinic System');
-        $mail->addAddress($toEmail);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Khoi phuc mat khau - Clinic System';
-        $mail->Body    = "Chào bạn, mật khẩu mới của bạn là: <b>$newPass</b>. Hãy dùng nó để đăng nhập và đổi lại mật khẩu nhé!";
-
-        $mail->send();
-        return true;
-    } catch (Exception $e) {
-        return false;
-    }
-}
 }

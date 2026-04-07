@@ -10,6 +10,7 @@ try {
         [
             'fullName' => 'Admin System',
             'email'    => 'admin@gmail.com',
+            'phone'    => '0123456789',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
             'role'     => 'admin',
             'isActive' => true,
@@ -18,6 +19,7 @@ try {
         [
             'fullName' => 'BS. Nguyễn Văn Huy',
             'email'    => 'doctor@gmail.com',
+            'phone'    => '0123456789',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
             'role'     => 'doctor',
             'isActive' => true,
@@ -26,6 +28,7 @@ try {
         [
             'fullName' => 'Lễ Tân Thúy Nga',
             'email'    => 'receptionist@gmail.com',
+            'phone'    => '0123456789',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
             'role'     => 'receptionist',
             'isActive' => true,
@@ -34,6 +37,7 @@ try {
         [
             'fullName' => 'Bệnh Nhân Test',
             'email'    => 'patient@gmail.com',
+            'phone'    => '0123456789',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
             'role'     => 'patient',
             'isActive' => true,
@@ -42,6 +46,7 @@ try {
         [
             'fullName' => 'Thu Ngân Test',
             'email'    => 'cashier@gmail.com',
+            'phone'    => '0123456789',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
             'role'     => 'cashier',
             'isActive' => true,
@@ -50,6 +55,7 @@ try {
         [
             'fullName' => 'Dược Sĩ Test',
             'email'    => 'pharmacist@gmail.com',
+            'phone'    => '0123456789',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
             'role'     => 'pharmacist',
             'isActive' => true,

@@ -2,7 +2,7 @@
 
 <div class="page-toolbar">
   <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-capsules"></i> Phát thuốc</h2><p class="page-subtitle">Kiểm tra đơn và bốc thuốc cho bệnh nhân</p></div>
-  <div class="page-toolbar__right"><a href="{$base_url}/?role=pharmacist&page=prescriptions" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Danh sách đơn</a></div>
+  <div class="page-toolbar__right"><a href="{$BASE_URL}/?role=pharmacist&page=prescriptions" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Danh sách đơn</a></div>
 </div>
 
 {if $success_message}<div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>{/if}
@@ -63,7 +63,7 @@
       {/if}
     </div>
     <div class="admin-card__footer">
-      <form action="{$base_url}/" method="POST">
+      <form action="{$BASE_URL}/" method="POST">
         <input type="hidden" name="role" value="pharmacist">
         <input type="hidden" name="page" value="dispensing">
         <input type="hidden" name="action" value="dispense">
@@ -79,7 +79,7 @@
 {else}
 <div class="empty-state admin-card" style="padding:3rem">
   <i class="fa-solid fa-prescription"></i><h3>Chưa chọn đơn thuốc</h3>
-  <a href="{$base_url}/?role=pharmacist&page=prescriptions" class="btn-admin-primary" style="margin-top:1rem">Xem danh sách đơn thuốc</a>
+  <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions" class="btn-admin-primary" style="margin-top:1rem">Xem danh sách đơn thuốc</a>
 </div>
 {/if}
 

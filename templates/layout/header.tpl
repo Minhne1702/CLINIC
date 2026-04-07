@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="{$base_url}/assets/css/main.css">
+<link rel="stylesheet" href="{$BASE_URL}/assets/css/main.css">
   {block name="extra_css"}{/block}
 </head>
 <body class="{$body_class|default:''}">
@@ -16,17 +16,17 @@
 <div class="topbar">
   <div class="container topbar__inner">
     <div class="topbar__links">
-      <a href="{$base_url}/?page=about"><i class="fa-regular fa-building"></i> Về chúng tôi</a>
-      <a href="{$base_url}/?page=contact"><i class="fa-regular fa-envelope"></i> Liên hệ</a>
+      <a href="{$BASE_URL}/?page=about"><i class="fa-regular fa-building"></i> Về chúng tôi</a>
+      <a href="{$BASE_URL}/?page=contact"><i class="fa-regular fa-envelope"></i> Liên hệ</a>
       <a href="tel:1900xxxx"><i class="fa-solid fa-phone-volume"></i> Hotline: 1900 xxxx</a>
     </div>
     <div class="topbar__auth">
       {if isset($smarty.session.user) && $smarty.session.user}
         <span class="topbar__welcome">Xin chào, <strong>{$smarty.session.user.full_name}</strong></span>
-        <a href="{$base_url}/?action=logout" class="btn-topbar btn-topbar--outline">Đăng xuất</a>
+        <a href="{$BASE_URL}/?action=logout" class="btn-topbar btn-topbar--outline">Đăng xuất</a>
       {else}
-        <a href="{$base_url}/?page=login" class="btn-topbar">Đăng nhập</a>
-        <a href="{$base_url}/?page=register" class="btn-topbar btn-topbar--primary">Đăng ký</a>
+        <a href="{$BASE_URL}/?page=login" class="btn-topbar">Đăng nhập</a>
+        <a href="{$BASE_URL}/?page=register" class="btn-topbar btn-topbar--primary">Đăng ký</a>
       {/if}
     </div>
   </div>
@@ -37,7 +37,7 @@
   <div class="container header__inner">
 
     <!-- Logo -->
-    <a href="{$base_url}/" class="header__logo">
+    <a href="{$BASE_URL}/" class="header__logo">
       <div class="logo-icon">
         <i class="fa-solid fa-heart-pulse"></i>
       </div>
@@ -49,16 +49,16 @@
 
     <!-- Nav links -->
     <nav class="header__nav" id="main-nav">
-      <a href="{$base_url}/" class="nav-link {if $active_page == 'home'}active{/if}">Trang chủ</a>
-      <a href="{$base_url}/?page=doctors" class="nav-link {if $active_page == 'doctors'}active{/if}">Bác sĩ</a>
-      <a href="{$base_url}/?page=services" class="nav-link {if $active_page == 'services'}active{/if}">Dịch vụ</a>
-      <a href="{$base_url}/?page=appointments" class="nav-link {if $active_page == 'appointments'}active{/if}">Đặt lịch</a>
-      <a href="{$base_url}/?page=contact" class="nav-link {if $active_page == 'contact'}active{/if}">Liên hệ</a>
+      <a href="{$BASE_URL}/" class="nav-link {if $active_page == 'home'}active{/if}">Trang chủ</a>
+      <a href="{$BASE_URL}/?page=doctors" class="nav-link {if $active_page == 'doctors'}active{/if}">Bác sĩ</a>
+      <a href="{$BASE_URL}/?page=services" class="nav-link {if $active_page == 'services'}active{/if}">Dịch vụ</a>
+      <a href="{$BASE_URL}/?page=appointments" class="nav-link {if $active_page == 'appointments'}active{/if}">Đặt lịch</a>
+      <a href="{$BASE_URL}/?page=contact" class="nav-link {if $active_page == 'contact'}active{/if}">Liên hệ</a>
     </nav>
 
     <!-- CTA + Hamburger -->
     <div class="header__actions">
-      <a href="{$base_url}/?page=appointments" class="btn-book">
+      <a href="{$BASE_URL}/?page=appointments" class="btn-book">
         <i class="fa-regular fa-calendar-check"></i>
         Đặt lịch ngay
       </a>
@@ -78,12 +78,12 @@
     <button class="mobile-nav__close" id="mobile-close"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <div class="mobile-nav__links">
-    <a href="{$base_url}/">Trang chủ</a>
-    <a href="{$base_url}/?page=doctors">Bác sĩ</a>
-    <a href="{$base_url}/?page=services">Dịch vụ</a>
-    <a href="{$base_url}/?page=appointments">Đặt lịch</a>
-    <a href="{$base_url}/?page=contact">Liên hệ</a>
-    <a href="{$base_url}/?page=appointments" class="mobile-nav__cta">Đặt lịch ngay</a>
+    <a href="{$BASE_URL}/">Trang chủ</a>
+    <a href="{$BASE_URL}/?page=doctors">Bác sĩ</a>
+    <a href="{$BASE_URL}/?page=services">Dịch vụ</a>
+    <a href="{$BASE_URL}/?page=appointments">Đặt lịch</a>
+    <a href="{$BASE_URL}/?page=contact">Liên hệ</a>
+    <a href="{$BASE_URL}/?page=appointments" class="mobile-nav__cta">Đặt lịch ngay</a>
   </div>
 </nav>
 

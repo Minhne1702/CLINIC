@@ -5,7 +5,7 @@
 
 </main><!-- /.patient-portal-content -->
 
-<script src="{$base_url}/assets/js/admin.js"></script>
+<script src="{$BASE_URL}/assets/js/admin.js"></script>
 <script>
   const patientMenuToggle = document.getElementById('patientMenuToggle');
   const patientMobileNav  = document.getElementById('patientMobileNav');
@@ -30,7 +30,7 @@
   </div><!-- /.admin-content -->
 </div><!-- /.admin-main -->
 
-<script src="{$base_url}/assets/js/admin.js"></script>
+<script src="{$BASE_URL}/assets/js/admin.js"></script>
 {block name="extra_js"}{/block}
 </body>
 </html>
@@ -75,20 +75,20 @@
       <div class="footer-col">
         <h4>Dịch vụ</h4>
         <ul>
-          <li><a href="{$base_url}/?page=services">Khám chuyên khoa</a></li>
-          <li><a href="{$base_url}/?page=services">Khám từ xa</a></li>
-          <li><a href="{$base_url}/?page=services">Khám tổng quát</a></li>
-          <li><a href="{$base_url}/?page=services">Xét nghiệm y học</a></li>
-          <li><a href="{$base_url}/?page=services">Nha khoa</a></li>
+          <li><a href="{$BASE_URL}/?page=services">Khám chuyên khoa</a></li>
+          <li><a href="{$BASE_URL}/?page=services">Khám từ xa</a></li>
+          <li><a href="{$BASE_URL}/?page=services">Khám tổng quát</a></li>
+          <li><a href="{$BASE_URL}/?page=services">Xét nghiệm y học</a></li>
+          <li><a href="{$BASE_URL}/?page=services">Nha khoa</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Thông tin</h4>
         <ul>
-          <li><a href="{$base_url}/?page=about">Về chúng tôi</a></li>
-          <li><a href="{$base_url}/?page=doctors">Đội ngũ bác sĩ</a></li>
-          <li><a href="{$base_url}/?page=contact">Liên hệ</a></li>
+          <li><a href="{$BASE_URL}/?page=about">Về chúng tôi</a></li>
+          <li><a href="{$BASE_URL}/?page=doctors">Đội ngũ bác sĩ</a></li>
+          <li><a href="{$BASE_URL}/?page=contact">Liên hệ</a></li>
         </ul>
       </div>
 
@@ -118,7 +118,7 @@
 
 </footer>
 
-<script src="{$base_url}/assets/js/main.js"></script>
+<script src="{$BASE_URL}/assets/js/main.js"></script>
 {block name="extra_js"}{/block}
 
 <script>

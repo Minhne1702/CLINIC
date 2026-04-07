@@ -75,7 +75,7 @@
   <div class="admin-card admin-card--lg">
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-clock-rotate-left"></i> Lịch hẹn gần đây</h3>
-      <a href="{$base_url}/?role=admin&page=appointments" class="btn-link">Xem tất cả</a>
+      <a href="{$BASE_URL}/?role=admin&page=appointments" class="btn-link">Xem tất cả</a>
     </div>
     <div class="admin-card__body p-0">
       <table class="admin-table">

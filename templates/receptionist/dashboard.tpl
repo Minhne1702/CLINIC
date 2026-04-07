@@ -5,7 +5,7 @@
     <h2>Xin chào, <span style="color:#a7f3d0">{$current_user_name|default:"Lễ tân"}</span> 🏥</h2>
     <p>Hôm nay {$smarty.now|date_format:"%d/%m/%Y"} — <strong style="color:#fff">{$stats.today_checkins|default:0}</strong> bệnh nhân đã check-in</p>
   </div>
-  <a href="{$base_url}/?role=receptionist&page=checkin" class="btn-admin-primary" style="background:#fff;color:#065f46">
+  <a href="{$BASE_URL}/?role=receptionist&page=checkin" class="btn-admin-primary" style="background:#fff;color:#065f46">
     <i class="fa-solid fa-qrcode"></i> Check-in bệnh nhân
   </a>
 </div>
@@ -19,7 +19,7 @@
 
 <div class="dashboard-grid">
   <div class="admin-card admin-card--lg">
-    <div class="admin-card__header"><h3><i class="fa-solid fa-list-ol"></i> Hàng chờ hiện tại</h3><a href="{$base_url}/?role=receptionist&page=queue" class="btn-link">Xem đầy đủ</a></div>
+    <div class="admin-card__header"><h3><i class="fa-solid fa-list-ol"></i> Hàng chờ hiện tại</h3><a href="{$BASE_URL}/?role=receptionist&page=queue" class="btn-link">Xem đầy đủ</a></div>
     <div class="admin-card__body p-0">
       <table class="admin-table">
         <thead><tr><th>STT</th><th>Bệnh nhân</th><th>Bác sĩ</th><th>Ưu tiên</th><th>Check-in lúc</th><th>Trạng thái</th></tr></thead>
@@ -40,7 +40,7 @@
     </div>
   </div>
   <div class="admin-card">
-    <div class="admin-card__header"><h3><i class="fa-solid fa-calendar-check"></i> Lịch hẹn sắp tới</h3><a href="{$base_url}/?role=receptionist&page=appointments" class="btn-link">Xem tất cả</a></div>
+    <div class="admin-card__header"><h3><i class="fa-solid fa-calendar-check"></i> Lịch hẹn sắp tới</h3><a href="{$BASE_URL}/?role=receptionist&page=appointments" class="btn-link">Xem tất cả</a></div>
     <div class="admin-card__body p-0">
       {foreach from=$upcoming_appointments item=apt}
       <div class="appt-item">

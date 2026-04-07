@@ -25,7 +25,7 @@
 
     <!-- General -->
     <div class="settings-pane active" id="tab-general">
-      <form action="{$base_url}/" method="POST" class="appt-form">
+      <form action="{$BASE_URL}/" method="POST" class="appt-form">
         <input type="hidden" name="role" value="admin">
         <input type="hidden" name="page" value="settings">
         <input type="hidden" name="tab" value="general">
@@ -68,7 +68,7 @@
 
     <!-- Schedule -->
     <div class="settings-pane" id="tab-schedule">
-      <form action="{$base_url}/" method="POST" class="appt-form">
+      <form action="{$BASE_URL}/" method="POST" class="appt-form">
         <input type="hidden" name="role" value="admin">
         <input type="hidden" name="page" value="settings">
         <input type="hidden" name="tab" value="schedule">
@@ -94,7 +94,7 @@
 
     <!-- Appointment -->
     <div class="settings-pane" id="tab-appointment">
-      <form action="{$base_url}/" method="POST" class="appt-form">
+      <form action="{$BASE_URL}/" method="POST" class="appt-form">
         <input type="hidden" name="role" value="admin">
         <input type="hidden" name="page" value="settings">
         <input type="hidden" name="tab" value="appointment">
@@ -134,7 +134,7 @@
 
     <!-- Notification -->
     <div class="settings-pane" id="tab-notification">
-      <form action="{$base_url}/" method="POST" class="appt-form">
+      <form action="{$BASE_URL}/" method="POST" class="appt-form">
         <input type="hidden" name="role" value="admin">
         <input type="hidden" name="page" value="settings">
         <input type="hidden" name="tab" value="notification">
@@ -168,7 +168,7 @@
       <div class="admin-card">
         <div class="admin-card__header"><h3>Cài đặt bảo mật</h3></div>
         <div class="admin-card__body">
-          <form action="{$base_url}/" method="POST" class="appt-form">
+          <form action="{$BASE_URL}/" method="POST" class="appt-form">
             <input type="hidden" name="role" value="admin">
             <input type="hidden" name="page" value="settings">
             <input type="hidden" name="tab" value="security">

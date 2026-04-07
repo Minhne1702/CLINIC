@@ -73,7 +73,7 @@
           <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>
           {/if}
 
-          <form action="{$base_url}/?page=contact" method="POST" class="appt-form">
+          <form action="{$BASE_URL}/?page=contact" method="POST" class="appt-form">
             <div class="form-row">
               <div class="form-group">
                 <label>Họ và tên <span class="required">*</span></label>

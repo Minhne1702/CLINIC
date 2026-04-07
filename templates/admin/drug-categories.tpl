@@ -38,8 +38,8 @@
           <td>
             <div class="table-actions">
               <button class="action-btn" onclick="editCat('{$cat._id}','{$cat.name}','{$cat.code}','{$cat.description}')" title="Sửa"><i class="fa-solid fa-pen"></i></button>
-              <a href="{$base_url}/?role=admin&page=drug-categories&action=toggle&id={$cat._id}" class="action-btn" title="Bật/Tắt"><i class="fa-solid fa-power-off"></i></a>
-              <a href="{$base_url}/?role=admin&page=drug-categories&action=delete&id={$cat._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa nhóm thuốc này?')"><i class="fa-solid fa-trash"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=drug-categories&action=toggle&id={$cat._id}" class="action-btn" title="Bật/Tắt"><i class="fa-solid fa-power-off"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=drug-categories&action=delete&id={$cat._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa nhóm thuốc này?')"><i class="fa-solid fa-trash"></i></a>
             </div>
           </td>
         </tr>
@@ -57,7 +57,7 @@
       <h3 id="modalDrugCatTitle">Thêm nhóm thuốc</h3>
       <button class="modal__close" onclick="closeModal('modalDrugCat')"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <form action="{$base_url}/" method="POST" class="modal__body">
+    <form action="{$BASE_URL}/" method="POST" class="modal__body">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="drug-categories">
       <input type="hidden" name="action" value="save">

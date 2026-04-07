@@ -13,7 +13,7 @@
   <div class="admin-card">
     <div class="admin-card__header"><h3><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm bệnh nhân</h3></div>
     <div class="admin-card__body">
-      <form method="GET" action="{$base_url}/" class="appt-form">
+      <form method="GET" action="{$BASE_URL}/" class="appt-form">
         <input type="hidden" name="role" value="receptionist">
         <input type="hidden" name="page" value="checkin">
         <div class="form-group">
@@ -68,7 +68,7 @@
       </div>
       {/if}
 
-      <form action="{$base_url}/" method="POST" class="appt-form" style="margin-top:1.25rem">
+      <form action="{$BASE_URL}/" method="POST" class="appt-form" style="margin-top:1.25rem">
         <input type="hidden" name="role" value="receptionist">
         <input type="hidden" name="page" value="checkin">
         <input type="hidden" name="action" value="checkin">
@@ -108,7 +108,7 @@
         <i class="fa-solid fa-user-xmark"></i>
         <h3>Không tìm thấy bệnh nhân</h3>
         <p>Không có kết quả cho "<strong>{$search_q}</strong>"</p>
-        <a href="{$base_url}/?role=receptionist&page=patient-new" class="btn-admin-primary" style="margin-top:1rem"><i class="fa-solid fa-user-plus"></i> Tạo hồ sơ mới</a>
+        <a href="{$BASE_URL}/?role=receptionist&page=patient-new" class="btn-admin-primary" style="margin-top:1rem"><i class="fa-solid fa-user-plus"></i> Tạo hồ sơ mới</a>
       </div>
     </div>
   </div>

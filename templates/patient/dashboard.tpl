@@ -5,7 +5,7 @@
     <h2>Xin chào, <span class="text-accent-light">{$current_user_name|default:"Bạn"}</span> 👋</h2>
     <p>Hôm nay {$smarty.now|date_format:"%d/%m/%Y"} — Chúc bạn sức khỏe!</p>
   </div>
-  <a href="{$base_url}/?page=book" class="patient-welcome__btn">
+  <a href="{$BASE_URL}/?page=book" class="patient-welcome__btn">
     <i class="fa-regular fa-calendar-plus"></i> Đặt lịch khám mới
   </a>
 </div>
@@ -34,7 +34,7 @@
   <div class="admin-card admin-card--lg">
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-calendar-check"></i> Lịch hẹn sắp tới</h3>
-      <a href="{$base_url}/?page=appointments" class="btn-link">Xem tất cả</a>
+      <a href="{$BASE_URL}/?page=appointments" class="btn-link">Xem tất cả</a>
     </div>
     <div class="admin-card__body p-0">
       {if $upcoming_appointments}
@@ -64,7 +64,7 @@
               {else}{$apt.status}{/if}
             </span>
             {if $apt.status == 'confirmed' || $apt.status == 'pending'}
-            <a href="{$base_url}/?page=appointments&action=cancel&id={$apt._id}"
+            <a href="{$BASE_URL}/?page=appointments&action=cancel&id={$apt._id}"
                class="action-btn action-btn--danger" title="Hủy lịch"
                onclick="return confirm('Bạn chắc chắn muốn hủy lịch này?')">
               <i class="fa-solid fa-ban"></i>
@@ -78,7 +78,7 @@
           <i class="fa-regular fa-calendar"></i>
           <h3>Chưa có lịch hẹn sắp tới</h3>
           <p>Đặt lịch để được khám bởi bác sĩ chuyên khoa</p>
-          <a href="{$base_url}/?page=book" class="btn-admin-primary" style="margin-top:1rem">
+          <a href="{$BASE_URL}/?page=book" class="btn-admin-primary" style="margin-top:1rem">
             <i class="fa-regular fa-calendar-plus"></i> Đặt lịch ngay
           </a>
         </div>
@@ -89,7 +89,7 @@
   <div class="admin-card">
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-file-medical"></i> Lịch sử khám gần đây</h3>
-      <a href="{$base_url}/?page=records" class="btn-link">Xem tất cả</a>
+      <a href="{$BASE_URL}/?page=records" class="btn-link">Xem tất cả</a>
     </div>
     <div class="admin-card__body p-0">
       {if $recent_records}
@@ -100,7 +100,7 @@
             <strong>{$rec.diagnosis|default:'Khám tổng quát'|truncate:35:'...'}</strong>
             <p>BS. {$rec.doctor_name} &nbsp;·&nbsp; {$rec.date|date_format:"%d/%m/%Y"}</p>
           </div>
-          <a href="{$base_url}/?page=records&id={$rec._id}" class="action-btn" title="Xem chi tiết">
+          <a href="{$BASE_URL}/?page=records&id={$rec._id}" class="action-btn" title="Xem chi tiết">
             <i class="fa-solid fa-eye"></i>
           </a>
         </div>
@@ -120,7 +120,7 @@
 <div class="admin-card" style="margin-top:1rem">
   <div class="admin-card__header">
     <h3><i class="fa-regular fa-bell"></i> Thông báo mới</h3>
-    <a href="{$base_url}/?page=notifications" class="btn-link">Xem tất cả</a>
+    <a href="{$BASE_URL}/?page=notifications" class="btn-link">Xem tất cả</a>
   </div>
   <div class="admin-card__body p-0">
     {foreach from=$notifications item=notif}

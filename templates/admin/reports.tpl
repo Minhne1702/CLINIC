@@ -15,7 +15,7 @@
 <!-- Date range filter -->
 <div class="admin-card mb-1">
   <div class="admin-card__body">
-    <form method="GET" action="{$base_url}/" class="filter-bar">
+    <form method="GET" action="{$BASE_URL}/" class="filter-bar">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="reports">
       <div class="filter-bar__group">
@@ -179,5 +179,5 @@ new Chart(document.getElementById('specialtyChart'), {
   options: { responsive: true, plugins: { legend: { position:'bottom' } }, cutout: '65%' }
 });
 
-function exportExcel() { window.location.href = '{$base_url}/?role=admin&page=reports&action=export'; }
+function exportExcel() { window.location.href = '{$BASE_URL}/?role=admin&page=reports&action=export'; }
 </script>

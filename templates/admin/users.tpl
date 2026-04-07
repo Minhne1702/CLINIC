@@ -6,7 +6,7 @@
     <p class="page-subtitle">Quản lý tất cả người dùng và phân quyền</p>
   </div>
   <div class="page-toolbar__right">
-    <a href="{$base_url}/?role=admin&page=users&action=create" class="btn-admin-primary">
+    <a href="{$BASE_URL}/?role=admin&page=users&action=create" class="btn-admin-primary">
       <i class="fa-solid fa-plus"></i> Thêm tài khoản
     </a>
   </div>
@@ -18,7 +18,7 @@
 <!-- Filter bar -->
 <div class="admin-card mb-1">
   <div class="admin-card__body">
-    <form method="GET" action="{$base_url}/" class="filter-bar">
+    <form method="GET" action="{$BASE_URL}/" class="filter-bar">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="users">
       <div class="filter-bar__group">
@@ -41,7 +41,7 @@
           <option value="inactive" {if $filter.status == 'inactive'}selected{/if}>Vô hiệu hóa</option>
         </select>
         <button type="submit" class="btn-admin-secondary"><i class="fa-solid fa-filter"></i> Lọc</button>
-        <a href="{$base_url}/?role=admin&page=users" class="btn-admin-ghost">Xóa lọc</a>
+        <a href="{$BASE_URL}/?role=admin&page=users" class="btn-admin-ghost">Xóa lọc</a>
       </div>
     </form>
   </div>
@@ -87,9 +87,9 @@
           </td>
           <td>
             <div class="table-actions">
-              <a href="{$base_url}/?role=admin&page=users&action=edit&id={$u._id}" class="action-btn" title="Sửa"><i class="fa-solid fa-pen"></i></a>
-              <a href="{$base_url}/?role=admin&page=users&action=toggle&id={$u._id}" class="action-btn" title="Bật/Tắt"><i class="fa-solid fa-power-off"></i></a>
-              <a href="{$base_url}/?role=admin&page=users&action=delete&id={$u._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa tài khoản này?')"><i class="fa-solid fa-trash"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=users&action=edit&id={$u._id}" class="action-btn" title="Sửa"><i class="fa-solid fa-pen"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=users&action=toggle&id={$u._id}" class="action-btn" title="Bật/Tắt"><i class="fa-solid fa-power-off"></i></a>
+              <a href="{$BASE_URL}/?role=admin&page=users&action=delete&id={$u._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa tài khoản này?')"><i class="fa-solid fa-trash"></i></a>
             </div>
           </td>
         </tr>

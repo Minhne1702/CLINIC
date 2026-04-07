@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 07:15:41
+/* Smarty version 5.8.0, created on 2026-04-07 07:21:12
   from 'file:layout/footer.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d492fd023925_11228208',
+  'unifunc' => 'content_69d4b06824ea91_20158113',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'e7f6f6d9ee197eef1092f81e611cc0fb94bfc332' => 
+    'c236be83de959aa34334d1bbfcdf91bcfff449e5' => 
     array (
       0 => 'layout/footer.tpl',
-      1 => 1775538703,
+      1 => 1775546450,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_69d492fd023925_11228208 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+function content_69d4b06824ea91_20158113 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 $_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)===null||$tmp==='' ? 'guest' ?? null : $tmp), false, NULL);?>
 
@@ -30,7 +30,7 @@ $_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)
 </main><!-- /.patient-portal-content -->
 
 <?php echo '<script'; ?>
- src="<?php echo $_smarty_tpl->getValue('base_url');?>
+ src="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /assets/js/admin.js"><?php echo '</script'; ?>
 >
 <?php echo '<script'; ?>
@@ -50,7 +50,7 @@ $_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)
 <?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_65758653269d492fce0c471_34785818', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_115564917869d4b068238401_26008791', "extra_js");
 ?>
 
 </body>
@@ -62,11 +62,11 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_65758653269d4
 </div><!-- /.admin-main -->
 
 <?php echo '<script'; ?>
- src="<?php echo $_smarty_tpl->getValue('base_url');?>
+ src="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /assets/js/admin.js"><?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_148763791069d492fd012582_97881599', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_145696822269d4b06823ec95_59127740', "extra_js");
 ?>
 
 </body>
@@ -111,15 +111,15 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_148763791069d
       <div class="footer-col">
         <h4>Dịch vụ</h4>
         <ul>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=services">Khám chuyên khoa</a></li>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=services">Khám từ xa</a></li>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=services">Khám tổng quát</a></li>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=services">Xét nghiệm y học</a></li>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=services">Nha khoa</a></li>
         </ul>
       </div>
@@ -127,11 +127,11 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_148763791069d
       <div class="footer-col">
         <h4>Thông tin</h4>
         <ul>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=about">Về chúng tôi</a></li>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=doctors">Đội ngũ bác sĩ</a></li>
-          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+          <li><a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /?page=contact">Liên hệ</a></li>
         </ul>
       </div>
@@ -164,11 +164,11 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_148763791069d
 </footer>
 
 <?php echo '<script'; ?>
- src="<?php echo $_smarty_tpl->getValue('base_url');?>
+ src="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /assets/js/main.js"><?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_95977178569d492fd01e937_63309837', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_90823530569d4b06824bee1_60045713', "extra_js");
 ?>
 
 
@@ -199,26 +199,26 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_95977178569d4
 <?php }
 }
 /* {block "extra_js"} */
-class Block_65758653269d492fce0c471_34785818 extends \Smarty\Runtime\Block
+class Block_115564917869d4b068238401_26008791 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 }
 }
 /* {/block "extra_js"} */
 /* {block "extra_js"} */
-class Block_148763791069d492fd012582_97881599 extends \Smarty\Runtime\Block
+class Block_145696822269d4b06823ec95_59127740 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 }
 }
 /* {/block "extra_js"} */
 /* {block "extra_js"} */
-class Block_95977178569d492fd01e937_63309837 extends \Smarty\Runtime\Block
+class Block_90823530569d4b06824bee1_60045713 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 }
 }
 /* {/block "extra_js"} */

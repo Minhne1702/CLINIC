@@ -1,4 +1,31 @@
-{include file="layout/header.tpl" page_title="Đặt lịch khám — MediCare" active_page="appointments"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-07 07:34:59
+  from 'file:guest/appointments.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d4b3a3252cc2_02251347',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '7dd05458da0919127d6030d6b78ae2999b92621c' => 
+    array (
+      0 => 'guest/appointments.tpl',
+      1 => 1775546544,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/header.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d4b3a3252cc2_02251347 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
+$_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đặt lịch khám — MediCare",'active_page'=>"appointments"), (int) 0, $_smarty_current_dir);
+?>
 
 <section class="page-hero">
   <div class="container">
@@ -22,14 +49,17 @@
             <h2>Thông tin đặt lịch</h2>
           </div>
 
-          {if $success_message}
-          <div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>
-          {/if}
-          {if $error_message}
-          <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>
-          {/if}
+          <?php if ($_smarty_tpl->getValue('success_message')) {?>
+          <div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> <?php echo $_smarty_tpl->getValue('success_message');?>
+</div>
+          <?php }?>
+          <?php if ($_smarty_tpl->getValue('error_message')) {?>
+          <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> <?php echo $_smarty_tpl->getValue('error_message');?>
+</div>
+          <?php }?>
 
-          <form action="{$BASE_URL}/?page=appointments" method="POST" class="appt-form">
+          <form action="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?page=appointments" method="POST" class="appt-form">
 
             <div class="form-section-title"><span>01</span> Chọn dịch vụ</div>
             <div class="form-row">
@@ -62,7 +92,8 @@
             <div class="form-row">
               <div class="form-group">
                 <label>Ngày khám <span class="required">*</span></label>
-                <input type="date" name="date" required min="{$smarty.now|date_format:'%Y-%m-%d'}">
+                <input type="date" name="date" required min="<?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')(time(),'%Y-%m-%d');?>
+">
               </div>
               <div class="form-group">
                 <label>Giờ khám <span class="required">*</span></label>
@@ -90,16 +121,19 @@
             <div class="form-row">
               <div class="form-group">
                 <label>Họ và tên <span class="required">*</span></label>
-                <input type="text" name="full_name" placeholder="Nguyễn Văn A" required value="{$smarty.session.user.full_name|default:''}">
+                <input type="text" name="full_name" placeholder="Nguyễn Văn A" required value="<?php echo (($tmp = $_SESSION['user']['full_name'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+">
               </div>
               <div class="form-group">
                 <label>Số điện thoại <span class="required">*</span></label>
-                <input type="tel" name="phone" placeholder="0901 234 567" required value="{$smarty.session.user.phone|default:''}">
+                <input type="tel" name="phone" placeholder="0901 234 567" required value="<?php echo (($tmp = $_SESSION['user']['phone'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+">
               </div>
             </div>
             <div class="form-group">
               <label>Email</label>
-              <input type="email" name="email" placeholder="email@example.com" value="{$smarty.session.user.email|default:''}">
+              <input type="email" name="email" placeholder="email@example.com" value="<?php echo (($tmp = $_SESSION['user']['email'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+">
             </div>
             <div class="form-group">
               <label>Triệu chứng / Lý do khám</label>
@@ -144,4 +178,6 @@
   </div>
 </section>
 
-{include file="layout/footer.tpl"}
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+}
+}

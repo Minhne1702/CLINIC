@@ -17,7 +17,7 @@
 
 {if $record}
 {* ========== CHI TIẾT HỒ SƠ ========== *}
-<a href="{$base_url}/?page=records" class="btn-admin-ghost" style="margin-bottom:1rem;display:inline-flex">
+<a href="{$BASE_URL}/?page=records" class="btn-admin-ghost" style="margin-bottom:1rem;display:inline-flex">
   <i class="fa-solid fa-arrow-left"></i> Quay lại danh sách
 </a>
 
@@ -83,7 +83,7 @@
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-prescription"></i> Đơn thuốc</h3>
       {if $record.prescription._id}
-      <a href="{$base_url}/?page=prescriptions&id={$record.prescription._id}" class="btn-admin-secondary" style="font-size:12px;padding:.35rem .75rem">
+      <a href="{$BASE_URL}/?page=prescriptions&id={$record.prescription._id}" class="btn-admin-secondary" style="font-size:12px;padding:.35rem .75rem">
         <i class="fa-solid fa-print"></i> In đơn
       </a>
       {/if}
@@ -226,11 +226,11 @@
           </td>
           <td>
             <div class="table-actions">
-              <a href="{$base_url}/?page=records&id={$rec._id}" class="action-btn" title="Xem chi tiết">
+              <a href="{$BASE_URL}/?page=records&id={$rec._id}" class="action-btn" title="Xem chi tiết">
                 <i class="fa-solid fa-eye"></i>
               </a>
               {if $rec.has_prescription}
-              <a href="{$base_url}/?page=prescriptions&record_id={$rec._id}" class="action-btn" title="Xem đơn thuốc">
+              <a href="{$BASE_URL}/?page=prescriptions&record_id={$rec._id}" class="action-btn" title="Xem đơn thuốc">
                 <i class="fa-solid fa-prescription"></i>
               </a>
               {/if}
