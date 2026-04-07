@@ -4,13 +4,13 @@
 </div>
 <div class="status-tabs mb-1">
   {assign var="cur" value=$filter.status|default:''}
-  <a href="/CLINIC/public/?role=doctor&page=appointments" class="status-tab {if $cur==''}active{/if}">Tất cả <span class="tab-count">{$count.all|default:0}</span></a>
-  <a href="/CLINIC/public/?role=doctor&page=appointments&status=confirmed" class="status-tab {if $cur=='confirmed'}active{/if}">Đã xác nhận <span class="tab-count tab-count--blue">{$count.confirmed|default:0}</span></a>
-  <a href="/CLINIC/public/?role=doctor&page=appointments&status=pending" class="status-tab {if $cur=='pending'}active{/if}">Chờ xác nhận <span class="tab-count tab-count--warning">{$count.pending|default:0}</span></a>
-  <a href="/CLINIC/public/?role=doctor&page=appointments&status=completed" class="status-tab {if $cur=='completed'}active{/if}">Hoàn thành <span class="tab-count tab-count--success">{$count.completed|default:0}</span></a>
+  <a href="{$base_url}/?role=doctor&page=appointments" class="status-tab {if $cur==''}active{/if}">Tất cả <span class="tab-count">{$count.all|default:0}</span></a>
+  <a href="{$base_url}/?role=doctor&page=appointments&status=confirmed" class="status-tab {if $cur=='confirmed'}active{/if}">Đã xác nhận <span class="tab-count tab-count--blue">{$count.confirmed|default:0}</span></a>
+  <a href="{$base_url}/?role=doctor&page=appointments&status=pending" class="status-tab {if $cur=='pending'}active{/if}">Chờ xác nhận <span class="tab-count tab-count--warning">{$count.pending|default:0}</span></a>
+  <a href="{$base_url}/?role=doctor&page=appointments&status=completed" class="status-tab {if $cur=='completed'}active{/if}">Hoàn thành <span class="tab-count tab-count--success">{$count.completed|default:0}</span></a>
 </div>
 <div class="admin-card mb-1"><div class="admin-card__body">
-  <form method="GET" action="/CLINIC/public/" class="filter-bar"><input type="hidden" name="role" value="doctor"><input type="hidden" name="page" value="appointments">
+  <form method="GET" action="{$base_url}/" class="filter-bar"><input type="hidden" name="role" value="doctor"><input type="hidden" name="page" value="appointments">
     <div class="filter-bar__group">
       <div class="filter-input"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="q" placeholder="Tên bệnh nhân..." value="{$filter.q|default:''}"></div>
       <input type="date" name="date" value="{$filter.date|default:''}">
@@ -34,8 +34,8 @@
         {else}<span class="badge badge--neutral">{$apt.status}</span>{/if}
       </td>
       <td><div class="table-actions">
-        <a href="/CLINIC/public/?role=doctor&page=examination&patient_id={$apt.patient_id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-stethoscope"></i> Khám</a>
-        <a href="/CLINIC/public/?role=doctor&page=appointments&action=view&id={$apt._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
+        <a href="{$base_url}/?role=doctor&page=examination&patient_id={$apt.patient_id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-stethoscope"></i> Khám</a>
+        <a href="{$base_url}/?role=doctor&page=appointments&action=view&id={$apt._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
       </div></td>
     </tr>
     {foreachelse}<tr><td colspan="6" class="table-empty">Không có lịch hẹn nào</td></tr>

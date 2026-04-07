@@ -1,10 +1,10 @@
 {include file="layout/sidebar.tpl" page_title="Báo cáo nhà thuốc" active_page="reports"}
 <div class="page-toolbar">
   <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-chart-bar"></i> Báo cáo nhà thuốc</h2><p class="page-subtitle">Thống kê xuất nhập tồn và thuốc bán chạy</p></div>
-  <div class="page-toolbar__right"><button class="btn-admin-secondary" onclick="window.location.href='/CLINIC/public/?role=pharmacist&page=reports&action=export'"><i class="fa-solid fa-file-excel"></i> Xuất Excel</button></div>
+  <div class="page-toolbar__right"><button class="btn-admin-secondary" onclick="window.location.href='{$base_url}/?role=pharmacist&page=reports&action=export'"><i class="fa-solid fa-file-excel"></i> Xuất Excel</button></div>
 </div>
 <div class="admin-card mb-1"><div class="admin-card__body">
-  <form method="GET" action="/CLINIC/public/" class="filter-bar">
+  <form method="GET" action="{$base_url}/" class="filter-bar">
     <input type="hidden" name="role" value="pharmacist"><input type="hidden" name="page" value="reports">
     <div class="filter-bar__group">
       <input type="date" name="date_from" value="{$filter.date_from|default:''}">

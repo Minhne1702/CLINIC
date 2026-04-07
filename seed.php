@@ -5,11 +5,7 @@ require_once __DIR__ . '/config/db.php';
 try {
     $db = (new Database())->getDb();
     $users = $db->selectCollection('users');
-
-    // Xóa sạch dữ liệu cũ
     $users->deleteMany([]);
-
-    // Chuẩn bị 4 tài khoản mẫu
     $data = [
         [
             'fullName' => 'Admin System',
@@ -40,6 +36,22 @@ try {
             'email'    => 'patient@gmail.com',
             'password' => password_hash('123456', PASSWORD_BCRYPT),
             'role'     => 'patient',
+            'isActive' => true,
+            'createdAt' => new MongoDB\BSON\UTCDateTime()
+        ],
+        [
+            'fullName' => 'Thu Ngân Test',
+            'email'    => 'cashier@gmail.com',
+            'password' => password_hash('123456', PASSWORD_BCRYPT),
+            'role'     => 'cashier',
+            'isActive' => true,
+            'createdAt' => new MongoDB\BSON\UTCDateTime()
+        ],
+        [
+            'fullName' => 'Dược Sĩ Test',
+            'email'    => 'pharmacist@gmail.com',
+            'password' => password_hash('123456', PASSWORD_BCRYPT),
+            'role'     => 'pharmacist',
             'isActive' => true,
             'createdAt' => new MongoDB\BSON\UTCDateTime()
         ]

@@ -184,8 +184,8 @@ private function sendEmail($toEmail, $newPass) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'thanhminhprovip455@gmail.com'; 
-        $mail->Password   = 'tefd gnmu qwns bnsn';
+        $mail->Username   = $_ENV['EMAIL_ACCOUNT'];
+        $mail->Password   = $_ENV['EMAIL_PASSWORD']; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->CharSet    = "UTF-8";

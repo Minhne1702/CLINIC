@@ -6,7 +6,7 @@
     <p class="page-subtitle">Quản lý hồ sơ bệnh nhân (EMR)</p>
   </div>
   <div class="page-toolbar__right">
-    <a href="/CLINIC/public/?role=admin&page=patients&action=create" class="btn-admin-primary">
+    <a href="{$base_url}/?role=admin&page=patients&action=create" class="btn-admin-primary">
       <i class="fa-solid fa-plus"></i> Thêm bệnh nhân
     </a>
   </div>
@@ -16,7 +16,7 @@
 
 <div class="admin-card mb-1">
   <div class="admin-card__body">
-    <form method="GET" action="/CLINIC/public/" class="filter-bar">
+    <form method="GET" action="{$base_url}/" class="filter-bar">
       <input type="hidden" name="role" value="admin">
       <input type="hidden" name="page" value="patients">
       <div class="filter-bar__group">
@@ -30,7 +30,7 @@
           <option value="female" {if $filter.gender == 'female'}selected{/if}>Nữ</option>
         </select>
         <button type="submit" class="btn-admin-secondary"><i class="fa-solid fa-filter"></i> Lọc</button>
-        <a href="/CLINIC/public/?role=admin&page=patients" class="btn-admin-ghost">Xóa lọc</a>
+        <a href="{$base_url}/?role=admin&page=patients" class="btn-admin-ghost">Xóa lọc</a>
       </div>
     </form>
   </div>
@@ -79,10 +79,10 @@
           <td>{$p.last_visit|date_format:"%d/%m/%Y"|default:'Chưa khám'}</td>
           <td>
             <div class="table-actions">
-              <a href="/CLINIC/public/?role=admin&page=patients&action=view&id={$p._id}" class="action-btn" title="Xem hồ sơ"><i class="fa-solid fa-folder-open"></i></a>
-              <a href="/CLINIC/public/?role=admin&page=patients&action=edit&id={$p._id}" class="action-btn" title="Sửa"><i class="fa-solid fa-pen"></i></a>
-              <a href="/CLINIC/public/?role=admin&page=patients&action=history&id={$p._id}" class="action-btn" title="Lịch sử khám"><i class="fa-solid fa-clock-rotate-left"></i></a>
-              <a href="/CLINIC/public/?role=admin&page=patients&action=delete&id={$p._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa bệnh nhân này?')"><i class="fa-solid fa-trash"></i></a>
+              <a href="{$base_url}/?role=admin&page=patients&action=view&id={$p._id}" class="action-btn" title="Xem hồ sơ"><i class="fa-solid fa-folder-open"></i></a>
+              <a href="{$base_url}/?role=admin&page=patients&action=edit&id={$p._id}" class="action-btn" title="Sửa"><i class="fa-solid fa-pen"></i></a>
+              <a href="{$base_url}/?role=admin&page=patients&action=history&id={$p._id}" class="action-btn" title="Lịch sử khám"><i class="fa-solid fa-clock-rotate-left"></i></a>
+              <a href="{$base_url}/?role=admin&page=patients&action=delete&id={$p._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa bệnh nhân này?')"><i class="fa-solid fa-trash"></i></a>
             </div>
           </td>
         </tr>

@@ -7,6 +7,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
 
+// Tự động xác định base URL (hoạt động với cả XAMPP, PHP Server, Docker...)
+define('BASE_URL', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'));
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../config/config.php';
@@ -17,6 +20,7 @@ require_once __DIR__ . '/../src/Controllers/HomeController.php';
 $smarty = new Smarty();
 $smarty->setTemplateDir(__DIR__ . '/../templates/');
 $smarty->setCompileDir(__DIR__ . '/../templates_c/');
+$smarty->assign('base_url', BASE_URL);
 
 $db = (new Database())->getDb();
 $userModel    = new UserModel($db);

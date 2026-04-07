@@ -1,4 +1,4 @@
-{include file="layout/header.tpl" page_title="Hồ sơ cá nhân" active_page="profile"}
+{include file="layout/sidebar.tpl" page_title="Hồ sơ cá nhân" active_page="profile"}
 
 <div class="page-toolbar">
   <div class="page-toolbar__left">
@@ -86,9 +86,7 @@
 
     <!-- Tab: Thông tin cá nhân -->
     <div class="settings-pane active" id="tab-info">
-      <form action="/CLINIC/public/" method="POST" class="appt-form" enctype="multipart/form-data">
-        <input type="hidden" name="role" value="patient">
-        <input type="hidden" name="page" value="profile">
+      <form action="{$base_url}/?page=profile" method="POST" class="appt-form" enctype="multipart/form-data">
         <input type="hidden" name="tab" value="info">
         <div class="admin-card">
           <div class="admin-card__header"><h3>Thông tin cá nhân</h3></div>
@@ -151,9 +149,7 @@
 
     <!-- Tab: Sức khỏe -->
     <div class="settings-pane" id="tab-health">
-      <form action="/CLINIC/public/" method="POST" class="appt-form">
-        <input type="hidden" name="role" value="patient">
-        <input type="hidden" name="page" value="profile">
+      <form action="{$base_url}/?page=profile" method="POST" class="appt-form">
         <input type="hidden" name="tab" value="health">
         <div class="admin-card">
           <div class="admin-card__header"><h3>Thông tin sức khỏe cơ bản</h3></div>
@@ -201,9 +197,7 @@
 
     <!-- Tab: Dị ứng -->
     <div class="settings-pane" id="tab-allergy">
-      <form action="/CLINIC/public/" method="POST" class="appt-form">
-        <input type="hidden" name="role" value="patient">
-        <input type="hidden" name="page" value="profile">
+      <form action="{$base_url}/?page=profile" method="POST" class="appt-form">
         <input type="hidden" name="tab" value="allergy">
         <div class="admin-card">
           <div class="admin-card__header">
@@ -236,9 +230,7 @@
 
     <!-- Tab: Đổi mật khẩu -->
     <div class="settings-pane" id="tab-security">
-      <form action="/CLINIC/public/" method="POST" class="appt-form" id="pwForm">
-        <input type="hidden" name="role" value="patient">
-        <input type="hidden" name="page" value="profile">
+      <form action="{$base_url}/?page=profile" method="POST" class="appt-form" id="pwForm">
         <input type="hidden" name="tab" value="security">
         <div class="admin-card">
           <div class="admin-card__header"><h3>Đổi mật khẩu</h3></div>

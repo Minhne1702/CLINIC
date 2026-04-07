@@ -3,7 +3,7 @@
 <div class="page-toolbar">
   <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-file-invoice-dollar"></i> Lập hóa đơn</h2><p class="page-subtitle">Xử lý thanh toán cho bệnh nhân</p></div>
   <div class="page-toolbar__right">
-    <a href="/CLINIC/public/?role=cashier&page=pending" class="btn-admin-secondary"><i class="fa-solid fa-clock"></i> Chờ TT ({$pending_count|default:0})</a>
+    <a href="{$base_url}/?role=cashier&page=pending" class="btn-admin-secondary"><i class="fa-solid fa-clock"></i> Chờ TT ({$pending_count|default:0})</a>
   </div>
 </div>
 
@@ -67,7 +67,7 @@
     </div>
 
     <div class="admin-card__footer">
-      <form action="/CLINIC/public/" method="POST" class="appt-form">
+      <form action="{$base_url}/" method="POST" class="appt-form">
         <input type="hidden" name="role" value="cashier">
         <input type="hidden" name="page" value="billing">
         <input type="hidden" name="action" value="pay">
@@ -88,7 +88,7 @@
         </div>
         <div style="display:flex;gap:.75rem;flex-wrap:wrap">
           <button type="submit" class="btn-admin-primary"><i class="fa-solid fa-cash-register"></i> Xác nhận thanh toán & In hóa đơn</button>
-          <a href="/CLINIC/public/?role=cashier&page=pending" class="btn-admin-ghost">Hủy</a>
+          <a href="{$base_url}/?role=cashier&page=pending" class="btn-admin-ghost">Hủy</a>
         </div>
       </form>
     </div>
@@ -99,7 +99,7 @@
 <!-- Tìm kiếm hóa đơn -->
 <div class="admin-card">
   <div class="admin-card__body">
-    <form method="GET" action="/CLINIC/public/" class="appt-form">
+    <form method="GET" action="{$base_url}/" class="appt-form">
       <input type="hidden" name="role" value="cashier"><input type="hidden" name="page" value="billing">
       <div class="form-group"><label>Tìm bệnh nhân / mã lịch hẹn</label>
         <div class="input-icon-wrap"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="q" value="{$search_q|default:''}" placeholder="Tên bệnh nhân, mã lịch, CCCD..."></div>
@@ -117,7 +117,7 @@
             <td>{$r.doctor_name}</td>
             <td><strong>{$r.total_amount|number_format:0:',':'.'}đ</strong></td>
             <td><span class="badge badge--warning">Chờ TT</span></td>
-            <td><a href="/CLINIC/public/?role=cashier&page=billing&id={$r._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .8rem"><i class="fa-solid fa-cash-register"></i> Thanh toán</a></td>
+            <td><a href="{$base_url}/?role=cashier&page=billing&id={$r._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .8rem"><i class="fa-solid fa-cash-register"></i> Thanh toán</a></td>
           </tr>
           {/foreach}
         </tbody>

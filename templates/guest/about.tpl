@@ -97,8 +97,8 @@
       <p>Đội ngũ chuyên gia của chúng tôi sẵn sàng hỗ trợ bạn 24/7.</p>
     </div>
     <div class="cta-banner__actions">
-      <a href="/CLINIC/public/?page=appointments" class="btn-cta-primary"><i class="fa-regular fa-calendar-check"></i> Đặt lịch ngay</a>
-      <a href="/CLINIC/public/?page=contact" class="btn-cta-outline"><i class="fa-solid fa-phone"></i> Liên hệ</a>
+      <a href="{$base_url}/?page=appointments" class="btn-cta-primary"><i class="fa-regular fa-calendar-check"></i> Đặt lịch ngay</a>
+      <a href="{$base_url}/?page=contact" class="btn-cta-outline"><i class="fa-solid fa-phone"></i> Liên hệ</a>
     </div>
   </div>
 </section>

@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(tasklist)",
-      "Bash(php seed.php)"
+      "Bash(php seed.php)",
+      "Bash(find templates:*)",
+      "Bash(find templates/patient -name '*.tpl' -exec sed -i 's|{$base_url}/?role=patient&page=|{$base_url}/?page=|g' '{}' ';')",
+      "Bash(find templates_c -name \"*.php\" -delete)",
+      "Bash(echo \"Cache cleared: $\\(find templates_c -name \"*.php\")"
     ]
   }
 }

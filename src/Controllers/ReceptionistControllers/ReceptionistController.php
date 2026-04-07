@@ -11,7 +11,7 @@ class ReceptionistController
         $this->db     = $db;
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'receptionist') {
-            header('Location: /CLINIC/public/?page=login'); exit;
+            header('Location: ' . BASE_URL . '/?page=login'); exit;
         }
 
         $user = $_SESSION['user'];

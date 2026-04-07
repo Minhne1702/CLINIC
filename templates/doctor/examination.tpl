@@ -6,7 +6,7 @@
     {if $patient}<p class="page-subtitle">Bệnh nhân: <strong>{$patient.full_name}</strong> — #{$patient.patient_code}</p>{/if}
   </div>
   <div class="page-toolbar__right">
-    <a href="/CLINIC/public/?role=doctor&page=queue" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Hàng chờ</a>
+    <a href="{$base_url}/?role=doctor&page=queue" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Hàng chờ</a>
   </div>
 </div>
 
@@ -53,7 +53,7 @@
             <strong style="font-size:13px">{$rec.diagnosis|default:'—'|truncate:30:'...'}</strong>
             <p>{$rec.date|date_format:"%d/%m/%Y"} · {$rec.doctor_name}</p>
           </div>
-          <a href="/CLINIC/public/?role=doctor&page=records&id={$rec._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
+          <a href="{$base_url}/?role=doctor&page=records&id={$rec._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
         </div>
         {foreachelse}
         <div class="table-empty">Chưa có lịch sử</div>
@@ -64,7 +64,7 @@
 
   <!-- Examination form -->
   <div class="exam-form-area">
-    <form action="/CLINIC/public/" method="POST" id="examForm">
+    <form action="{$base_url}/" method="POST" id="examForm">
       <input type="hidden" name="role" value="doctor">
       <input type="hidden" name="page" value="examination">
       <input type="hidden" name="action" value="save">
@@ -200,7 +200,7 @@
   <i class="fa-solid fa-user-doctor"></i>
   <h3>Chưa chọn bệnh nhân</h3>
   <p>Vui lòng chọn bệnh nhân từ hàng chờ để bắt đầu khám.</p>
-  <a href="/CLINIC/public/?role=doctor&page=queue" class="btn-admin-primary" style="margin-top:1rem"><i class="fa-solid fa-list-ol"></i> Xem hàng chờ</a>
+  <a href="{$base_url}/?role=doctor&page=queue" class="btn-admin-primary" style="margin-top:1rem"><i class="fa-solid fa-list-ol"></i> Xem hàng chờ</a>
 </div>
 {/if}
 
