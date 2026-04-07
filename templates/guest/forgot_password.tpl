@@ -19,7 +19,7 @@
         <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>
         {/if}
 
-        <form action="/CLINIC/public/?page=forgot-password" method="POST" class="appt-form">
+        <form action="{$base_url}/?page=forgot-password" method="POST" class="appt-form">
           <div class="form-group">
             <label>Email đã đăng ký <span class="required">*</span></label>
             <div class="input-icon-wrap">
@@ -36,7 +36,7 @@
       {/if}
 
       <div class="auth-back-link">
-        <a href="/CLINIC/public/?page=login"><i class="fa-solid fa-arrow-left"></i> Quay lại đăng nhập</a>
+        <a href="{$base_url}/?page=login"><i class="fa-solid fa-arrow-left"></i> Quay lại đăng nhập</a>
       </div>
     </div>
   </div>

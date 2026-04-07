@@ -12,7 +12,7 @@ class AdminController
 
         // Kiểm tra quyền admin
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-            header('Location: /CLINIC/public/?page=login');
+            header('Location: ' . BASE_URL . '/?page=login');
             exit;
         }
 

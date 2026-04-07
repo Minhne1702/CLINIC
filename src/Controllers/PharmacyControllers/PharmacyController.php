@@ -11,7 +11,7 @@ class PharmacyController
         $this->db     = $db;
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'pharmacist') {
-            header('Location: /CLINIC/public/?page=login'); exit;
+            header('Location: ' . BASE_URL . '/?page=login'); exit;
         }
 
         $user = $_SESSION['user'];

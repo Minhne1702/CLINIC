@@ -1,4 +1,4 @@
-{include file="layout/header.tpl" page_title="Lịch hẹn của tôi" active_page="appointments"}
+{include file="layout/sidebar.tpl" page_title="Lịch hẹn của tôi" active_page="appointments"}
 
 <div class="page-toolbar">
   <div class="page-toolbar__left">
@@ -6,7 +6,7 @@
     <p class="page-subtitle">Quản lý tất cả lịch hẹn khám bệnh</p>
   </div>
   <div class="page-toolbar__right">
-    <a href="/CLINIC/public/?role=patient&page=book" class="btn-admin-primary">
+    <a href="{$base_url}/?page=book" class="btn-admin-primary">
       <i class="fa-regular fa-calendar-plus"></i> Đặt lịch mới
     </a>
   </div>
@@ -17,19 +17,19 @@
 
 <div class="status-tabs mb-1">
   {assign var="cur" value=$filter.status|default:''}
-  <a href="/CLINIC/public/?role=patient&page=appointments" class="status-tab {if $cur == ''}active{/if}">
+  <a href="{$base_url}/?page=appointments" class="status-tab {if $cur == ''}active{/if}">
     Tất cả <span class="tab-count">{$count.all|default:0}</span>
   </a>
-  <a href="/CLINIC/public/?role=patient&page=appointments&status=pending" class="status-tab {if $cur == 'pending'}active{/if}">
+  <a href="{$base_url}/?page=appointments&status=pending" class="status-tab {if $cur == 'pending'}active{/if}">
     Chờ xác nhận <span class="tab-count tab-count--warning">{$count.pending|default:0}</span>
   </a>
-  <a href="/CLINIC/public/?role=patient&page=appointments&status=confirmed" class="status-tab {if $cur == 'confirmed'}active{/if}">
+  <a href="{$base_url}/?page=appointments&status=confirmed" class="status-tab {if $cur == 'confirmed'}active{/if}">
     Đã xác nhận <span class="tab-count tab-count--blue">{$count.confirmed|default:0}</span>
   </a>
-  <a href="/CLINIC/public/?role=patient&page=appointments&status=completed" class="status-tab {if $cur == 'completed'}active{/if}">
+  <a href="{$base_url}/?page=appointments&status=completed" class="status-tab {if $cur == 'completed'}active{/if}">
     Đã khám <span class="tab-count tab-count--success">{$count.completed|default:0}</span>
   </a>
-  <a href="/CLINIC/public/?role=patient&page=appointments&status=cancelled" class="status-tab {if $cur == 'cancelled'}active{/if}">
+  <a href="{$base_url}/?page=appointments&status=cancelled" class="status-tab {if $cur == 'cancelled'}active{/if}">
     Đã hủy <span class="tab-count tab-count--danger">{$count.cancelled|default:0}</span>
   </a>
 </div>
@@ -79,18 +79,18 @@
       </a>
       {/if}
       {if $apt.status == 'confirmed' || $apt.status == 'pending'}
-      <a href="/CLINIC/public/?role=patient&page=appointments&action=cancel&id={$apt._id}"
+      <a href="{$base_url}/?page=appointments&action=cancel&id={$apt._id}"
          class="btn-admin-secondary" style="font-size:13px;padding:.5rem 1rem"
          onclick="return confirm('Bạn chắc chắn muốn hủy lịch này?\nLưu ý: Chỉ hủy được trước 2 tiếng.')">
         <i class="fa-solid fa-ban"></i> Hủy lịch
       </a>
       {/if}
       {if $apt.status == 'completed'}
-      <a href="/CLINIC/public/?role=patient&page=records&apt_id={$apt._id}"
+      <a href="{$base_url}/?page=records&apt_id={$apt._id}"
          class="btn-admin-secondary" style="font-size:13px;padding:.5rem 1rem">
         <i class="fa-solid fa-file-medical"></i> Xem hồ sơ
       </a>
-      <a href="/CLINIC/public/?role=patient&page=book" class="btn-admin-ghost" style="font-size:13px;padding:.5rem 1rem">
+      <a href="{$base_url}/?page=book" class="btn-admin-ghost" style="font-size:13px;padding:.5rem 1rem">
         <i class="fa-solid fa-rotate-right"></i> Đặt lại
       </a>
       {/if}
@@ -101,7 +101,7 @@
     <i class="fa-regular fa-calendar"></i>
     <h3>Không có lịch hẹn nào</h3>
     <p>Bạn chưa có lịch hẹn trong mục này.</p>
-    <a href="/CLINIC/public/?role=patient&page=book" class="btn-admin-primary" style="margin-top:1rem">
+    <a href="{$base_url}/?page=book" class="btn-admin-primary" style="margin-top:1rem">
       <i class="fa-regular fa-calendar-plus"></i> Đặt lịch ngay
     </a>
   </div>

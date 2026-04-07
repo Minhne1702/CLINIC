@@ -1,4 +1,4 @@
-{include file="layout/header.tpl" page_title="Kết quả xét nghiệm" active_page="test-results"}
+{include file="layout/sidebar.tpl" page_title="Kết quả xét nghiệm" active_page="test-results"}
 
 <div class="page-toolbar">
   <div class="page-toolbar__left">
@@ -8,7 +8,7 @@
 </div>
 
 <div class="admin-card mb-1"><div class="admin-card__body">
-  <form method="GET" action="/CLINIC/public/" class="filter-bar">
+  <form method="GET" action="{$base_url}/" class="filter-bar">
     <input type="hidden" name="role" value="patient">
     <input type="hidden" name="page" value="test-results">
     <div class="filter-bar__group">
@@ -25,7 +25,7 @@
 
 {if $test_result}
 {* Chi tiết kết quả *}
-<a href="/CLINIC/public/?role=patient&page=test-results" class="btn-admin-ghost" style="margin-bottom:1rem;display:inline-flex">
+<a href="{$base_url}/?page=test-results" class="btn-admin-ghost" style="margin-bottom:1rem;display:inline-flex">
   <i class="fa-solid fa-arrow-left"></i> Quay lại
 </a>
 <div class="admin-card">
@@ -98,7 +98,7 @@
           {/if}
         </td>
         <td>
-          <a href="/CLINIC/public/?role=patient&page=test-results&id={$tr._id}" class="action-btn" title="Xem chi tiết">
+          <a href="{$base_url}/?page=test-results&id={$tr._id}" class="action-btn" title="Xem chi tiết">
             <i class="fa-solid fa-eye"></i>
           </a>
         </td>

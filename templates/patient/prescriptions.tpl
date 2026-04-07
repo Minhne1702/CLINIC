@@ -1,4 +1,4 @@
-{include file="layout/header.tpl" page_title="Đơn thuốc của tôi" active_page="prescriptions"}
+{include file="layout/sidebar.tpl" page_title="Đơn thuốc của tôi" active_page="prescriptions"}
 
 <div class="page-toolbar">
   <div class="page-toolbar__left">
@@ -7,7 +7,7 @@
   </div>
   {if $prescription}
   <div class="page-toolbar__right">
-    <a href="/CLINIC/public/?role=patient&page=prescriptions" class="btn-admin-ghost">
+    <a href="{$base_url}/?page=prescriptions" class="btn-admin-ghost">
       <i class="fa-solid fa-arrow-left"></i> Quay lại
     </a>
     <button class="btn-admin-secondary" onclick="window.print()">
@@ -144,7 +144,7 @@
             {/if}
           </td>
           <td>
-            <a href="/CLINIC/public/?role=patient&page=prescriptions&id={$rx._id}" class="action-btn" title="Xem & In">
+            <a href="{$base_url}/?page=prescriptions&id={$rx._id}" class="action-btn" title="Xem & In">
               <i class="fa-solid fa-eye"></i>
             </a>
           </td>

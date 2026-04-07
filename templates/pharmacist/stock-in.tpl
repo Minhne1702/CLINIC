@@ -1,14 +1,14 @@
 {include file="layout/sidebar.tpl" page_title="Nhập kho" active_page="stock-in"}
 <div class="page-toolbar">
   <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-truck-ramp-box"></i> Nhập kho thuốc</h2><p class="page-subtitle">Ghi nhận thuốc nhập về kho</p></div>
-  <div class="page-toolbar__right"><a href="/CLINIC/public/?role=pharmacist&page=inventory" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Tồn kho</a></div>
+  <div class="page-toolbar__right"><a href="{$base_url}/?role=pharmacist&page=inventory" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Tồn kho</a></div>
 </div>
 {if $success_message}<div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>{/if}
 {if $error_message}<div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>{/if}
 <div class="admin-card">
   <div class="admin-card__header"><h3>Phiếu nhập kho</h3></div>
   <div class="admin-card__body">
-    <form action="/CLINIC/public/" method="POST" class="appt-form">
+    <form action="{$base_url}/" method="POST" class="appt-form">
       <input type="hidden" name="role" value="pharmacist"><input type="hidden" name="page" value="stock-in"><input type="hidden" name="action" value="save">
       <div class="form-row-2">
         <div class="form-group"><label>Nhà cung cấp</label><input type="text" name="supplier" placeholder="Tên nhà cung cấp" value="{$form.supplier|default:''}"></div>
@@ -30,7 +30,7 @@
       </div>
       <div style="display:flex;gap:.75rem;margin-top:1.5rem">
         <button type="submit" class="btn-admin-primary"><i class="fa-solid fa-floppy-disk"></i> Lưu phiếu nhập kho</button>
-        <a href="/CLINIC/public/?role=pharmacist&page=inventory" class="btn-admin-ghost">Hủy</a>
+        <a href="{$base_url}/?role=pharmacist&page=inventory" class="btn-admin-ghost">Hủy</a>
       </div>
     </form>
   </div>

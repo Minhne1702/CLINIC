@@ -2,13 +2,13 @@
 <div class="page-toolbar">
   <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-boxes-stacking"></i> Tồn kho thuốc</h2><p class="page-subtitle">Theo dõi số lượng tồn kho và hạn sử dụng</p></div>
   <div class="page-toolbar__right">
-    <a href="/CLINIC/public/?role=pharmacist&page=stock-in" class="btn-admin-primary"><i class="fa-solid fa-truck-ramp-box"></i> Nhập kho</a>
+    <a href="{$base_url}/?role=pharmacist&page=stock-in" class="btn-admin-primary"><i class="fa-solid fa-truck-ramp-box"></i> Nhập kho</a>
   </div>
 </div>
-{if $stats.low_stock > 0}<div class="alert alert--warning mb-1"><i class="fa-solid fa-triangle-exclamation"></i> <strong>{$stats.low_stock}</strong> loại thuốc tồn kho dưới mức tối thiểu. <a href="/CLINIC/public/?role=pharmacist&page=low-stock">Xem ngay</a></div>{/if}
-{if $stats.expiring > 0}<div class="alert alert--danger mb-1"><i class="fa-regular fa-calendar-xmark"></i> <strong>{$stats.expiring}</strong> loại thuốc sắp hết hạn trong 30 ngày. <a href="/CLINIC/public/?role=pharmacist&page=expiring">Xem ngay</a></div>{/if}
+{if $stats.low_stock > 0}<div class="alert alert--warning mb-1"><i class="fa-solid fa-triangle-exclamation"></i> <strong>{$stats.low_stock}</strong> loại thuốc tồn kho dưới mức tối thiểu. <a href="{$base_url}/?role=pharmacist&page=low-stock">Xem ngay</a></div>{/if}
+{if $stats.expiring > 0}<div class="alert alert--danger mb-1"><i class="fa-regular fa-calendar-xmark"></i> <strong>{$stats.expiring}</strong> loại thuốc sắp hết hạn trong 30 ngày. <a href="{$base_url}/?role=pharmacist&page=expiring">Xem ngay</a></div>{/if}
 <div class="admin-card mb-1"><div class="admin-card__body">
-  <form method="GET" action="/CLINIC/public/" class="filter-bar">
+  <form method="GET" action="{$base_url}/" class="filter-bar">
     <input type="hidden" name="role" value="pharmacist"><input type="hidden" name="page" value="inventory">
     <div class="filter-bar__group">
       <div class="filter-input"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="q" placeholder="Tên thuốc, hoạt chất..." value="{$filter.q|default:''}"></div>
@@ -48,8 +48,8 @@
           {else}<span class="badge badge--success" style="font-size:11px">OK</span>{/if}
         </td>
         <td><div class="table-actions">
-          <a href="/CLINIC/public/?role=pharmacist&page=stock-in&drug_id={$drug._id}" class="action-btn" title="Nhập thêm"><i class="fa-solid fa-plus"></i></a>
-          <a href="/CLINIC/public/?role=pharmacist&page=inventory&action=view&id={$drug._id}" class="action-btn" title="Lịch sử"><i class="fa-solid fa-clock-rotate-left"></i></a>
+          <a href="{$base_url}/?role=pharmacist&page=stock-in&drug_id={$drug._id}" class="action-btn" title="Nhập thêm"><i class="fa-solid fa-plus"></i></a>
+          <a href="{$base_url}/?role=pharmacist&page=inventory&action=view&id={$drug._id}" class="action-btn" title="Lịch sử"><i class="fa-solid fa-clock-rotate-left"></i></a>
         </div></td>
       </tr>
       {foreachelse}<tr><td colspan="9" class="table-empty">Chưa có dữ liệu tồn kho</td></tr>

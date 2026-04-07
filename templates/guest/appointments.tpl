@@ -29,7 +29,7 @@
           <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>
           {/if}
 
-          <form action="/CLINIC/public/?page=appointments" method="POST" class="appt-form">
+          <form action="{$base_url}/?page=appointments" method="POST" class="appt-form">
 
             <div class="form-section-title"><span>01</span> Chọn dịch vụ</div>
             <div class="form-row">

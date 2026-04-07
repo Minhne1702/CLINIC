@@ -11,7 +11,7 @@ class PatientController
         $this->db     = $db;
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'patient') {
-            header('Location: /CLINIC/public/?page=login');
+            header('Location: ' . BASE_URL . '/?page=login');
             exit;
         }
 

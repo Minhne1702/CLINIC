@@ -1,12 +1,40 @@
-{assign var="current_role" value=$smarty.session.user.role|default:'guest'}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-07 07:15:41
+  from 'file:layout/footer.tpl' */
 
-{* ===== PATIENT PORTAL FOOTER ===== *}
-{if $current_role == 'patient'}
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d492fd023925_11228208',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    'e7f6f6d9ee197eef1092f81e611cc0fb94bfc332' => 
+    array (
+      0 => 'layout/footer.tpl',
+      1 => 1775538703,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+))) {
+function content_69d492fd023925_11228208 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+$_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
+$_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)===null||$tmp==='' ? 'guest' ?? null : $tmp), false, NULL);?>
+
+<?php if ($_smarty_tpl->getValue('current_role') == 'patient') {?>
 
 </main><!-- /.patient-portal-content -->
 
-<script src="{$base_url}/assets/js/admin.js"></script>
-<script>
+<?php echo '<script'; ?>
+ src="<?php echo $_smarty_tpl->getValue('base_url');?>
+/assets/js/admin.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+>
   const patientMenuToggle = document.getElementById('patientMenuToggle');
   const patientMobileNav  = document.getElementById('patientMobileNav');
   if (patientMenuToggle && patientMobileNav) {
@@ -19,24 +47,32 @@
       }
     });
   }
-</script>
-{block name="extra_js"}{/block}
+<?php echo '</script'; ?>
+>
+<?php 
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_65758653269d492fce0c471_34785818', "extra_js");
+?>
+
 </body>
 </html>
 
-{* ===== ADMIN / STAFF FOOTER ===== *}
-{elseif $current_role == 'admin' || $current_role == 'doctor' || $current_role == 'receptionist' || $current_role == 'cashier' || $current_role == 'pharmacist'}
+<?php } elseif ($_smarty_tpl->getValue('current_role') == 'admin' || $_smarty_tpl->getValue('current_role') == 'doctor' || $_smarty_tpl->getValue('current_role') == 'receptionist' || $_smarty_tpl->getValue('current_role') == 'cashier' || $_smarty_tpl->getValue('current_role') == 'pharmacist') {?>
 
   </div><!-- /.admin-content -->
 </div><!-- /.admin-main -->
 
-<script src="{$base_url}/assets/js/admin.js"></script>
-{block name="extra_js"}{/block}
+<?php echo '<script'; ?>
+ src="<?php echo $_smarty_tpl->getValue('base_url');?>
+/assets/js/admin.js"><?php echo '</script'; ?>
+>
+<?php 
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_148763791069d492fd012582_97881599', "extra_js");
+?>
+
 </body>
 </html>
 
-{* ===== GUEST FOOTER ===== *}
-{else}
+<?php } else { ?>
 
 </main><!-- /.main-content -->
 
@@ -75,20 +111,28 @@
       <div class="footer-col">
         <h4>Dịch vụ</h4>
         <ul>
-          <li><a href="{$base_url}/?page=services">Khám chuyên khoa</a></li>
-          <li><a href="{$base_url}/?page=services">Khám từ xa</a></li>
-          <li><a href="{$base_url}/?page=services">Khám tổng quát</a></li>
-          <li><a href="{$base_url}/?page=services">Xét nghiệm y học</a></li>
-          <li><a href="{$base_url}/?page=services">Nha khoa</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=services">Khám chuyên khoa</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=services">Khám từ xa</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=services">Khám tổng quát</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=services">Xét nghiệm y học</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=services">Nha khoa</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Thông tin</h4>
         <ul>
-          <li><a href="{$base_url}/?page=about">Về chúng tôi</a></li>
-          <li><a href="{$base_url}/?page=doctors">Đội ngũ bác sĩ</a></li>
-          <li><a href="{$base_url}/?page=contact">Liên hệ</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=about">Về chúng tôi</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors">Đội ngũ bác sĩ</a></li>
+          <li><a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=contact">Liên hệ</a></li>
         </ul>
       </div>
 
@@ -107,7 +151,8 @@
 
   <div class="footer-bottom">
     <div class="container footer-bottom__inner">
-      <p>&copy; {$smarty.now|date_format:"%Y"} MediCare. Bảo lưu mọi quyền.</p>
+      <p>&copy; <?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')(time(),"%Y");?>
+ MediCare. Bảo lưu mọi quyền.</p>
       <div class="footer-bottom__links">
         <a href="#">Chính sách bảo mật</a>
         <a href="#">Điều khoản sử dụng</a>
@@ -118,10 +163,17 @@
 
 </footer>
 
-<script src="{$base_url}/assets/js/main.js"></script>
-{block name="extra_js"}{/block}
+<?php echo '<script'; ?>
+ src="<?php echo $_smarty_tpl->getValue('base_url');?>
+/assets/js/main.js"><?php echo '</script'; ?>
+>
+<?php 
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_95977178569d492fd01e937_63309837', "extra_js");
+?>
 
-<script>
+
+<?php echo '<script'; ?>
+>
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobile-nav');
   const overlay   = document.getElementById('mobile-overlay');
@@ -139,8 +191,35 @@
       header.classList.toggle('scrolled', window.scrollY > 40);
     });
   }
-</script>
+<?php echo '</script'; ?>
+>
 </body>
 </html>
 
-{/if}
+<?php }
+}
+/* {block "extra_js"} */
+class Block_65758653269d492fce0c471_34785818 extends \Smarty\Runtime\Block
+{
+public function callBlock(\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+}
+}
+/* {/block "extra_js"} */
+/* {block "extra_js"} */
+class Block_148763791069d492fd012582_97881599 extends \Smarty\Runtime\Block
+{
+public function callBlock(\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+}
+}
+/* {/block "extra_js"} */
+/* {block "extra_js"} */
+class Block_95977178569d492fd01e937_63309837 extends \Smarty\Runtime\Block
+{
+public function callBlock(\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\layout';
+}
+}
+/* {/block "extra_js"} */
+}

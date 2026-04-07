@@ -5,7 +5,7 @@
     <h2>Xin chào, <span style="color:#a5f3fc">BS. {$current_user_name|default:"Bác sĩ"}</span> 👨‍⚕️</h2>
     <p>Hôm nay {$smarty.now|date_format:"%d/%m/%Y"} — Bạn có <strong style="color:#fff">{$stats.today_queue|default:0}</strong> bệnh nhân chờ khám</p>
   </div>
-  <a href="/CLINIC/public/?role=doctor&page=examination" class="btn-admin-primary" style="background:#fff;color:#0e7490">
+  <a href="{$base_url}/?role=doctor&page=examination" class="btn-admin-primary" style="background:#fff;color:#0e7490">
     <i class="fa-solid fa-stethoscope"></i> Bắt đầu khám
   </a>
 </div>
@@ -22,7 +22,7 @@
   <div class="admin-card admin-card--lg">
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-list-ol"></i> Hàng chờ khám hôm nay</h3>
-      <a href="/CLINIC/public/?role=doctor&page=queue" class="btn-link">Xem đầy đủ</a>
+      <a href="{$base_url}/?role=doctor&page=queue" class="btn-link">Xem đầy đủ</a>
     </div>
     <div class="admin-card__body p-0">
       <table class="admin-table">
@@ -47,7 +47,7 @@
               {else}<span class="badge badge--neutral">{$q.status}</span>{/if}
             </td>
             <td>
-              <a href="/CLINIC/public/?role=doctor&page=examination&patient_id={$q.patient_id}&queue_id={$q._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-stethoscope"></i> Khám</a>
+              <a href="{$base_url}/?role=doctor&page=examination&patient_id={$q.patient_id}&queue_id={$q._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-stethoscope"></i> Khám</a>
             </td>
           </tr>
           {foreachelse}

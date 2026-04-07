@@ -1,4 +1,4 @@
-{include file="layout/header.tpl" page_title="Hồ sơ bệnh án" active_page="records"}
+{include file="layout/sidebar.tpl" page_title="Hồ sơ bệnh án" active_page="records"}
 
 <div class="page-toolbar">
   <div class="page-toolbar__left">
@@ -17,7 +17,7 @@
 
 {if $record}
 {* ========== CHI TIẾT HỒ SƠ ========== *}
-<a href="/CLINIC/public/?role=patient&page=records" class="btn-admin-ghost" style="margin-bottom:1rem;display:inline-flex">
+<a href="{$base_url}/?page=records" class="btn-admin-ghost" style="margin-bottom:1rem;display:inline-flex">
   <i class="fa-solid fa-arrow-left"></i> Quay lại danh sách
 </a>
 
@@ -83,7 +83,7 @@
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-prescription"></i> Đơn thuốc</h3>
       {if $record.prescription._id}
-      <a href="/CLINIC/public/?role=patient&page=prescriptions&id={$record.prescription._id}" class="btn-admin-secondary" style="font-size:12px;padding:.35rem .75rem">
+      <a href="{$base_url}/?page=prescriptions&id={$record.prescription._id}" class="btn-admin-secondary" style="font-size:12px;padding:.35rem .75rem">
         <i class="fa-solid fa-print"></i> In đơn
       </a>
       {/if}
@@ -226,11 +226,11 @@
           </td>
           <td>
             <div class="table-actions">
-              <a href="/CLINIC/public/?role=patient&page=records&id={$rec._id}" class="action-btn" title="Xem chi tiết">
+              <a href="{$base_url}/?page=records&id={$rec._id}" class="action-btn" title="Xem chi tiết">
                 <i class="fa-solid fa-eye"></i>
               </a>
               {if $rec.has_prescription}
-              <a href="/CLINIC/public/?role=patient&page=prescriptions&record_id={$rec._id}" class="action-btn" title="Xem đơn thuốc">
+              <a href="{$base_url}/?page=prescriptions&record_id={$rec._id}" class="action-btn" title="Xem đơn thuốc">
                 <i class="fa-solid fa-prescription"></i>
               </a>
               {/if}

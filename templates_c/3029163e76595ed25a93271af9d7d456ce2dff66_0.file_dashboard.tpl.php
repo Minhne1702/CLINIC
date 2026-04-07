@@ -1,4 +1,31 @@
-{include file="layout/sidebar.tpl" page_title="Dashboard" active_page="dashboard"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-07 07:15:57
+  from 'file:admin/dashboard.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d4930d965fe4_27515585',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '3029163e76595ed25a93271af9d7d456ce2dff66' => 
+    array (
+      0 => 'admin/dashboard.tpl',
+      1 => 1775538582,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/sidebar.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d4930d965fe4_27515585 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\admin';
+$_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Dashboard",'active_page'=>"dashboard"), (int) 0, $_smarty_current_dir);
+?>
 
 <!-- STATS CARDS -->
 <div class="stats-grid">
@@ -6,7 +33,8 @@
     <div class="stat-card__icon"><i class="fa-solid fa-hospital-user"></i></div>
     <div class="stat-card__body">
       <p class="stat-card__label">Bệnh nhân hôm nay</p>
-      <h3 class="stat-card__value">{$stats.today_patients|default:0}</h3>
+      <h3 class="stat-card__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['today_patients'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</h3>
       <p class="stat-card__change up"><i class="fa-solid fa-arrow-trend-up"></i> +12% so với hôm qua</p>
     </div>
   </div>
@@ -14,7 +42,8 @@
     <div class="stat-card__icon"><i class="fa-solid fa-calendar-check"></i></div>
     <div class="stat-card__body">
       <p class="stat-card__label">Lịch hẹn hôm nay</p>
-      <h3 class="stat-card__value">{$stats.today_appointments|default:0}</h3>
+      <h3 class="stat-card__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['today_appointments'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</h3>
       <p class="stat-card__change up"><i class="fa-solid fa-arrow-trend-up"></i> +5% so với hôm qua</p>
     </div>
   </div>
@@ -22,7 +51,8 @@
     <div class="stat-card__icon"><i class="fa-solid fa-sack-dollar"></i></div>
     <div class="stat-card__body">
       <p class="stat-card__label">Doanh thu hôm nay</p>
-      <h3 class="stat-card__value">{$stats.today_revenue|default:"0đ"}</h3>
+      <h3 class="stat-card__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['today_revenue'] ?? null)===null||$tmp==='' ? "0đ" ?? null : $tmp);?>
+</h3>
       <p class="stat-card__change up"><i class="fa-solid fa-arrow-trend-up"></i> +8% so với hôm qua</p>
     </div>
   </div>
@@ -30,7 +60,8 @@
     <div class="stat-card__icon"><i class="fa-solid fa-user-doctor"></i></div>
     <div class="stat-card__body">
       <p class="stat-card__label">Bác sĩ đang trực</p>
-      <h3 class="stat-card__value">{$stats.doctors_on_duty|default:0}</h3>
+      <h3 class="stat-card__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['doctors_on_duty'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</h3>
       <p class="stat-card__change neutral"><i class="fa-solid fa-minus"></i> Không thay đổi</p>
     </div>
   </div>
@@ -75,7 +106,8 @@
   <div class="admin-card admin-card--lg">
     <div class="admin-card__header">
       <h3><i class="fa-solid fa-clock-rotate-left"></i> Lịch hẹn gần đây</h3>
-      <a href="{$base_url}/?role=admin&page=appointments" class="btn-link">Xem tất cả</a>
+      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?role=admin&page=appointments" class="btn-link">Xem tất cả</a>
     </div>
     <div class="admin-card__body p-0">
       <table class="admin-table">
@@ -89,17 +121,34 @@
           </tr>
         </thead>
         <tbody>
-          {foreach from=$recent_appointments item=apt}
+          <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('recent_appointments'), 'apt');
+$foreach0DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('apt')->value) {
+$foreach0DoElse = false;
+?>
           <tr>
-            <td><div class="table-user"><div class="table-avatar">{$apt.patient_name|truncate:1:""}</div>{$apt.patient_name}</div></td>
-            <td>{$apt.doctor_name}</td>
-            <td>{$apt.specialty}</td>
-            <td>{$apt.time}</td>
-            <td><span class="badge badge--{$apt.status_class}">{$apt.status_label}</span></td>
+            <td><div class="table-user"><div class="table-avatar"><?php echo $_smarty_tpl->getSmarty()->getModifierCallback('truncate')($_smarty_tpl->getValue('apt')['patient_name'],1,'');?>
+</div><?php echo $_smarty_tpl->getValue('apt')['patient_name'];?>
+</div></td>
+            <td><?php echo $_smarty_tpl->getValue('apt')['doctor_name'];?>
+</td>
+            <td><?php echo $_smarty_tpl->getValue('apt')['specialty'];?>
+</td>
+            <td><?php echo $_smarty_tpl->getValue('apt')['time'];?>
+</td>
+            <td><span class="badge badge--<?php echo $_smarty_tpl->getValue('apt')['status_class'];?>
+"><?php echo $_smarty_tpl->getValue('apt')['status_label'];?>
+</span></td>
           </tr>
-          {foreachelse}
+          <?php
+}
+if ($foreach0DoElse) {
+?>
           <tr><td colspan="5" class="table-empty">Chưa có lịch hẹn nào hôm nay</td></tr>
-          {/foreach}
+          <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
         </tbody>
       </table>
     </div>
@@ -114,27 +163,33 @@
       <div class="quick-stats">
         <div class="quick-stat">
           <span class="quick-stat__label">Tổng bệnh nhân</span>
-          <span class="quick-stat__value">{$stats.total_patients|default:0}</span>
+          <span class="quick-stat__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['total_patients'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</span>
         </div>
         <div class="quick-stat">
           <span class="quick-stat__label">Tổng bác sĩ</span>
-          <span class="quick-stat__value">{$stats.total_doctors|default:0}</span>
+          <span class="quick-stat__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['total_doctors'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</span>
         </div>
         <div class="quick-stat">
           <span class="quick-stat__label">Lịch hẹn tháng này</span>
-          <span class="quick-stat__value">{$stats.month_appointments|default:0}</span>
+          <span class="quick-stat__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['month_appointments'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</span>
         </div>
         <div class="quick-stat">
           <span class="quick-stat__label">Doanh thu tháng này</span>
-          <span class="quick-stat__value text-success">{$stats.month_revenue|default:"0đ"}</span>
+          <span class="quick-stat__value text-success"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['month_revenue'] ?? null)===null||$tmp==='' ? "0đ" ?? null : $tmp);?>
+</span>
         </div>
         <div class="quick-stat">
           <span class="quick-stat__label">Đơn thuốc hôm nay</span>
-          <span class="quick-stat__value">{$stats.today_prescriptions|default:0}</span>
+          <span class="quick-stat__value"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['today_prescriptions'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</span>
         </div>
         <div class="quick-stat">
           <span class="quick-stat__label">Thuốc sắp hết</span>
-          <span class="quick-stat__value text-danger">{$stats.low_stock_drugs|default:0}</span>
+          <span class="quick-stat__value text-danger"><?php echo (($tmp = $_smarty_tpl->getValue('stats')['low_stock_drugs'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+</span>
         </div>
       </div>
     </div>
@@ -142,14 +197,22 @@
 
 </div>
 
-{include file="layout/footer.tpl"}
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script>
-const labels = {$chart_labels|default:'["T2","T3","T4","T5","T6","T7","CN"]'};
-const revenues = {$chart_revenues|default:'[12000000,18500000,15000000,22000000,19000000,25000000,17000000]'};
-const specialtyLabels = {$specialty_labels|default:'["Tim mạch","Nhi","Da liễu","Nha","Thần kinh","Khác"]'};
-const specialtyData = {$specialty_data|default:'[30,25,20,15,6,4]'};
+<?php echo '<script'; ?>
+ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"><?php echo '</script'; ?>
+>
+<?php echo '<script'; ?>
+>
+const labels = <?php echo (($tmp = $_smarty_tpl->getValue('chart_labels') ?? null)===null||$tmp==='' ? '["T2","T3","T4","T5","T6","T7","CN"]' ?? null : $tmp);?>
+;
+const revenues = <?php echo (($tmp = $_smarty_tpl->getValue('chart_revenues') ?? null)===null||$tmp==='' ? '[12000000,18500000,15000000,22000000,19000000,25000000,17000000]' ?? null : $tmp);?>
+;
+const specialtyLabels = <?php echo (($tmp = $_smarty_tpl->getValue('specialty_labels') ?? null)===null||$tmp==='' ? '["Tim mạch","Nhi","Da liễu","Nha","Thần kinh","Khác"]' ?? null : $tmp);?>
+;
+const specialtyData = <?php echo (($tmp = $_smarty_tpl->getValue('specialty_data') ?? null)===null||$tmp==='' ? '[30,25,20,15,6,4]' ?? null : $tmp);?>
+;
 
 // Revenue chart
 new Chart(document.getElementById('revenueChart'), {
@@ -195,4 +258,7 @@ new Chart(document.getElementById('specialtyChart'), {
     cutout: '65%'
   }
 });
-</script>
+<?php echo '</script'; ?>
+>
+<?php }
+}

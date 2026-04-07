@@ -9,7 +9,7 @@
   <div class="admin-card">
     <div class="admin-card__header"><h3><i class="fa-solid fa-magnifying-glass"></i> Tìm bệnh nhân hiện có</h3></div>
     <div class="admin-card__body">
-      <form method="GET" action="/CLINIC/public/" class="appt-form">
+      <form method="GET" action="{$base_url}/" class="appt-form">
         <input type="hidden" name="role" value="receptionist"><input type="hidden" name="page" value="walk-in">
         <div class="form-group">
           <div class="input-icon-wrap"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="q" value="{$search_q|default:''}" placeholder="CCCD, SĐT hoặc tên bệnh nhân..."></div>
@@ -22,7 +22,7 @@
   <div class="admin-card">
     <div class="admin-card__header"><h3><i class="fa-solid fa-user-plus"></i> {if $found_patient}Xác nhận đăng ký{else}Tạo hồ sơ & Đăng ký{/if}</h3></div>
     <div class="admin-card__body">
-      <form action="/CLINIC/public/" method="POST" class="appt-form">
+      <form action="{$base_url}/" method="POST" class="appt-form">
         <input type="hidden" name="role" value="receptionist"><input type="hidden" name="page" value="walk-in"><input type="hidden" name="action" value="register">
         <input type="hidden" name="patient_id" value="{$found_patient._id|default:''}">
         <div class="form-row-2">

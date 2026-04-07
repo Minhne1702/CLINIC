@@ -1,4 +1,31 @@
-{include file="layout/header.tpl" page_title="MediCare — Đặt lịch khám bệnh" active_page="home"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-07 07:15:38
+  from 'file:guest/home.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d492fa8937f5_30711845',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '1da98eb2ec9d1c8638c93d8cecd54b04d6624b18' => 
+    array (
+      0 => 'guest/home.tpl',
+      1 => 1775538584,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/header.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d492fa8937f5_30711845 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\xampp\\htdocs\\CLINIC\\templates\\guest';
+$_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"MediCare — Đặt lịch khám bệnh",'active_page'=>"home"), (int) 0, $_smarty_current_dir);
+?>
 
 <!-- HERO -->
 <section class="hero">
@@ -22,7 +49,8 @@
         Kết nối bạn với hàng trăm bác sĩ chuyên khoa giàu kinh nghiệm.
         Đặt lịch trực tuyến 24/7, nhận xác nhận ngay lập tức.
       </p>
-      <form class="hero__search" action="{$base_url}/" method="GET">
+      <form class="hero__search" action="<?php echo $_smarty_tpl->getValue('base_url');?>
+/" method="GET">
         <div class="search-group">
           <div class="search-field">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -44,11 +72,16 @@
       </form>
       <div class="hero__chips">
         <span>Tìm nhanh:</span>
-        <a href="{$base_url}/?page=doctors&amp;spec=tim-mach" class="chip">Tim mạch</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=nhi-khoa" class="chip">Nhi khoa</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=da-lieu" class="chip">Da liễu</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=nha-khoa" class="chip">Nha khoa</a>
-        <a href="{$base_url}/?page=doctors&amp;spec=mat" class="chip">Mắt</a>
+        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors&amp;spec=tim-mach" class="chip">Tim mạch</a>
+        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors&amp;spec=nhi-khoa" class="chip">Nhi khoa</a>
+        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors&amp;spec=da-lieu" class="chip">Da liễu</a>
+        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors&amp;spec=nha-khoa" class="chip">Nha khoa</a>
+        <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors&amp;spec=mat" class="chip">Mắt</a>
       </div>
     </div>
     <div class="hero__visual" data-animate="fade-left">
@@ -88,16 +121,28 @@
       <p class="section-desc">Đội ngũ bác sĩ chuyên khoa đầu ngành sẵn sàng hỗ trợ bạn</p>
     </div>
     <div class="services__grid" data-animate="stagger">
-      {foreach from=$services item=svc}
-      <a href="{$svc.url}" class="service-card">
-        <div class="service-card__icon" style="--icon-color: {$svc.color}">
-          <i class="{$svc.icon}"></i>
+      <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('services'), 'svc');
+$foreach0DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('svc')->value) {
+$foreach0DoElse = false;
+?>
+      <a href="<?php echo $_smarty_tpl->getValue('svc')['url'];?>
+" class="service-card">
+        <div class="service-card__icon" style="--icon-color: <?php echo $_smarty_tpl->getValue('svc')['color'];?>
+">
+          <i class="<?php echo $_smarty_tpl->getValue('svc')['icon'];?>
+"></i>
         </div>
-        <h3 class="service-card__name">{$svc.name}</h3>
-        <p class="service-card__desc">{$svc.description}</p>
+        <h3 class="service-card__name"><?php echo $_smarty_tpl->getValue('svc')['name'];?>
+</h3>
+        <p class="service-card__desc"><?php echo $_smarty_tpl->getValue('svc')['description'];?>
+</p>
         <span class="service-card__link">Xem thêm <i class="fa-solid fa-arrow-right"></i></span>
       </a>
-      {/foreach}
+      <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     </div>
   </div>
 </section>
@@ -110,15 +155,26 @@
       <h2 class="section-title">Tìm đúng <span class="text-accent">chuyên khoa</span></h2>
     </div>
     <div class="specialties__grid" data-animate="stagger">
-      {foreach from=$specialties item=spec}
-      <a href="{$spec.url}" class="spec-chip">
-        <i class="{$spec.icon}"></i>
-        <span>{$spec.name}</span>
+      <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('specialties'), 'spec');
+$foreach1DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('spec')->value) {
+$foreach1DoElse = false;
+?>
+      <a href="<?php echo $_smarty_tpl->getValue('spec')['url'];?>
+" class="spec-chip">
+        <i class="<?php echo $_smarty_tpl->getValue('spec')['icon'];?>
+"></i>
+        <span><?php echo $_smarty_tpl->getValue('spec')['name'];?>
+</span>
       </a>
-      {/foreach}
+      <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     </div>
     <div class="text-center mt-3">
-      <a href="{$base_url}/?page=doctors" class="btn-outline">Xem tất cả chuyên khoa <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors" class="btn-outline">Xem tất cả chuyên khoa <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
@@ -132,35 +188,52 @@
       <p class="section-desc">Được lựa chọn và kiểm duyệt kỹ lưỡng từ các bệnh viện uy tín</p>
     </div>
     <div class="doctors__grid" data-animate="stagger">
-      {foreach from=$featured_doctors item=doc}
-      <a href="{$base_url}/?page=appointments&amp;id={$doc._id}" class="doctor-card">
+      <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('featured_doctors'), 'doc');
+$foreach2DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('doc')->value) {
+$foreach2DoElse = false;
+?>
+      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=appointments&amp;id=<?php echo $_smarty_tpl->getValue('doc')['_id'];?>
+" class="doctor-card">
         <div class="doctor-card__img">
-          {if $doc.avatar}
-            <img src="{$doc.avatar}" alt="{$doc.full_name}" loading="lazy">
-          {else}
+          <?php if ($_smarty_tpl->getValue('doc')['avatar']) {?>
+            <img src="<?php echo $_smarty_tpl->getValue('doc')['avatar'];?>
+" alt="<?php echo $_smarty_tpl->getValue('doc')['full_name'];?>
+" loading="lazy">
+          <?php } else { ?>
             <div class="doctor-avatar__fallback"><i class="fa-solid fa-user-doctor"></i></div>
-          {/if}
-          {if $doc.is_featured}
+          <?php }?>
+          <?php if ($_smarty_tpl->getValue('doc')['is_featured']) {?>
             <span class="doctor-card__badge">Nổi bật</span>
-          {/if}
+          <?php }?>
         </div>
         <div class="doctor-card__body">
-          <p class="doctor-card__degree">{$doc.degree}</p>
-          <h3 class="doctor-card__name">{$doc.full_name}</h3>
-          <p class="doctor-card__specialty"><i class="fa-solid fa-circle-dot"></i> {$doc.specialty}</p>
+          <p class="doctor-card__degree"><?php echo $_smarty_tpl->getValue('doc')['degree'];?>
+</p>
+          <h3 class="doctor-card__name"><?php echo $_smarty_tpl->getValue('doc')['full_name'];?>
+</h3>
+          <p class="doctor-card__specialty"><i class="fa-solid fa-circle-dot"></i> <?php echo $_smarty_tpl->getValue('doc')['specialty'];?>
+</p>
           <div class="doctor-card__meta">
-            <span class="rating"><i class="fa-solid fa-star"></i> {$doc.rating}</span>
-            <span class="reviews">{$doc.review_count} đánh giá</span>
+            <span class="rating"><i class="fa-solid fa-star"></i> <?php echo $_smarty_tpl->getValue('doc')['rating'];?>
+</span>
+            <span class="reviews"><?php echo $_smarty_tpl->getValue('doc')['review_count'];?>
+ đánh giá</span>
           </div>
         </div>
         <div class="doctor-card__footer">
           <span class="btn-book-sm">Đặt lịch</span>
         </div>
       </a>
-      {/foreach}
+      <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     </div>
     <div class="text-center mt-3">
-      <a href="{$base_url}/?page=doctors" class="btn-outline">Xem tất cả bác sĩ <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors" class="btn-outline">Xem tất cả bác sĩ <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
@@ -205,23 +278,34 @@
       <h2 class="section-title">Bệnh nhân nói <span class="text-accent">gì về chúng tôi</span></h2>
     </div>
     <div class="testimonials__grid" data-animate="stagger">
-      {foreach from=$testimonials item=t}
+      <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('testimonials'), 't');
+$foreach3DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('t')->value) {
+$foreach3DoElse = false;
+?>
       <div class="review-card">
         <div class="review-card__stars">
           <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           <i class="fa-solid fa-star"></i>
         </div>
-        <p class="review-card__text">"{$t.content}"</p>
+        <p class="review-card__text">"<?php echo $_smarty_tpl->getValue('t')['content'];?>
+"</p>
         <div class="review-card__author">
-          <div class="review-avatar">{$t.name|truncate:1:""}</div>
+          <div class="review-avatar"><?php echo $_smarty_tpl->getSmarty()->getModifierCallback('truncate')($_smarty_tpl->getValue('t')['name'],1,'');?>
+</div>
           <div>
-            <strong>{$t.name}</strong>
-            <span>{$t.specialty}</span>
+            <strong><?php echo $_smarty_tpl->getValue('t')['name'];?>
+</strong>
+            <span><?php echo $_smarty_tpl->getValue('t')['specialty'];?>
+</span>
           </div>
         </div>
       </div>
-      {/foreach}
+      <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
     </div>
   </div>
 </section>
@@ -234,14 +318,18 @@
       <p>Đặt lịch khám ngay hôm nay — nhanh chóng, dễ dàng, không phải chờ đợi lâu.</p>
     </div>
     <div class="cta-banner__actions">
-      <a href="{$base_url}/?page=appointments" class="btn-cta-primary">
+      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=appointments" class="btn-cta-primary">
         <i class="fa-regular fa-calendar-check"></i> Đặt lịch ngay
       </a>
-      <a href="{$base_url}/?page=doctors" class="btn-cta-outline">
+      <a href="<?php echo $_smarty_tpl->getValue('base_url');?>
+/?page=doctors" class="btn-cta-outline">
         <i class="fa-solid fa-user-doctor"></i> Xem bác sĩ
       </a>
     </div>
   </div>
 </section>
 
-{include file="layout/footer.tpl"}
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+}
+}

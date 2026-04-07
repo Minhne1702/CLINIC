@@ -1,4 +1,4 @@
-{include file="layout/header.tpl" page_title="Đặt lịch khám" active_page="book"}
+{include file="layout/sidebar.tpl" page_title="Đặt lịch khám" active_page="book"}
 
 <div class="page-toolbar">
   <div class="page-toolbar__left">
@@ -10,7 +10,7 @@
 {if $success_message}
 <div class="alert alert--success">
   <i class="fa-solid fa-circle-check"></i> {$success_message}
-  <a href="/CLINIC/public/?role=patient&page=appointments" style="font-weight:600;margin-left:.5rem">Xem lịch hẹn →</a>
+  <a href="{$base_url}/?page=appointments" style="font-weight:600;margin-left:.5rem">Xem lịch hẹn →</a>
 </div>
 {/if}
 {if $error_message}
@@ -27,9 +27,7 @@
   <div class="booking-step" id="step-ind-4"><span>4</span> Xác nhận</div>
 </div>
 
-<form action="/CLINIC/public/" method="POST" id="bookingForm">
-  <input type="hidden" name="role" value="patient">
-  <input type="hidden" name="page" value="book">
+<form action="{$base_url}/?page=book" method="POST" id="bookingForm">
   <input type="hidden" name="action" value="submit">
 
   <!-- STEP 1 -->
