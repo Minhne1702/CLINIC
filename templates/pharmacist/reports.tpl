@@ -1,0 +1,42 @@
+{include file="layout/sidebar.tpl" page_title="Báo cáo nhà thuốc" active_page="reports"}
+<div class="page-toolbar">
+  <div class="page-toolbar__left"><h2 class="page-title"><i class="fa-solid fa-chart-bar"></i> Báo cáo nhà thuốc</h2><p class="page-subtitle">Thống kê xuất nhập tồn và thuốc bán chạy</p></div>
+  <div class="page-toolbar__right"><button class="btn-admin-secondary" onclick="window.location.href='/CLINIC/public/?role=pharmacist&page=reports&action=export'"><i class="fa-solid fa-file-excel"></i> Xuất Excel</button></div>
+</div>
+<div class="admin-card mb-1"><div class="admin-card__body">
+  <form method="GET" action="/CLINIC/public/" class="filter-bar">
+    <input type="hidden" name="role" value="pharmacist"><input type="hidden" name="page" value="reports">
+    <div class="filter-bar__group">
+      <input type="date" name="date_from" value="{$filter.date_from|default:''}">
+      <input type="date" name="date_to"   value="{$filter.date_to|default:''}">
+      <select name="period"><option value="7" {if $filter.period=='7'}selected{/if}>7 ngày</option><option value="30" {if $filter.period=='30'}selected{/if}>30 ngày</option><option value="90" {if $filter.period=='90'}selected{/if}>3 tháng</option></select>
+      <button type="submit" class="btn-admin-secondary"><i class="fa-solid fa-rotate"></i> Cập nhật</button>
+    </div>
+  </form>
+</div></div>
+<div class="patient-stats">
+  <div class="patient-stat-card"><div class="patient-stat-icon" style="--c:#8b5cf6"><i class="fa-solid fa-prescription"></i></div><div><p>Đơn thuốc đã phát</p><strong>{$report.total_dispensed|default:0}</strong></div></div>
+  <div class="patient-stat-card"><div class="patient-stat-icon" style="--c:#10b981"><i class="fa-solid fa-pills"></i></div><div><p>Lượt thuốc xuất</p><strong>{$report.total_qty_out|default:0}</strong></div></div>
+  <div class="patient-stat-card"><div class="patient-stat-icon" style="--c:#0891b2"><i class="fa-solid fa-truck-ramp-box"></i></div><div><p>Lượt thuốc nhập</p><strong>{$report.total_qty_in|default:0}</strong></div></div>
+  <div class="patient-stat-card"><div class="patient-stat-icon" style="--c:#f59e0b"><i class="fa-solid fa-boxes-stacking"></i></div><div><p>Tổng tồn kho</p><strong>{$report.total_stock|default:0}</strong></div></div>
+</div>
+<div class="admin-card">
+  <div class="admin-card__header"><h3><i class="fa-solid fa-trophy"></i> Thuốc sử dụng nhiều nhất</h3></div>
+  <div class="admin-card__body p-0">
+    <table class="admin-table">
+      <thead><tr><th>Tên thuốc</th><th>Nhóm</th><th>Số lượng xuất</th><th>Số đơn</th></tr></thead>
+      <tbody>
+        {foreach from=$top_drugs item=drug}
+        <tr>
+          <td><strong>{$drug.name}</strong></td>
+          <td>{$drug.category_name|default:'—'}</td>
+          <td><span class="badge badge--blue">{$drug.total_qty} {$drug.unit}</span></td>
+          <td>{$drug.prescription_count} đơn</td>
+        </tr>
+        {foreachelse}<tr><td colspan="4" class="table-empty">Chưa có dữ liệu</td></tr>
+        {/foreach}
+      </tbody>
+    </table>
+  </div>
+</div>
+{include file="layout/footer.tpl"}
