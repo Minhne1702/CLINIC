@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 07:26:43
+/* Smarty version 5.8.0, created on 2026-04-08 03:54:39
   from 'file:guest/home.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d4b1b369c5e4_41254962',
+  'unifunc' => 'content_69d5d17f7552c9_77950468',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'ad837e6f6098ffff2c454e905e53cba07082631b' => 
+    'aa7b1290a072756d01bcf5a7727ddbcb5e06bbf4' => 
     array (
       0 => 'guest/home.tpl',
-      1 => 1775546534,
+      1 => 1775611356,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d4b1b369c5e4_41254962 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
+function content_69d5d17f7552c9_77950468 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\guest';
 $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"MediCare — Đặt lịch khám bệnh",'active_page'=>"home"), (int) 0, $_smarty_current_dir);
 ?>
 

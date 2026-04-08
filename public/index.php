@@ -24,6 +24,9 @@ $smarty->assign('BASE_URL', BASE_URL);
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../src/Models/UserModel.php';
+require_once __DIR__ . '/../src/Models/DrugModel.php';
+require_once __DIR__ . '/../src/Models/PrescriptionModel.php';
+require_once __DIR__ . '/../src/Models/BillModel.php';
 require_once __DIR__ . '/../src/Controllers/AuthControllers/AuthController.php';
 require_once __DIR__ . '/../src/Controllers/HomeController.php';
 

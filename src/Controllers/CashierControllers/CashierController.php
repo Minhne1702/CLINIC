@@ -1,25 +1,32 @@
 <?php
-
 class CashierController
 {
     private $smarty;
-    private $db;
+    private $billModel;
+    private $prescriptionModel;
 
     public function __construct($smarty, $db = null)
     {
         $this->smarty = $smarty;
-        $this->db     = $db;
 
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'cashier') {
-            header('Location: ' . BASE_URL . '/?page=login'); exit;
+            header('Location: ' . BASE_URL . '/?page=login');
+            exit;
+        }
+
+        if ($db) {
+            $this->billModel         = new BillModel($db);
+            $this->prescriptionModel = new PrescriptionModel($db);
         }
 
         $user = $_SESSION['user'];
-        $name = $user['full_name'] ?? $user['fullName'] ?? $user['name'] ?? $user['username'] ?? 'Thu ngân';
+        $name = $user['fullName'] ?? $user['full_name'] ?? $user['name'] ?? $user['username'] ?? 'Thu ngân';
         $this->smarty->assign('current_user_name', $name);
         $this->smarty->assign('current_user_role', 'cashier');
         $this->smarty->assign('notification_count', 0);
-        $this->smarty->assign('pending_count', 0); // TODO: query real count
+
+        $pendingCount = $this->billModel ? $this->billModel->countPending() : 0;
+        $this->smarty->assign('pending_count', $pendingCount);
     }
 
     public function run()
@@ -37,89 +44,192 @@ class CashierController
         }
     }
 
+    // ─── Dashboard ────────────────────────────────────────────────────────────
+
     private function dashboard()
     {
-        $this->smarty->assign('stats', ['today_revenue'=>'0đ','pending_count'=>0,'paid_today'=>0,'advance_today'=>'0đ','cash_today'=>'0đ','transfer_today'=>'0đ','qr_today'=>'0đ','insurance_today'=>'0đ']);
-        $this->smarty->assign('pending_bills', []);
+        $stats        = $this->billModel ? $this->billModel->getTodayStats()       : $this->emptyStats();
+        $pendingBills = $this->billModel ? $this->billModel->getPendingBills(10)   : [];
+
+        $this->smarty->assign('stats',         $stats);
+        $this->smarty->assign('pending_bills', $pendingBills);
         $this->smarty->display('cashier/dashboard.tpl');
     }
 
+    // ─── Thanh toán ───────────────────────────────────────────────────────────
+
     private function billing()
     {
-        $billId   = $_GET['id']  ?? null;
-        $searchQ  = $_GET['q']   ?? '';
+        $billId        = $_GET['id'] ?? null;
+        $searchQ       = $_GET['q']  ?? '';
         $searchResults = [];
-        $bill = null;
+        $bill          = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'pay') {
-            // TODO: Update bill status = paid
-            // TODO: Update prescription status = paid (ready for pharmacist)
-            // TODO: Generate invoice PDF
-            // TODO: Deduct from stock if applicable
-            $invoiceCode = 'INV' . strtoupper(substr(uniqid(), -6));
-            $this->smarty->assign('success_message', "Thanh toán thành công! Mã hóa đơn: <strong>{$invoiceCode}</strong>");
+            $billId        = $_POST['bill_id']       ?? null;
+            $payMethod     = $_POST['payment_method'] ?? 'cash';
+            $amtReceived   = (int)($_POST['amount_received'] ?? 0);
+
+            if ($billId && $this->billModel) {
+                $invoiceCode = 'INV-' . strtoupper(substr(uniqid(), -6));
+                $user        = $_SESSION['user'];
+                $cashierId   = (string)($user['_id'] ?? '');
+                $cashierName = $user['fullName'] ?? $user['full_name'] ?? $user['username'] ?? 'Thu ngân';
+
+                $this->billModel->markPaid($billId, [
+                    'invoice_code'    => $invoiceCode,
+                    'payment_method'  => $payMethod,
+                    'amount_received' => $amtReceived,
+                    'cashier_id'      => $cashierId,
+                    'cashier_name'    => $cashierName,
+                ]);
+
+                // Cập nhật trạng thái đơn thuốc → pharmacist có thể phát
+                $bill = $this->billModel->getBillById($billId);
+                if ($bill && !empty($bill['prescription_id']) && $this->prescriptionModel) {
+                    // Prescription vẫn ở 'pending' (pharmacist thấy là "chờ phát")
+                    // Không cần đổi status vì 'pending' = chờ phát trong context pharmacist
+                }
+
+                $this->smarty->assign('success_message',
+                    "Thanh toán thành công! Mã hóa đơn: <strong>{$invoiceCode}</strong>"
+                );
+            } else {
+                $this->smarty->assign('error_message', 'Không tìm thấy hóa đơn. Vui lòng thử lại.');
+            }
+
+            // Reset billId để hiển thị trang tìm kiếm sau khi thanh toán
+            $billId = null;
         }
 
-        if ($billId) {
-            // TODO: Query bill from MongoDB by id
-            $bill = null;
-        } elseif ($searchQ) {
-            // TODO: Search bills
-            $searchResults = [];
+        if ($billId && $this->billModel) {
+            $bill = $this->billModel->getBillById($billId);
+            if (!$bill) {
+                $this->smarty->assign('error_message', 'Không tìm thấy hóa đơn.');
+            }
+        } elseif ($searchQ && $this->billModel) {
+            $searchResults = $this->billModel->searchPendingBills($searchQ);
         }
 
-        $this->smarty->assign('bill', $bill);
-        $this->smarty->assign('search_q', $searchQ);
+        $this->smarty->assign('bill',           $bill);
+        $this->smarty->assign('search_q',       $searchQ);
         $this->smarty->assign('search_results', $searchResults);
-        $this->smarty->assign('pending_count', 0);
         $this->smarty->display('cashier/billing.tpl');
     }
 
+    // ─── Chờ thanh toán ───────────────────────────────────────────────────────
+
     private function pending()
     {
-        // TODO: Query all unpaid bills from MongoDB
-        $this->smarty->assign('pending_bills', []);
+        $pendingBills = $this->billModel ? $this->billModel->getPendingBills() : [];
+        $this->smarty->assign('pending_bills', $pendingBills);
         $this->smarty->display('cashier/pending.tpl');
     }
+
+    // ─── Lịch sử ──────────────────────────────────────────────────────────────
 
     private function history()
     {
         if (($_GET['action'] ?? '') === 'export') {
-            // TODO: Export to Excel
+            // Export Excel yêu cầu thư viện PhpSpreadsheet — chưa cài
+            $this->smarty->assign('error_message', 'Tính năng xuất Excel chưa được kích hoạt.');
         }
-        $filter = ['q' => $_GET['q'] ?? '', 'date_from' => $_GET['date_from'] ?? '', 'date_to' => $_GET['date_to'] ?? '', 'method' => $_GET['method'] ?? ''];
-        $this->smarty->assign('history', []);
-        $this->smarty->assign('filter', $filter);
+
+        $filter  = [
+            'q'         => $_GET['q']         ?? '',
+            'date_from' => $_GET['date_from'] ?? '',
+            'date_to'   => $_GET['date_to']   ?? '',
+            'method'    => $_GET['method']    ?? '',
+        ];
+        $history = $this->billModel ? $this->billModel->getHistory($filter) : [];
+
+        $this->smarty->assign('history', $history);
+        $this->smarty->assign('filter',  $filter);
         $this->smarty->display('cashier/history.tpl');
     }
+
+    // ─── Tạm ứng ──────────────────────────────────────────────────────────────
 
     private function advance()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // TODO: Record advance payment
+            // TODO: Lưu tạm ứng vào collection 'advances'
             $this->smarty->assign('success_message', 'Đã ghi nhận tạm ứng.');
         }
         $this->smarty->assign('advances', []);
-        // Reuse billing page with advance mode
-        $this->smarty->display('cashier/billing.tpl');
+        $this->smarty->display('cashier/advance.tpl');
     }
+
+    // ─── BHYT ─────────────────────────────────────────────────────────────────
 
     private function insurance()
     {
-        $this->smarty->assign('insurance_bills', []);
-        $this->smarty->assign('filter', ['q' => $_GET['q'] ?? '']);
-        $this->smarty->display('cashier/pending.tpl');
+        $filter       = ['q' => $_GET['q'] ?? ''];
+        $pendingBills = [];
+
+        if ($this->billModel) {
+            $pendingBills = $this->billModel->getPendingBills();
+            // Lọc chỉ lấy hóa đơn có bhyt_code
+            $pendingBills = array_filter($pendingBills, fn($b) => !empty($b['bhyt_code']));
+            $pendingBills = array_values($pendingBills);
+
+            if (!empty($filter['q'])) {
+                $q = mb_strtolower($filter['q']);
+                $pendingBills = array_filter($pendingBills, function ($b) use ($q) {
+                    return str_contains(mb_strtolower($b['patient_name'] ?? ''), $q)
+                        || str_contains(mb_strtolower($b['bhyt_code']    ?? ''), $q);
+                });
+                $pendingBills = array_values($pendingBills);
+            }
+        }
+
+        $this->smarty->assign('pending_bills',   $pendingBills);
+        $this->smarty->assign('insurance_bills', $pendingBills);
+        $this->smarty->assign('filter',          $filter);
+        $this->smarty->display('cashier/insurance.tpl');
     }
+
+    // ─── Báo cáo ──────────────────────────────────────────────────────────────
 
     private function reports()
     {
         if (($_GET['action'] ?? '') === 'export') {
-            // TODO: Export revenue report
+            $this->smarty->assign('error_message', 'Tính năng xuất báo cáo chưa được kích hoạt.');
         }
-        $filter = ['period' => $_GET['period'] ?? '30', 'date_from' => $_GET['date_from'] ?? '', 'date_to' => $_GET['date_to'] ?? ''];
-        $this->smarty->assign('report', ['total_revenue'=>'0đ','total_invoices'=>0,'cash_total'=>'0đ','transfer_total'=>'0đ','qr_total'=>'0đ']);
-        $this->smarty->assign('filter', $filter);
+
+        $period   = (int)($_GET['period']    ?? 30);
+        $dateFrom = $_GET['date_from']       ?? date('Y-m-d', strtotime("-{$period} days"));
+        $dateTo   = $_GET['date_to']         ?? date('Y-m-d');
+
+        $filter = [
+            'period'    => (string)$period,
+            'date_from' => $dateFrom,
+            'date_to'   => $dateTo,
+        ];
+
+        $report = $this->billModel
+            ? $this->billModel->getRevenueStats($dateFrom, $dateTo)
+            : ['total_revenue' => '0đ', 'total_invoices' => 0, 'cash_total' => '0đ', 'transfer_total' => '0đ', 'qr_total' => '0đ'];
+
+        $this->smarty->assign('report',       $report);
+        $this->smarty->assign('filter',       $filter);
         $this->smarty->assign('top_services', []);
-        $this->smarty->display('admin/reports.tpl');
+        $this->smarty->display('cashier/reports.tpl');
+    }
+
+    // ─── Helpers ──────────────────────────────────────────────────────────────
+
+    private function emptyStats()
+    {
+        return [
+            'today_revenue'   => '0đ',
+            'pending_count'   => 0,
+            'paid_today'      => 0,
+            'advance_today'   => '0đ',
+            'cash_today'      => '0đ',
+            'transfer_today'  => '0đ',
+            'qr_today'        => '0đ',
+            'insurance_today' => '0đ',
+        ];
     }
 }

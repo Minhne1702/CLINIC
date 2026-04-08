@@ -47,7 +47,7 @@
             </td>
             <td>
               {if $drug.stock_qty >= $drug.qty}
-              <label class="checkbox-label"><input type="checkbox" class="dispense-check" data-drug="{$drug._id}" checked> Đủ</label>
+              <label class="checkbox-label"><input type="checkbox" class="dispense-check" data-drug="{$drug.drug_id|default:''}" checked> Đủ</label>
               {else}
               <span class="text-danger" style="font-size:12px">Không đủ</span>
               {/if}
@@ -63,9 +63,7 @@
       {/if}
     </div>
     <div class="admin-card__footer">
-      <form action="{$BASE_URL}/" method="POST">
-        <input type="hidden" name="role" value="pharmacist">
-        <input type="hidden" name="page" value="dispensing">
+      <form action="{$BASE_URL}/?role=pharmacist&page=dispensing" method="POST">
         <input type="hidden" name="action" value="dispense">
         <input type="hidden" name="prescription_id" value="{$prescription._id}">
         <div style="display:flex;gap:.75rem;flex-wrap:wrap">

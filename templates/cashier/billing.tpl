@@ -67,9 +67,7 @@
     </div>
 
     <div class="admin-card__footer">
-      <form action="{$BASE_URL}/" method="POST" class="appt-form">
-        <input type="hidden" name="role" value="cashier">
-        <input type="hidden" name="page" value="billing">
+      <form action="{$BASE_URL}/?page=billing" method="POST" class="appt-form">
         <input type="hidden" name="action" value="pay">
         <input type="hidden" name="bill_id" value="{$bill._id}">
         <div class="form-row-2" style="margin-bottom:1rem">
