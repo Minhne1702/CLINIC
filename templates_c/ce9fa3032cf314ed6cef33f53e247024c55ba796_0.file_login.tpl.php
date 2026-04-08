@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 07:34:56
+/* Smarty version 5.8.0, created on 2026-04-08 03:54:42
   from 'file:guest/login.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d4b3a050d582_58977230',
+  'unifunc' => 'content_69d5d18219e297_57272362',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '8d6949a5569df14fefd6e4bad626e9208e6ee048' => 
+    'ce9fa3032cf314ed6cef33f53e247024c55ba796' => 
     array (
       0 => 'guest/login.tpl',
-      1 => 1775546560,
+      1 => 1775611356,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d4b3a050d582_58977230 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
+function content_69d5d18219e297_57272362 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\guest';
 $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đăng nhập — MediCare",'active_page'=>"login"), (int) 0, $_smarty_current_dir);
 ?>
 

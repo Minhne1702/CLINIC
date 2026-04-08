@@ -8,13 +8,13 @@
 <div class="admin-card">
   <div class="admin-card__header"><h3>Phiếu nhập kho</h3></div>
   <div class="admin-card__body">
-    <form action="{$BASE_URL}/" method="POST" class="appt-form">
-      <input type="hidden" name="role" value="pharmacist"><input type="hidden" name="page" value="stock-in"><input type="hidden" name="action" value="save">
+    <form action="{$BASE_URL}/?role=pharmacist&page=stock-in" method="POST" class="appt-form">
+      <input type="hidden" name="action" value="save">
       <div class="form-row-2">
         <div class="form-group"><label>Nhà cung cấp</label><input type="text" name="supplier" placeholder="Tên nhà cung cấp" value="{$form.supplier|default:''}"></div>
-        <div class="form-group"><label>Ngày nhập <span class="required">*</span></label><input type="date" name="import_date" value="{$smarty.now|date_format:'%Y-%m-%d'}" required></div>
+        <div class="form-group"><label>Ngày nhập <span class="required">*</span></label><input type="date" name="import_date" value="{$form.import_date|default:''}" required></div>
       </div>
-      <div class="form-group"><label>Ghi chú</label><input type="text" name="note" placeholder="Ghi chú phiếu nhập..."></div>
+      <div class="form-group"><label>Ghi chú</label><input type="text" name="note" placeholder="Ghi chú phiếu nhập..." value="{$form.note|default:''}"></div>
 
       <div style="margin-top:1.5rem">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
@@ -38,12 +38,21 @@
 {include file="layout/footer.tpl"}
 <script>
 const drugOptions = {$drug_options_json|default:'[]'};
-function addStockRow() {
+const preselectedDrugId = '{$preselected_drug_id|default:''}';
+
+function buildDrugSelect(selectedId) {
+  const opts = drugOptions.map(d =>
+    `<option value="${d._id}"${d._id === selectedId ? ' selected' : ''}>${d.name}</option>`
+  ).join('');
+  return `<select name="drug_id[]" style="width:200px"><option value="">-- Chọn thuốc --</option>${opts}</select>`;
+}
+
+function addStockRow(selectedId) {
   document.getElementById('emptyStockRow')?.remove();
   const tbody = document.getElementById('stockRows');
   const tr = document.createElement('tr');
   tr.innerHTML = `
-    <td><select name="drug_id[]" style="width:200px"><option value="">-- Chọn thuốc --</option>${drugOptions.map(d=>`<option value="${d._id}">${d.name}</option>`).join('')}</select></td>
+    <td>${buildDrugSelect(selectedId || '')}</td>
     <td><input type="text" name="lot_number[]" placeholder="LOT001" style="width:90px"></td>
     <td><input type="date" name="expiry_date[]" style="width:140px"></td>
     <td><input type="number" name="qty[]" placeholder="100" min="1" style="width:80px" required></td>
@@ -52,5 +61,10 @@ function addStockRow() {
     <td><button type="button" class="action-btn action-btn--danger" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button></td>
   `;
   tbody.appendChild(tr);
+}
+
+// Tự động thêm dòng nếu có drug được pre-select từ trang tồn kho
+if (preselectedDrugId) {
+  addStockRow(preselectedDrugId);
 }
 </script>

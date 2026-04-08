@@ -71,8 +71,8 @@ input, select, textarea, button { font-family: var(--font); }
 }
 .sidebar__toggle:hover { color: #fff; }
 .sidebar.collapsed .sidebar__logo-text,
-.sidebar.collapsed .sidebar__toggle,
 .sidebar.collapsed .sidebar__section-label { display: none; }
+.sidebar.collapsed .sidebar__toggle { position: absolute; top: 16px; right: 8px; }
 .sidebar.collapsed .sidebar__user-info { display: none; }
 
 .sidebar__nav {

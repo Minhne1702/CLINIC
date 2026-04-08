@@ -39,7 +39,7 @@
         </td>
         <td><div class="table-actions">
           <a href="{$BASE_URL}/?role=pharmacist&page=dispensing&id={$rx._id}" class="btn-admin-primary" style="font-size:12px;padding:.35rem .75rem"><i class="fa-solid fa-capsules"></i> Phát thuốc</a>
-          <a href="{$BASE_URL}/?role=pharmacist&page=prescriptions&action=view&id={$rx._id}" class="action-btn" title="Xem"><i class="fa-solid fa-eye"></i></a>
+          <a href="{$BASE_URL}/?role=pharmacist&page=dispensing&id={$rx._id}" class="action-btn" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
         </div></td>
       </tr>
       {foreachelse}<tr><td colspan="8" class="table-empty">Không có đơn thuốc nào</td></tr>

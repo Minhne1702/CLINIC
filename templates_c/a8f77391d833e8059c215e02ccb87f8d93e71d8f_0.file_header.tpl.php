@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 07:21:11
+/* Smarty version 5.8.0, created on 2026-04-08 03:54:40
   from 'file:layout/header.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d4b0679c9383_73819023',
+  'unifunc' => 'content_69d5d18002b263_32581639',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'e486d1759af99fea53ebed6c74b76d7bdcadb382' => 
+    'a8f77391d833e8059c215e02ccb87f8d93e71d8f' => 
     array (
       0 => 'layout/header.tpl',
-      1 => 1775546460,
+      1 => 1775611356,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_69d4b0679c9383_73819023 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
+function content_69d5d18002b263_32581639 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 <link rel="stylesheet" href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
 /assets/css/main.css">
   <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_124122277969d4b0679a8e95_51928310', "extra_css");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_164976674769d5d180009564_16432557', "extra_css");
 ?>
 
 </head>
@@ -141,10 +141,10 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_124122277969d
 <main class="main-content">
 <?php }
 /* {block "extra_css"} */
-class Block_124122277969d4b0679a8e95_51928310 extends \Smarty\Runtime\Block
+class Block_164976674769d5d180009564_16432557 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';
 }
 }
 /* {/block "extra_css"} */
