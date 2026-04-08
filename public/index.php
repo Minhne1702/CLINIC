@@ -8,6 +8,7 @@ session_start();
 // 2. Nạp Composer Autoload lên ĐẦU TIÊN (Để PHP biết Smarty là ai)
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Controllers\AuthControllers\AuthController;
 // 3. Khai báo sử dụng Class
 use Smarty\Smarty;
 
@@ -86,6 +87,12 @@ switch ($page) {
         break;
     case 'google-auth':
         $authController->googleLogin();
+        break;
+    case 'send-otp':
+        $authController->sendOTP();
+        break;
+    case 'verify-otp':
+        $authController->verifyOTP();
         break;
     case 'about':
         $smarty->assign('active_page', 'about');

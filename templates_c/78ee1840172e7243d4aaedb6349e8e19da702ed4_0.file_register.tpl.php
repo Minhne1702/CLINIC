@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-07 08:38:03
+/* Smarty version 5.8.0, created on 2026-04-08 02:48:08
   from 'file:guest/register.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d4c26b58bea2_58391558',
+  'unifunc' => 'content_69d5c1e8c97020_24097865',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '78ee1840172e7243d4aaedb6349e8e19da702ed4' => 
     array (
       0 => 'guest/register.tpl',
-      1 => 1775551076,
+      1 => 1775616459,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d4c26b58bea2_58391558 (\Smarty\Template $_smarty_tpl) {
+function content_69d5c1e8c97020_24097865 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
 $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đăng ký — MediCare",'active_page'=>"register"), (int) 0, $_smarty_current_dir);
 ?>
@@ -61,8 +61,8 @@ $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id
 </div>
         <?php }?>
 
-        <form action="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
-/?page=register" method="POST" class="appt-form">
+<form action="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?page=send-otp" method="POST" class="appt-form">
           <div class="form-row">
             <div class="form-group">
               <label>Họ và tên <span class="required">*</span></label>
@@ -130,7 +130,7 @@ $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id
               Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a>
             </label>
           </div>
-              <button type="submit" name="btn_register" class="btn-submit">Tạo tài khoản</button>
+<button type="submit" name="btn_register" class="btn-submit">Tiếp tục & Nhận mã OTP</button>
         </form>
 
         <div class="auth-divider"><span>hoặc</span></div>

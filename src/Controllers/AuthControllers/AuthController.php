@@ -1,15 +1,26 @@
 <?php
+namespace Controllers\AuthControllers;
+
+use MongoDB\BSON\UTCDateTime;
+use Google\Service\Oauth2;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+// use Twilio\Rest\Client;
 class AuthController
 {
     private $userModel;
     private $smarty;
+    // private $twilioSid;
+    // private $twilioToken;
+    // private $verifySid;
 
     public function __construct($userModel, $smarty)
     {
         $this->userModel = $userModel;
         $this->smarty = $smarty;
+        // $this->twilioSid = $_SERVER['TWILIO_SID'] ?? getenv('TWILIO_SID');
+        // $this->twilioToken = $_SERVER['TWILIO_TOKEN'] ?? getenv('TWILIO_TOKEN');
+        // $this->verifySid = $_SERVER['TWILIO_VERIFY_SID'] ?? getenv('TWILIO_VERIFY_SID');
     }
 
     public function login()
@@ -63,7 +74,7 @@ class AuthController
                 'email'    => $email,
                 'password' => $hashedPassword,
                 'role'     => 'patient',
-                'createdAt' => new MongoDB\BSON\UTCDateTime()
+                'createdAt' => new UTCDateTime()
             ];
 
             $userId = $this->userModel->createUser($userData);
@@ -117,7 +128,7 @@ class AuthController
             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
             $client->setAccessToken($token);
 
-            $googleService = new Google\Service\Oauth2($client);
+            $googleService = new Oauth2($client);
             $data = $googleService->userinfo->get();
 
             $email = $data->email;
@@ -231,8 +242,105 @@ class AuthController
             $mail->send();
             return true;
         } catch (Exception $e) {
-            // Tui tạm đóng cái echo lỗi này lại để không bị in ra trên màn hình làm xấu web
-            // error_log($mail->ErrorInfo); 
+            return false;
+        }
+    }
+    // private function formatPhoneNumber($phone)
+    // {
+    //     $phone = trim($phone);
+    //     if (strpos($phone, '0') === 0) {
+    //         return '+84' . substr($phone, 1);
+    //     }
+    //     return $phone;
+    // }
+    public function sendOTP()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = trim($_POST['email'] ?? '');
+            $otp = rand(100000, 999999);
+
+            $_SESSION['temp_otp'] = $otp;
+            $_SESSION['temp_email'] = $email;
+            $_SESSION['register_data'] = $_POST;
+
+            if ($this->sendOTPEmail($email, $otp)) {
+                header("Location: index.php?page=verify-otp");
+                exit;
+            } else {
+                $this->smarty->assign('error_message', 'Lỗi: Không thể gửi email xác thực!');
+                $this->smarty->display('guest/register.tpl');
+            }
+        }
+    }
+
+    public function verifyOTP()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_verify'])) {
+            $userOtp = trim($_POST['otp'] ?? '');
+            $systemOtp = $_SESSION['temp_otp'] ?? '';
+
+            if ($userOtp == $systemOtp) {
+                $data = $_SESSION['register_data'];
+                $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+
+                $userData = [
+                    'fullName'  => $data['fullName'],
+                    'phone'     => $data['phone'],
+                    'email'     => $data['email'],
+                    'password'  => $hashedPassword,
+                    'role'      => 'patient',
+                    'createdAt' => new \MongoDB\BSON\UTCDateTime()
+                ];
+
+                $userId = $this->userModel->createUser($userData);
+
+                if ($userId) {
+                    unset($_SESSION['temp_otp'], $_SESSION['temp_email'], $_SESSION['register_data']);
+                    $_SESSION['user'] = [
+                        'id'       => (string) $userId,
+                        'email'    => $data['email'],
+                        'fullName' => $data['fullName'],
+                        'role'     => 'patient',
+                    ];
+                    header("Location: index.php");
+                    exit;
+                }
+            } else {
+                $this->smarty->assign('error_message', 'Mã OTP không chính xác!');
+            }
+        }
+        $this->smarty->display('guest/verify_otp.tpl');
+    }
+
+    private function sendOTPEmail($toEmail, $otp)
+    {
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $_SERVER['EMAIL_ACCOUNT'] ?? getenv('EMAIL_ACCOUNT');
+            $mail->Password   = $_SERVER['EMAIL_PASSWORD'] ?? getenv('EMAIL_PASSWORD');
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
+            $mail->CharSet    = "UTF-8";
+
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                ]
+            ];
+
+            $mail->setFrom($mail->Username, 'MediCare Clinic');
+            $mail->addAddress($toEmail);
+            $mail->isHTML(true);
+            $mail->Subject = 'Mã xác thực MediCare';
+            $mail->Body    = "<h3>Mã xác thực của bạn là: <b style='color:red;'>$otp</b></h3>";
+
+            return $mail->send();
+        } catch (Exception $e) {
             return false;
         }
     }

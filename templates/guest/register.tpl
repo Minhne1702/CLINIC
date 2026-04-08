@@ -31,7 +31,7 @@
         <div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>
         {/if}
 
-        <form action="{$BASE_URL}/?page=register" method="POST" class="appt-form">
+<form action="{$BASE_URL}/?page=send-otp" method="POST" class="appt-form">
           <div class="form-row">
             <div class="form-group">
               <label>Họ và tên <span class="required">*</span></label>
@@ -96,7 +96,7 @@
               Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a>
             </label>
           </div>
-              <button type="submit" name="btn_register" class="btn-submit">Tạo tài khoản</button>
+<button type="submit" name="btn_register" class="btn-submit">Tiếp tục & Nhận mã OTP</button>
         </form>
 
         <div class="auth-divider"><span>hoặc</span></div>
