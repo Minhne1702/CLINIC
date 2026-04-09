@@ -8,9 +8,13 @@ class UserModel
         $this->collection = $db->selectCollection('users');
     }
 
-    public function checkEmailExists($email)
+    public function findUserByEmail($email)
     {
-        return $this->collection->findOne(['email' => $email]);
+        try {
+            return $this->collection->findOne(['email' => $email]);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     public function getUserById($userId)
@@ -34,8 +38,7 @@ class UserModel
                 'bio'         => '',
                 'experience'  => 0,
             ];
-        }
-        else if ($data['role'] === 'patient' && !isset($data['patientProfile'])) {
+        } else if ($data['role'] === 'patient' && !isset($data['patientProfile'])) {
             $data['patientProfile'] = [
                 'address' => '',
                 'gender'  => '',
@@ -84,21 +87,8 @@ class UserModel
         }
     }
 
-    public function findUserByEmail($email)
+    public function checkEmailExists($email)
     {
-        try {
-            return $this->collection->findOne(['email' => $email]);
-        } catch (Exception $e) {
-            return null;
-        }
-    }
-
-    public function registerUser($data)
-    {
-        try {
-            return $this->collection->insertOne($data);
-        } catch (Exception $e) {
-            return false;
-        }
+        return $this->collection->findOne(['email' => $email]);
     }
 }
