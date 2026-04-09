@@ -57,25 +57,49 @@ class DoctorController
 
     private function examination()
     {
-        $patientId = $_GET['patient_id'] ?? null;
-        $queueId   = $_GET['queue_id']   ?? null;
+        $queueId   = $_GET['queue_id'] ?? 'Q-123'; 
+        $patientId = $_GET['patient_id'] ?? 'P-TEST';
 
+        // 1. XỬ LÝ KHI BÁC SĨ ẤN NÚT "HOÀN TẤT" HOẶC "LƯU NHÁP"
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $status = $_POST['exam_status'] ?? 'draft';
-            // TODO: Save examination record to MongoDB
-            // TODO: Save prescription if drugs provided
-            // TODO: Save lab orders if provided
-            // TODO: If completed → update queue status → notify cashier
-            $this->smarty->assign('success_message', $status === 'completed' ? 'Đã hoàn tất khám. Bệnh nhân chuyển sang thanh toán.' : 'Đã lưu nháp.');
+            // TODO: Kết nối DB để lưu...
+            
+            if ($status === 'completed') {
+                $this->smarty->assign('success_message', '✅ Đã hoàn tất khám. Trạng thái bệnh nhân đã chuyển thành "Chờ thanh toán".');
+            } else {
+                $this->smarty->assign('success_message', '💾 Đã lưu nháp hồ sơ bệnh án thành công.');
+            }
         }
 
-        // TODO: Query patient info from MongoDB
-        $patient = $patientId ? [] : null;
-        $this->smarty->assign('patient',        $patient);
-        $this->smarty->assign('queue_id',       $queueId);
-        $this->smarty->assign('queue_symptoms', '');
-        $this->smarty->assign('recent_records', []);
-        $this->smarty->assign('exam',           []);
+        // =====================================================================
+        // 2. GIẢ LẬP DỮ LIỆU BỆNH NHÂN (Đã sửa lại key cho khớp 100% với .tpl)
+        // =====================================================================
+        $patient = [
+            '_id'             => $patientId,
+            'patient_code'    => 'BN-12345',
+            'full_name'       => 'Bệnh Nhân Test',
+            'birthday'        => '1990-05-15',
+            'gender'          => 'male',      // File .tpl của bạn đang check if == 'male'
+            'blood_type'      => 'O+',
+            'bhyt_code'       => 'DN40123456789',
+            'drug_allergies'  => 'Dị ứng Penicillin',
+            'medical_history' => 'Viêm dạ dày mãn tính',
+            'weight'          => 68
+        ];
+
+        // 3. TRUYỀN DATA RA VIEW
+        $this->smarty->assign('patient', $patient);
+        $this->smarty->assign('queue_id', $queueId);
+        
+        // Truyền thêm các mảng rỗng này để file .tpl không bị lỗi "Undefined variable" 
+        // ở các phần Sinh hiệu ($exam) và Lịch sử khám ($recent_records)
+        $this->smarty->assign('exam', []); 
+        // Khởi tạo sẵn các mảng rỗng để View không bị lỗi Undefined array key
+        $this->smarty->assign('exam', [
+            'prescription_drugs' => [],
+            'lab_orders'         => []
+        ]);
         $this->smarty->display('doctor/examination.tpl');
     }
 
@@ -123,17 +147,46 @@ class DoctorController
 
     private function schedule()
     {
-        $this->smarty->assign('schedule', []);
+        // Lấy thông tin user từ session
+        $user = $_SESSION['user'];
+        // Lấy ID linh hoạt: ưu tiên _id (MongoDB), nếu không có thì lấy id (MySQL), nếu vẫn không có thì gán mặc định để tránh lỗi
+        $doctorId = $user['_id'] ?? $user['id'] ?? 'unknown_doctor';
+
+        // 1. Xử lý khi bác sĩ Submit form đăng ký/cập nhật lịch
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $scheduleData = $_POST['schedule'] ?? [];
+            
+            // TODO: Validate và Lưu vào DB với $doctorId
+            
+            $this->smarty->assign('success_message', 'Đã đăng ký/cập nhật lịch làm việc thành công!');
+        }
+
+        // 2. Lấy lịch hiện tại từ DB để hiển thị lên View
+        // TODO: Query db lấy lịch làm việc tuần này của $doctorId
+        $currentScheduleFromDB = []; // Giả sử query ra được kết quả
+
+        // 3. Khởi tạo mảng chuẩn 7 ngày
+        $standardSchedule = [];
+        for ($i = 0; $i < 7; $i++) {
+            $standardSchedule[$i] = [
+                'morning'   => $currentScheduleFromDB[$i]['morning'] ?? false,
+                'afternoon' => $currentScheduleFromDB[$i]['afternoon'] ?? false,
+                'evening'   => $currentScheduleFromDB[$i]['evening'] ?? false, 
+                'room'      => $currentScheduleFromDB[$i]['room'] ?? '',
+                'note'      => $currentScheduleFromDB[$i]['note'] ?? ''
+            ];
+        }
+
+        $this->smarty->assign('schedule', $standardSchedule);
         $this->smarty->display('doctor/schedule.tpl');
     }
-
     private function profile()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // TODO: Update doctor profile
             $this->smarty->assign('success_message', 'Đã cập nhật hồ sơ.');
         }
-        $this->smarty->assign('patient', []);
-        $this->smarty->display('patient/profile.tpl'); // Reuse profile template
+        $this->smarty->assign('doctor', []);
+        $this->smarty->display('doctor/profile.tpl');
     }
 }

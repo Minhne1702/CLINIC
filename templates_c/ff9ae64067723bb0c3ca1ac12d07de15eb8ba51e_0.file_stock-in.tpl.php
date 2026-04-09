@@ -1,4 +1,31 @@
-{include file="layout/sidebar.tpl" page_title="Nhập kho" active_page="stock-in"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-09 08:29:30
+  from 'file:pharmacist/stock-in.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d7636ac20b58_74703412',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    'ff9ae64067723bb0c3ca1ac12d07de15eb8ba51e' => 
+    array (
+      0 => 'pharmacist/stock-in.tpl',
+      1 => 1775721250,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/sidebar.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d7636ac20b58_74703412 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\pharmacist';
+$_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Nhập kho",'active_page'=>"stock-in"), (int) 0, $_smarty_current_dir);
+?>
 
 <div class="page-toolbar">
   <div class="page-toolbar__left">
@@ -6,33 +33,40 @@
     <p class="page-subtitle">Ghi nhận thuốc nhập về kho</p>
   </div>
   <div class="page-toolbar__right">
-    <a href="{$BASE_URL}/?role=pharmacist&page=inventory" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Tồn kho</a>
+    <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?role=pharmacist&page=inventory" class="btn-admin-ghost"><i class="fa-solid fa-arrow-left"></i> Tồn kho</a>
   </div>
 </div>
 
-{if $success_message}<div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>{/if}
-{if $error_message}<div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>{/if}
+<?php if ($_smarty_tpl->getValue('success_message')) {?><div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> <?php echo $_smarty_tpl->getValue('success_message');?>
+</div><?php }
+if ($_smarty_tpl->getValue('error_message')) {?><div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> <?php echo $_smarty_tpl->getValue('error_message');?>
+</div><?php }?>
 
 <div class="admin-card">
   <div class="admin-card__header"><h3>Phiếu nhập kho</h3></div>
   <div class="admin-card__body">
-    <form action="{$BASE_URL}/?role=pharmacist&page=stock-in" method="POST" class="appt-form">
+    <form action="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?role=pharmacist&page=stock-in" method="POST" class="appt-form">
       <input type="hidden" name="action" value="save">
       
       <div class="form-row-2">
         <div class="form-group">
           <label>Nhà cung cấp</label>
-          <input type="text" name="supplier" placeholder="Tên nhà cung cấp" value="{$form.supplier|default:''}">
+          <input type="text" name="supplier" placeholder="Tên nhà cung cấp" value="<?php echo (($tmp = $_smarty_tpl->getValue('form')['supplier'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+">
         </div>
         <div class="form-group">
           <label>Ngày nhập <span class="required">*</span></label>
-          <input type="date" name="import_date" value="{$form.import_date|default:''}" required>
+          <input type="date" name="import_date" value="<?php echo (($tmp = $_smarty_tpl->getValue('form')['import_date'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+" required>
         </div>
       </div>
       
       <div class="form-group">
         <label>Ghi chú</label>
-        <input type="text" name="note" placeholder="Ghi chú phiếu nhập..." value="{$form.note|default:''}">
+        <input type="text" name="note" placeholder="Ghi chú phiếu nhập..." value="<?php echo (($tmp = $_smarty_tpl->getValue('form')['note'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+">
       </div>
 
       <div style="margin-top:1.5rem">
@@ -63,20 +97,24 @@
 
       <div style="display:flex;gap:.75rem;margin-top:1.5rem">
         <button type="submit" class="btn-admin-primary"><i class="fa-solid fa-floppy-disk"></i> Lưu phiếu nhập kho</button>
-        <a href="{$BASE_URL}/?role=pharmacist&page=inventory" class="btn-admin-ghost">Hủy</a>
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?role=pharmacist&page=inventory" class="btn-admin-ghost">Hủy</a>
       </div>
     </form>
   </div>
 </div>
 
-<script>
+<?php echo '<script'; ?>
+>
 /**
  * Đặt các biến Smarty ra ngoài literal để được biên dịch
  */
-const drugOptions = {$drug_options_json|default:'[]'};
-const preselectedDrugId = '{$preselected_drug_id|default:''}';
+const drugOptions = <?php echo (($tmp = $_smarty_tpl->getValue('drug_options_json') ?? null)===null||$tmp==='' ? '[]' ?? null : $tmp);?>
+;
+const preselectedDrugId = '<?php echo (($tmp = $_smarty_tpl->getValue('preselected_drug_id') ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+';
 
-{literal}
+
 /**
  * Sử dụng literal bao bọc toàn bộ code JS có chứa dấu { } và $
  */
@@ -126,7 +164,10 @@ function addStockRow(selectedId) {
 if (preselectedDrugId) {
     addStockRow(preselectedDrugId);
 }
-{/literal}
-</script>
 
-{include file="layout/footer.tpl"}
+<?php echo '</script'; ?>
+>
+
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+}
+}

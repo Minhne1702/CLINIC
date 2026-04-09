@@ -1,4 +1,31 @@
-{include file="layout/header.tpl" page_title="Đặt lịch khám — MediCare" active_page="appointments"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-09 08:45:07
+  from 'file:guest/appointments.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d767138ad616_09056081',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '6fb3cfa8dfb64ecef1ce1e6db9a1bd3df594e6fa' => 
+    array (
+      0 => 'guest/appointments.tpl',
+      1 => 1775724305,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/header.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d767138ad616_09056081 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\guest';
+$_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đặt lịch khám — MediCare",'active_page'=>"appointments"), (int) 0, $_smarty_current_dir);
+?>
 
 <style>
   .booking-wrapper { max-width: 1000px; margin: 3rem auto; padding: 0 1rem; }
@@ -26,7 +53,8 @@
     <div class="g-step" id="gst-3"><span>3</span> Thông tin liên hệ</div>
   </div>
 
-  <form action="{$BASE_URL}/?page=appointments" method="POST" id="guestBookingForm">
+  <form action="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?page=appointments" method="POST" id="guestBookingForm">
     <input type="hidden" name="action" value="guest_submit">
     <input type="hidden" name="doctor_id" id="g_doctor_id">
     <input type="hidden" name="date" id="g_date">
@@ -40,9 +68,18 @@
                 <label>Chuyên khoa <span class="required">*</span></label>
                 <select name="specialty" id="g_specialty" required style="width:100%; padding:12px; border-radius:8px; border:1px solid #cbd5e1">
                     <option value="">-- Tất cả chuyên khoa --</option>
-                    {foreach from=$specialties item=s}
-                        <option value="{$s.name}">{$s.name}</option>
-                    {/foreach}
+                    <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('specialties'), 's');
+$foreach0DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('s')->value) {
+$foreach0DoElse = false;
+?>
+                        <option value="<?php echo $_smarty_tpl->getValue('s')['name'];?>
+"><?php echo $_smarty_tpl->getValue('s')['name'];?>
+</option>
+                    <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
                 </select>
             </div>
             <div class="form-group">
@@ -61,25 +98,47 @@
     <div class="booking-pane" id="step-2" style="display:none">
        <h3 style="margin-bottom:1.5rem">Bước 2: Chọn bác sĩ & Thời gian</h3>
        <div id="doctor-container">
-          {foreach from=$doctors item=doc}
+          <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('doctors'), 'doc');
+$foreach1DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('doc')->value) {
+$foreach1DoElse = false;
+?>
           <div class="bc-doctor-card">
              <div class="bc-doctor-left">
-                <img src="{$doc.avatar|default:'/assets/img/default-doc.png'}" style="width:80px;height:80px;border-radius:50%">
+                <img src="<?php echo (($tmp = $_smarty_tpl->getValue('doc')['avatar'] ?? null)===null||$tmp==='' ? '/assets/img/default-doc.png' ?? null : $tmp);?>
+" style="width:80px;height:80px;border-radius:50%">
                 <div>
-                   <h4 style="margin:0; color:#0284c7">{$doc.degree} {$doc.full_name}</h4>
-                   <p style="font-size:13px; color:#64748b">{$doc.specialty}</p>
+                   <h4 style="margin:0; color:#0284c7"><?php echo $_smarty_tpl->getValue('doc')['degree'];?>
+ <?php echo $_smarty_tpl->getValue('doc')['full_name'];?>
+</h4>
+                   <p style="font-size:13px; color:#64748b"><?php echo $_smarty_tpl->getValue('doc')['specialty'];?>
+</p>
                 </div>
              </div>
              <div class="bc-doctor-right">
-                <input type="date" class="g-date-picker" value="{$smarty.now|date_format:'%Y-%m-%d'}" style="margin-bottom:10px">
+                <input type="date" class="g-date-picker" value="<?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')(time(),'%Y-%m-%d');?>
+" style="margin-bottom:10px">
                 <div class="bc-time-grid">
-                   {foreach from=['08:00','09:00','10:00','14:00','15:00'] item=t}
-                   <div class="bc-time-slot" onclick="pickTime('{$doc._id}', '{$t}')">{$t}</div>
-                   {/foreach}
+                   <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, array('08:00','09:00','10:00','14:00','15:00'), 't');
+$foreach2DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('t')->value) {
+$foreach2DoElse = false;
+?>
+                   <div class="bc-time-slot" onclick="pickTime('<?php echo $_smarty_tpl->getValue('doc')['_id'];?>
+', '<?php echo $_smarty_tpl->getValue('t');?>
+')"><?php echo $_smarty_tpl->getValue('t');?>
+</div>
+                   <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
                 </div>
              </div>
           </div>
-          {/foreach}
+          <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
        </div>
        <button type="button" onclick="showStep(1)" class="btn-outline">Quay lại</button>
     </div>
@@ -121,8 +180,9 @@
   </form>
 </div>
 
-<script>
-{literal}
+<?php echo '<script'; ?>
+>
+
     function showStep(n) {
         document.querySelectorAll('.booking-pane').forEach(p => p.style.display = 'none');
         document.getElementById('step-' + n).style.display = 'block';
@@ -144,7 +204,10 @@
         
         showStep(3);
     }
-{/literal}
-</script>
 
-{include file="layout/footer.tpl"}
+<?php echo '</script'; ?>
+>
+
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+}
+}

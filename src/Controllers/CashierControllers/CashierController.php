@@ -71,42 +71,48 @@ class CashierController
             $amtReceived   = (int)($_POST['amount_received'] ?? 0);
 
             if ($billId && $this->billModel) {
-                $invoiceCode = 'INV-' . strtoupper(substr(uniqid(), -6));
-                $user        = $_SESSION['user'];
-                $cashierId   = (string)($user['_id'] ?? '');
-                $cashierName = $user['fullName'] ?? $user['full_name'] ?? $user['username'] ?? 'Thu ngân';
-
-                $this->billModel->markPaid($billId, [
-                    'invoice_code'    => $invoiceCode,
-                    'payment_method'  => $payMethod,
-                    'amount_received' => $amtReceived,
-                    'cashier_id'      => $cashierId,
-                    'cashier_name'    => $cashierName,
-                ]);
-
-                // Cập nhật trạng thái đơn thuốc → pharmacist có thể phát
+                // Lấy thông tin hóa đơn trước khi cập nhật
                 $bill = $this->billModel->getBillById($billId);
-                if ($bill && !empty($bill['prescription_id']) && $this->prescriptionModel) {
-                    // Prescription vẫn ở 'pending' (pharmacist thấy là "chờ phát")
-                    // Không cần đổi status vì 'pending' = chờ phát trong context pharmacist
-                }
+                
+                if ($bill) {
+                    $invoiceCode = 'INV-' . strtoupper(substr(uniqid(), -6));
+                    $user        = $_SESSION['user'];
+                    $cashierId   = (string)($user['_id'] ?? '');
+                    $cashierName = $user['fullName'] ?? $user['full_name'] ?? 'Thu ngân';
 
-                $this->smarty->assign('success_message',
-                    "Thanh toán thành công! Mã hóa đơn: <strong>{$invoiceCode}</strong>"
-                );
+                    // 1. Đánh dấu hóa đơn đã thanh toán
+                    $this->billModel->markPaid($billId, [
+                        'invoice_code'    => $invoiceCode,
+                        'payment_method'  => $payMethod,
+                        'amount_received' => $amtReceived,
+                        'cashier_id'      => $cashierId,
+                        'cashier_name'    => $cashierName,
+                    ]);
+
+                    // 2. CẬP NHẬT ĐƠN THUỐC (Để dược sĩ thấy đơn này đã sẵn sàng)
+                    if (!empty($bill['prescription_id']) && $this->prescriptionModel) {
+                        // Chuyển từ 'pending' (chờ khám xong) sang 'paid' (đã thu tiền, chờ phát)
+                        $this->prescriptionModel->updateStatus($bill['prescription_id'], 'paid');
+                    }
+
+                    // Tính tiền thừa để hiển thị
+                    $change = $amtReceived - ($bill['total_amount'] ?? 0);
+                    $msg = "Thanh toán thành công! Mã đơn: <strong>{$invoiceCode}</strong>.";
+                    if ($change > 0) {
+                        $msg .= " Tiền thối lại: <strong>" . number_format($change, 0, ',', '.') . "đ</strong>";
+                    }
+                    
+                    $this->smarty->assign('success_message', $msg);
+                }
             } else {
                 $this->smarty->assign('error_message', 'Không tìm thấy hóa đơn. Vui lòng thử lại.');
             }
-
-            // Reset billId để hiển thị trang tìm kiếm sau khi thanh toán
-            $billId = null;
+            $billId = null; // Quay lại trang tìm kiếm
         }
 
+        // Logic hiển thị View (giữ nguyên của bạn)
         if ($billId && $this->billModel) {
             $bill = $this->billModel->getBillById($billId);
-            if (!$bill) {
-                $this->smarty->assign('error_message', 'Không tìm thấy hóa đơn.');
-            }
         } elseif ($searchQ && $this->billModel) {
             $searchResults = $this->billModel->searchPendingBills($searchQ);
         }
@@ -120,11 +126,11 @@ class CashierController
     // ─── Chờ thanh toán ───────────────────────────────────────────────────────
 
     private function pending()
-    {
-        $pendingBills = $this->billModel ? $this->billModel->getPendingBills() : [];
-        $this->smarty->assign('pending_bills', $pendingBills);
-        $this->smarty->display('cashier/pending.tpl');
-    }
+{
+    $pendingBills = $this->billModel ? $this->billModel->getPendingBills() : [];
+    $this->smarty->assign('pending_bills', $pendingBills);
+    $this->smarty->display('cashier/pending.tpl');
+}
 
     // ─── Lịch sử ──────────────────────────────────────────────────────────────
 
