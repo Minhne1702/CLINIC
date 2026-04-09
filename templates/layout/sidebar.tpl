@@ -213,7 +213,7 @@
       <a href="{$BASE_URL}/?page=dispensing"   class="sidebar__link {if $active_page == 'dispensing'}active{/if}"><i class="fa-solid fa-capsules"></i><span>Phát thuốc</span></a>
 
       <div class="sidebar__section-label">Kho thuốc</div>
-      <a href="{$BASE_URL}/?page=inventory"    class="sidebar__link {if $active_page == 'inventory'}active{/if}"><i class="fa-solid fa-boxes-stacking"></i><span>Tồn kho</span></a>
+      <a href="{$BASE_URL}/?page=inventory"    class="sidebar__link {if $active_page == 'inventory'}active{/if}"><i class="fa-solid fa-boxes-stacked"></i><span>Tồn kho</span></a>
       <a href="{$BASE_URL}/?page=stock-in"     class="sidebar__link {if $active_page == 'stock-in'}active{/if}"><i class="fa-solid fa-truck-ramp-box"></i><span>Nhập kho</span></a>
       <a href="{$BASE_URL}/?page=low-stock"    class="sidebar__link {if $active_page == 'low-stock'}active{/if}"><i class="fa-solid fa-triangle-exclamation"></i><span>Sắp hết hàng</span></a>
       <a href="{$BASE_URL}/?page=expiring"     class="sidebar__link {if $active_page == 'expiring'}active{/if}"><i class="fa-regular fa-calendar-xmark"></i><span>Sắp hết hạn</span></a>

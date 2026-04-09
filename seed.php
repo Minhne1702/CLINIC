@@ -5,30 +5,106 @@ require_once __DIR__ . '/config/db.php';
 try {
     $db = (new Database())->getDb();
 
+    // ─── 0. Specialties (Chuyên khoa) - TẠO TRƯỚC ĐỂ LẤY ID ───────────────
+    $specCol = $db->selectCollection('specialties');
+    $specCol->deleteMany([]);
+
+    $specialtiesData = [
+        ['name' => 'Tim mạch', 'icon' => 'fa-solid fa-heart-pulse'],
+        ['name' => 'Nhi khoa', 'icon' => 'fa-solid fa-baby'],
+        ['name' => 'Da liễu', 'icon' => 'fa-solid fa-hand-dots'],
+        ['name' => 'Nha khoa', 'icon' => 'fa-solid fa-tooth'],
+        ['name' => 'Tiêu hóa', 'icon' => 'fa-solid fa-utensils'],
+        ['name' => 'Mắt (Nhãn khoa)', 'icon' => 'fa-solid fa-eye'],
+        ['name' => 'Thần kinh', 'icon' => 'fa-solid fa-brain'],
+        ['name' => 'Tai Mũi Họng', 'icon' => 'fa-solid fa-ear-listen'],
+        ['name' => 'Cơ xương khớp', 'icon' => 'fa-solid fa-bone']
+    ];
+
+    $insertedSpecs = [];
+    foreach ($specialtiesData as $s) {
+        $s['is_active'] = true;
+        $s['created_at'] = new MongoDB\BSON\UTCDateTime();
+        $result = $specCol->insertOne($s);
+        $insertedSpecs[$s['name']] = $result->getInsertedId();
+    }
+
     // ─── 1. Users ─────────────────────────────────────────────────────────────
     $users = $db->selectCollection('users');
     $users->deleteMany([]);
 
     $userData = [
         ['fullName' => 'Admin System',      'email' => 'admin@gmail.com',       'role' => 'admin'],
-        ['fullName' => 'BS. Nguyễn Văn Huy','email' => 'doctor@gmail.com',      'role' => 'doctor'],
         ['fullName' => 'Lễ Tân Thúy Nga',  'email' => 'receptionist@gmail.com','role' => 'receptionist'],
         ['fullName' => 'Bệnh Nhân Test',    'email' => 'patient@gmail.com',     'role' => 'patient'],
         ['fullName' => 'Thu Ngân Test',     'email' => 'cashier@gmail.com',     'role' => 'cashier'],
         ['fullName' => 'Dược Sĩ Test',     'email' => 'pharmacist@gmail.com',  'role' => 'pharmacist'],
+        
+        // --- THÊM DANH SÁCH BÁC SĨ ---
+        [
+            'fullName' => 'BS. Nguyễn Văn Huy',
+            'email' => 'doctor@gmail.com',
+            'role' => 'doctor',
+            'specialty_id' => (string)$insertedSpecs['Tim mạch'],
+            'specialty' => 'Tim mạch',
+            'degree' => 'ThS. Bác sĩ',
+            'rating' => 4.9,
+            'review_count' => 124,
+            'avatar' => 'https://ui-avatars.com/api/?name=Nguyen+Van+Huy&background=0284c7&color=fff&size=128'
+        ],
+        [
+            'fullName' => 'BS. Trần Thị Bé',
+            'email' => 'doctor2@gmail.com',
+            'role' => 'doctor',
+            'specialty_id' => (string)$insertedSpecs['Nhi khoa'],
+            'specialty' => 'Nhi khoa',
+            'degree' => 'BS. CKI',
+            'rating' => 4.8,
+            'review_count' => 89,
+            'avatar' => 'https://ui-avatars.com/api/?name=Tran+Thi+Be&background=10b981&color=fff&size=128'
+        ],
+        [
+            'fullName' => 'BS. Lê Hoàng Minh',
+            'email' => 'doctor3@gmail.com',
+            'role' => 'doctor',
+            'specialty_id' => (string)$insertedSpecs['Da liễu'],
+            'specialty' => 'Da liễu',
+            'degree' => 'TS. Bác sĩ',
+            'rating' => 5.0,
+            'review_count' => 312,
+            'avatar' => 'https://ui-avatars.com/api/?name=Le+Hoang+Minh&background=f59e0b&color=fff&size=128'
+        ],
+        [
+            'fullName' => 'BS. Phạm Ngọc Hà',
+            'email' => 'doctor4@gmail.com',
+            'role' => 'doctor',
+            'specialty_id' => (string)$insertedSpecs['Tiêu hóa'],
+            'specialty' => 'Tiêu hóa',
+            'degree' => 'BS. CKII',
+            'rating' => 4.7,
+            'review_count' => 56,
+            'avatar' => 'https://ui-avatars.com/api/?name=Pham+Ngoc+Ha&background=8b5cf6&color=fff&size=128'
+        ]
     ];
 
     $insertedUsers = [];
+    $doctorIds = []; // Mảng chứa ID các bác sĩ
+    
     foreach ($userData as $u) {
         $u['phone']     = '0123456789';
         $u['password']  = password_hash('123456', PASSWORD_BCRYPT);
         $u['isActive']  = true;
         $u['createdAt'] = new MongoDB\BSON\UTCDateTime();
         $result = $users->insertOne($u);
+        
         $insertedUsers[$u['role']] = $result->getInsertedId();
+        if ($u['role'] === 'doctor') {
+            $doctorIds[] = $result->getInsertedId(); // Lưu lại ID bác sĩ
+        }
     }
 
-    $doctorId    = $insertedUsers['doctor'];
+    // Lấy ID bác sĩ Huy (người đầu tiên) để dùng cho phần Đơn thuốc/Hóa đơn bên dưới
+    $doctorId    = $doctorIds[0]; 
     $patientId   = $insertedUsers['patient'];
     $patientCode = 'BN-' . strtoupper(substr((string)$patientId, -5));
 
@@ -313,6 +389,7 @@ try {
     }
 
     echo "✅ Seed thành công!\n";
+    echo "   Specialties: " . count($specialtiesData) . " chuyên khoa\n";
     echo "   Users: " . count($userData) . " tài khoản (password: 123456)\n";
     echo "   Drug categories: " . count($catData) . "\n";
     echo "   Drugs: " . count($drugs) . " (có 1 sắp hết hàng, 1 hết hàng, 1 sắp hết hạn)\n";

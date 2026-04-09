@@ -166,29 +166,16 @@ class BillModel
         $arr = (array)$doc;
         $arr['_id'] = (string)$doc['_id'];
 
-        foreach (['created_at', 'paid_at'] as $f) {
-            if (isset($doc[$f]) && $doc[$f] instanceof MongoDB\BSON\UTCDateTime) {
-                $arr[$f] = $doc[$f]->toDateTime()->setTimezone($tz)->getTimestamp();
+        // --- BỔ SUNG: Tạo chuỗi tóm tắt dịch vụ/thuốc ---
+        if (isset($doc['items']) && is_array($doc['items'])) {
+            $descriptions = [];
+            foreach ($doc['items'] as $item) {
+                $descriptions[] = $item['description'] ?? '';
             }
-        }
-
-        if (isset($doc['prescription_id'])) {
-            $arr['prescription_id'] = (string)$doc['prescription_id'];
-        }
-
-        // Tính thời gian chờ cho hóa đơn pending
-        if (isset($arr['created_at']) && ($doc['status'] ?? '') === 'pending') {
-            $mins = max(0, (int)((time() - $arr['created_at']) / 60));
-            $arr['wait_time'] = $mins < 60 ? "{$mins} phút" : round($mins / 60, 1) . " giờ";
-        }
-
-        // Đảm bảo các trường số là int
-        foreach (['subtotal', 'bhyt_amount', 'discount', 'total_amount', 'service_fee', 'drug_fee', 'amount_received'] as $f) {
-            if (isset($doc[$f])) $arr[$f] = (int)$doc[$f];
-        }
-
-        // Chuyển items thành array PHP thuần
-        if (isset($doc['items'])) {
+            // Gộp tên các món đồ thành chuỗi: "Phí khám, Amoxicillin..."
+            $arr['services'] = implode(', ', $descriptions);
+            
+            // Chuyển items thành array PHP thuần (giữ nguyên code cũ của bạn)
             $items = [];
             foreach ($doc['items'] as $item) {
                 $i = (array)$item;
@@ -198,6 +185,29 @@ class BillModel
                 $items[] = $i;
             }
             $arr['items'] = $items;
+        } else {
+            $arr['services'] = '';
+            $arr['items'] = [];
+        }
+
+        // --- CÁC PHẦN DƯỚI GIỮ NGUYÊN ---
+        foreach (['created_at', 'paid_at'] as $f) {
+            if (isset($doc[$f]) && $doc[$f] instanceof MongoDB\BSON\UTCDateTime) {
+                $arr[$f] = $doc[$f]->toDateTime()->setTimezone($tz)->getTimestamp();
+            }
+        }
+        
+        if (isset($doc['prescription_id'])) {
+            $arr['prescription_id'] = (string)$doc['prescription_id'];
+        }
+
+        if (isset($arr['created_at']) && ($doc['status'] ?? '') === 'pending') {
+            $mins = max(0, (int)((time() - $arr['created_at']) / 60));
+            $arr['wait_time'] = $mins < 60 ? "{$mins} phút" : round($mins / 60, 1) . " giờ";
+        }
+
+        foreach (['subtotal', 'bhyt_amount', 'discount', 'total_amount', 'service_fee', 'drug_fee', 'amount_received'] as $f) {
+            if (isset($doc[$f])) $arr[$f] = (int)$doc[$f];
         }
 
         return $arr;

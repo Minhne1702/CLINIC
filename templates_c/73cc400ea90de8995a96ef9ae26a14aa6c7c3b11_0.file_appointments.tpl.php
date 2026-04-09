@@ -1,4 +1,31 @@
-{include file="layout/header.tpl" page_title="Quản lý lịch hẹn" active_page="appointments"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-09 08:57:10
+  from 'file:patient/appointments.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d769e6df97b1_40788898',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '73cc400ea90de8995a96ef9ae26a14aa6c7c3b11' => 
+    array (
+      0 => 'patient/appointments.tpl',
+      1 => 1775725028,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/header.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d769e6df97b1_40788898 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\patient';
+$_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Quản lý lịch hẹn",'active_page'=>"appointments"), (int) 0, $_smarty_current_dir);
+?>
 
 <style>
   .booking-wrapper { max-width: 1000px; margin: 2rem auto 4rem auto; padding: 0 1rem; }
@@ -47,54 +74,73 @@
       <h2 class="page-title"><i class="fa-regular fa-calendar-check" style="color: #0284c7;"></i> Lịch hẹn của tôi</h2>
     </div>
     <div class="page-toolbar__right">
-      <a href="{$BASE_URL|default:$base_url}/?page=book" class="btn-primary" style="background: #0284c7; color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+      <a href="<?php echo (($tmp = $_smarty_tpl->getValue('BASE_URL') ?? null)===null||$tmp==='' ? $_smarty_tpl->getValue('base_url') ?? null : $tmp);?>
+/?page=book" class="btn-primary" style="background: #0284c7; color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
         <i class="fa-solid fa-plus"></i> Đặt lịch mới
       </a>
     </div>
   </div>
   <div class="tabs" style="margin-bottom: 2rem; border-bottom: 1px solid #e2e8f0; display: flex; gap: 2rem;">
-    <a href="?page=appointments&status=all" style="padding: 0.75rem 0; font-weight: 500; text-decoration: none; color: {if $filter.status == 'all'}#0284c7{else}#64748b{/if}; border-bottom: 2px solid {if $filter.status == 'all'}#0284c7{else}transparent{/if};">Tất cả ({$count.all|default:0})</a>
-    <a href="?page=appointments&status=pending" style="padding: 0.75rem 0; font-weight: 500; text-decoration: none; color: {if $filter.status == 'pending'}#0284c7{else}#64748b{/if}; border-bottom: 2px solid {if $filter.status == 'pending'}#0284c7{else}transparent{/if};">Chờ khám ({$count.pending|default:0})</a>
+    <a href="?page=appointments&status=all" style="padding: 0.75rem 0; font-weight: 500; text-decoration: none; color: <?php if ($_smarty_tpl->getValue('filter')['status'] == 'all') {?>#0284c7<?php } else { ?>#64748b<?php }?>; border-bottom: 2px solid <?php if ($_smarty_tpl->getValue('filter')['status'] == 'all') {?>#0284c7<?php } else { ?>transparent<?php }?>;">Tất cả (<?php echo (($tmp = $_smarty_tpl->getValue('count')['all'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+)</a>
+    <a href="?page=appointments&status=pending" style="padding: 0.75rem 0; font-weight: 500; text-decoration: none; color: <?php if ($_smarty_tpl->getValue('filter')['status'] == 'pending') {?>#0284c7<?php } else { ?>#64748b<?php }?>; border-bottom: 2px solid <?php if ($_smarty_tpl->getValue('filter')['status'] == 'pending') {?>#0284c7<?php } else { ?>transparent<?php }?>;">Chờ khám (<?php echo (($tmp = $_smarty_tpl->getValue('count')['pending'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+)</a>
   </div>
 
   <div class="appointments-list">
-    {if isset($appointments) && $appointments|@count > 0}
-      {foreach from=$appointments item=apt}
+    <?php if ((true && ($_smarty_tpl->hasVariable('appointments') && null !== ($_smarty_tpl->getValue('appointments') ?? null))) && $_smarty_tpl->getSmarty()->getModifierCallback('count')($_smarty_tpl->getValue('appointments')) > 0) {?>
+      <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('appointments'), 'apt');
+$foreach0DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('apt')->value) {
+$foreach0DoElse = false;
+?>
       <div class="appt-card">
         <div class="appt-info">
           <div class="appt-date">
-            <strong>{$apt.date|date_format:"%d"}</strong>
-            <span>Thg {$apt.date|date_format:"%m"}</span>
+            <strong><?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')($_smarty_tpl->getValue('apt')['date'],"%d");?>
+</strong>
+            <span>Thg <?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')($_smarty_tpl->getValue('apt')['date'],"%m");?>
+</span>
           </div>
           <div class="appt-details">
-            <h4>BS. {$apt.doctor_name}</h4>
-            <p><i class="fa-solid fa-stethoscope" style="color: #94a3b8; width: 20px;"></i> Khoa {$apt.specialty}</p>
-            <p><i class="fa-regular fa-clock" style="color: #94a3b8; width: 20px;"></i> {$apt.time} | {$apt.date|date_format:"%d/%m/%Y"}</p>
+            <h4>BS. <?php echo $_smarty_tpl->getValue('apt')['doctor_name'];?>
+</h4>
+            <p><i class="fa-solid fa-stethoscope" style="color: #94a3b8; width: 20px;"></i> Khoa <?php echo $_smarty_tpl->getValue('apt')['specialty'];?>
+</p>
+            <p><i class="fa-regular fa-clock" style="color: #94a3b8; width: 20px;"></i> <?php echo $_smarty_tpl->getValue('apt')['time'];?>
+ | <?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')($_smarty_tpl->getValue('apt')['date'],"%d/%m/%Y");?>
+</p>
             <div style="margin-top: 0.5rem;">
                 <span class="badge" style="padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; 
-                    {if $apt.status == 'pending'}background: #fef3c7; color: #d97706;
-                    {elseif $apt.status == 'completed'}background: #dcfce7; color: #15803d;
-                    {else}background: #e0f2fe; color: #0369a1;{/if}">
-                    {$apt.status_text}
+                    <?php if ($_smarty_tpl->getValue('apt')['status'] == 'pending') {?>background: #fef3c7; color: #d97706;
+                    <?php } elseif ($_smarty_tpl->getValue('apt')['status'] == 'completed') {?>background: #dcfce7; color: #15803d;
+                    <?php } else { ?>background: #e0f2fe; color: #0369a1;<?php }?>">
+                    <?php echo $_smarty_tpl->getValue('apt')['status_text'];?>
+
                 </span>
-                <span class="badge" style="background:#f1f5f9; color:#475569; margin-left:5px; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;">Mã: {$apt.code}</span>
+                <span class="badge" style="background:#f1f5f9; color:#475569; margin-left:5px; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;">Mã: <?php echo $_smarty_tpl->getValue('apt')['code'];?>
+</span>
             </div>
           </div>
         </div>
         <div class="appt-actions">
-          <button onclick="openDetailModal('{$apt.id}')" style="background: #0284c7; color: #fff; padding: 0.6rem 1.2rem; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600;">
+          <button onclick="openDetailModal('<?php echo $_smarty_tpl->getValue('apt')['id'];?>
+')" style="background: #0284c7; color: #fff; padding: 0.6rem 1.2rem; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600;">
             <i class="fa-solid fa-qrcode"></i> Xem tiến trình
           </button>
         </div>
       </div>
-      {/foreach}
-    {else}
+      <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
+    <?php } else { ?>
       <div class="empty-state" style="text-align: center; padding: 4rem 1rem; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1;">
         <i class="fa-regular fa-calendar-xmark" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
         <h3 style="color: #334155; margin-bottom: 0.5rem;">Không có lịch hẹn nào</h3>
         <p style="color: #64748b;">Bạn chưa có lịch hẹn nào trong trạng thái này.</p>
       </div>
-    {/if}
+    <?php }?>
   </div>
 
   <div id="detailModal" class="modal-detail">
@@ -138,13 +184,16 @@
 </div> ```
 
 
-{include file="layout/footer.tpl"}
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+?>
 
-<script>
+<?php echo '<script'; ?>
+>
 // Nhận dữ liệu JSON từ Controller
-const appointmentsData = {$appointments_json|default:'[]'};
+const appointmentsData = <?php echo (($tmp = $_smarty_tpl->getValue('appointments_json') ?? null)===null||$tmp==='' ? '[]' ?? null : $tmp);?>
+;
 
-{literal}
+
 function openDetailModal(apptId) {
     const appt = appointmentsData.find(a => a.id === apptId);
     if (!appt) return;
@@ -193,5 +242,7 @@ window.onclick = function(event) {
     const modal = document.getElementById('detailModal');
     if (event.target == modal) closeDetailModal();
 }
-{/literal}
-</script>
+
+<?php echo '</script'; ?>
+><?php }
+}

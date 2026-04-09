@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-08 03:54:40
+/* Smarty version 5.8.0, created on 2026-04-09 08:03:52
   from 'file:layout/footer.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d5d1805fd750_83677696',
+  'unifunc' => 'content_69d75d688a28a8_57178510',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_69d5d1805fd750_83677696 (\Smarty\Template $_smarty_tpl) {
+function content_69d75d688a28a8_57178510 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 $_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)===null||$tmp==='' ? 'guest' ?? null : $tmp), false, NULL);?>
@@ -50,7 +50,7 @@ $_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)
 <?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_144789524369d5d1805f1bf2_14538530', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_40590421969d75d6889a4d3_91548772', "extra_js");
 ?>
 
 </body>
@@ -66,7 +66,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_144789524369d
 /assets/js/admin.js"><?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_140669923269d5d1805fa240_32758720', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1453666669d75d6889dc50_05567892', "extra_js");
 ?>
 
 </body>
@@ -168,7 +168,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_140669923269d
 /assets/js/main.js"><?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_58216332569d5d1805fca91_67031106', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_46526358069d75d688a1305_54197817', "extra_js");
 ?>
 
 
@@ -199,7 +199,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_58216332569d5
 <?php }
 }
 /* {block "extra_js"} */
-class Block_144789524369d5d1805f1bf2_14538530 extends \Smarty\Runtime\Block
+class Block_40590421969d75d6889a4d3_91548772 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';
@@ -207,7 +207,7 @@ $_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';
 }
 /* {/block "extra_js"} */
 /* {block "extra_js"} */
-class Block_140669923269d5d1805fa240_32758720 extends \Smarty\Runtime\Block
+class Block_1453666669d75d6889dc50_05567892 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';
@@ -215,7 +215,7 @@ $_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';
 }
 /* {/block "extra_js"} */
 /* {block "extra_js"} */
-class Block_58216332569d5d1805fca91_67031106 extends \Smarty\Runtime\Block
+class Block_46526358069d75d688a1305_54197817 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\layout';

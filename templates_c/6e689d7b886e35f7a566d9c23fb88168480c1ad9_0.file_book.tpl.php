@@ -1,4 +1,31 @@
-{include file="layout/header.tpl" page_title="Đặt lịch khám" active_page="book"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-09 08:23:30
+  from 'file:patient/book.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d762021b0e17_93151382',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '6e689d7b886e35f7a566d9c23fb88168480c1ad9' => 
+    array (
+      0 => 'patient/book.tpl',
+      1 => 1775704063,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/header.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d762021b0e17_93151382 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\patient';
+$_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đặt lịch khám",'active_page'=>"book"), (int) 0, $_smarty_current_dir);
+?>
 
 <style>
   .booking-wrapper { max-width: 1000px; margin: 2rem auto 4rem auto; padding: 0 1rem; }
@@ -77,7 +104,8 @@
     <div class="booking-step" id="step-ind-3"><span>3</span> <div style="margin-top: 8px;">Xác nhận</div></div>
   </div>
 
-  <form action="{$BASE_URL|default:$base_url}/?page=book" method="POST" id="bookingForm">
+  <form action="<?php echo (($tmp = $_smarty_tpl->getValue('BASE_URL') ?? null)===null||$tmp==='' ? $_smarty_tpl->getValue('base_url') ?? null : $tmp);?>
+/?page=book" method="POST" id="bookingForm">
     <input type="hidden" name="action" value="submit">
     <input type="hidden" name="doctor_id" id="input_doctor_id">
     <input type="hidden" name="doctor_name" id="input_doctor_name">
@@ -113,37 +141,47 @@
         <div class="form-group" style="margin-bottom: 1.5rem;">
           <label style="font-size:15px; font-weight:600; margin-bottom:1rem; display:block;">Chuyên khoa <span style="color:#ef4444">*</span></label>
           <div class="specialty-grid">
-            {if isset($specialties) && $specialties|@count > 0}
-              {foreach from=$specialties item=spec}
+            <?php if ((true && ($_smarty_tpl->hasVariable('specialties') && null !== ($_smarty_tpl->getValue('specialties') ?? null))) && $_smarty_tpl->getSmarty()->getModifierCallback('count')($_smarty_tpl->getValue('specialties')) > 0) {?>
+              <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('specialties'), 'spec');
+$foreach0DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('spec')->value) {
+$foreach0DoElse = false;
+?>
               <label class="specialty-option">
-                <input type="radio" name="specialty_id" value="{$spec._id}" required>
+                <input type="radio" name="specialty_id" value="<?php echo $_smarty_tpl->getValue('spec')['_id'];?>
+" required>
                 <div class="specialty-option__card">
-                  <i class="{$spec.icon|default:'fa-solid fa-stethoscope'}"></i>
-                  <span class="spec-name">{$spec.name}</span>
+                  <i class="<?php echo (($tmp = $_smarty_tpl->getValue('spec')['icon'] ?? null)===null||$tmp==='' ? 'fa-solid fa-stethoscope' ?? null : $tmp);?>
+"></i>
+                  <span class="spec-name"><?php echo $_smarty_tpl->getValue('spec')['name'];?>
+</span>
                 </div>
               </label>
-              {/foreach}
-            {else}
-              {foreach from=[
-                ['id'=>'tm', 'name'=>'Tim mạch', 'icon'=>'fa-solid fa-heart-pulse'],
-                ['id'=>'nk', 'name'=>'Nhi khoa', 'icon'=>'fa-solid fa-baby'],
-                ['id'=>'dl', 'name'=>'Da liễu', 'icon'=>'fa-solid fa-hand-dots'],
-                ['id'=>'nha', 'name'=>'Nha khoa', 'icon'=>'fa-solid fa-tooth'],
-                ['id'=>'th', 'name'=>'Tiêu hóa', 'icon'=>'fa-solid fa-utensils'],
-                ['id'=>'mat', 'name'=>'Mắt (Nhãn khoa)', 'icon'=>'fa-solid fa-eye'],
-                ['id'=>'tk', 'name'=>'Thần kinh', 'icon'=>'fa-solid fa-brain'],
-                ['id'=>'tmh', 'name'=>'Tai Mũi Họng', 'icon'=>'fa-solid fa-ear-listen'],
-                ['id'=>'cxk', 'name'=>'Cơ xương khớp', 'icon'=>'fa-solid fa-bone']
-              ] item=spec}
+              <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
+            <?php } else { ?>
+              <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, array(array('id'=>'tm','name'=>'Tim mạch','icon'=>'fa-solid fa-heart-pulse'),array('id'=>'nk','name'=>'Nhi khoa','icon'=>'fa-solid fa-baby'),array('id'=>'dl','name'=>'Da liễu','icon'=>'fa-solid fa-hand-dots'),array('id'=>'nha','name'=>'Nha khoa','icon'=>'fa-solid fa-tooth'),array('id'=>'th','name'=>'Tiêu hóa','icon'=>'fa-solid fa-utensils'),array('id'=>'mat','name'=>'Mắt (Nhãn khoa)','icon'=>'fa-solid fa-eye'),array('id'=>'tk','name'=>'Thần kinh','icon'=>'fa-solid fa-brain'),array('id'=>'tmh','name'=>'Tai Mũi Họng','icon'=>'fa-solid fa-ear-listen'),array('id'=>'cxk','name'=>'Cơ xương khớp','icon'=>'fa-solid fa-bone')), 'spec');
+$foreach1DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('spec')->value) {
+$foreach1DoElse = false;
+?>
               <label class="specialty-option">
-                <input type="radio" name="specialty_id" value="{$spec.id}" required>
+                <input type="radio" name="specialty_id" value="<?php echo $_smarty_tpl->getValue('spec')['id'];?>
+" required>
                 <div class="specialty-option__card">
-                  <i class="{$spec.icon}"></i>
-                  <span class="spec-name">{$spec.name}</span>
+                  <i class="<?php echo $_smarty_tpl->getValue('spec')['icon'];?>
+"></i>
+                  <span class="spec-name"><?php echo $_smarty_tpl->getValue('spec')['name'];?>
+</span>
                 </div>
               </label>
-              {/foreach}
-            {/if}
+              <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
+            <?php }?>
           </div>
         </div>
 
@@ -162,32 +200,59 @@
       </div>
 
       <div id="doctor-list-container">
-        {if isset($doctors) && $doctors|@count > 0}
-          {foreach from=$doctors item=doc}
+        <?php if ((true && ($_smarty_tpl->hasVariable('doctors') && null !== ($_smarty_tpl->getValue('doctors') ?? null))) && $_smarty_tpl->getSmarty()->getModifierCallback('count')($_smarty_tpl->getValue('doctors')) > 0) {?>
+          <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, $_smarty_tpl->getValue('doctors'), 'doc');
+$foreach2DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('doc')->value) {
+$foreach2DoElse = false;
+?>
           <div class="bc-doctor-card">
             <div class="bc-doctor-left">
               <div class="bc-doctor-avatar">
-                <img src="{$doc.avatar|default:'https://ui-avatars.com/api/?name=Doctor'}" alt="Avatar">
+                <img src="<?php echo (($tmp = $_smarty_tpl->getValue('doc')['avatar'] ?? null)===null||$tmp==='' ? 'https://ui-avatars.com/api/?name=Doctor' ?? null : $tmp);?>
+" alt="Avatar">
               </div>
               <div class="bc-doctor-info">
-                <h4>{$doc.degree|default:'Bác sĩ'} {$doc.full_name}</h4>
-                <p>Bác sĩ chuyên khoa {$doc.specialty}</p>
+                <h4><?php echo (($tmp = $_smarty_tpl->getValue('doc')['degree'] ?? null)===null||$tmp==='' ? 'Bác sĩ' ?? null : $tmp);?>
+ <?php echo $_smarty_tpl->getValue('doc')['full_name'];?>
+</h4>
+                <p>Bác sĩ chuyên khoa <?php echo $_smarty_tpl->getValue('doc')['specialty'];?>
+</p>
                 <p>Khám cho người lớn và trẻ em trên 5 tuổi.</p>
                 <div class="location"><i class="fa-solid fa-location-dot"></i> Hà Nội</div>
               </div>
             </div>
             <div class="bc-doctor-right">
-              <select class="bc-date-select" id="date_picker_{$doc._id}">
-                <option value="{'today'|date_format:'%Y-%m-%d'}">Hôm nay - {'today'|date_format:'%d/%m'}</option>
-                <option value="{'tomorrow'|date_format:'%Y-%m-%d'}">Ngày mai - {'tomorrow'|date_format:'%d/%m'}</option>
-                <option value="{'+2 days'|date_format:'%Y-%m-%d'}">Ngày kia - {'+2 days'|date_format:'%d/%m'}</option>
+              <select class="bc-date-select" id="date_picker_<?php echo $_smarty_tpl->getValue('doc')['_id'];?>
+">
+                <option value="<?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('today','%Y-%m-%d');?>
+">Hôm nay - <?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('today','%d/%m');?>
+</option>
+                <option value="<?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('tomorrow','%Y-%m-%d');?>
+">Ngày mai - <?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('tomorrow','%d/%m');?>
+</option>
+                <option value="<?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('+2 days','%Y-%m-%d');?>
+">Ngày kia - <?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('+2 days','%d/%m');?>
+</option>
               </select>
 
               <div class="bc-schedule-heading"><i class="fa-solid fa-calendar-days"></i> LỊCH KHÁM</div>
               <div class="bc-time-grid">
-                {foreach from=['08:00 - 08:30','09:00 - 09:30','10:00 - 10:30','13:30 - 14:00','14:30 - 15:00','15:30 - 16:00'] item=slot}
-                <div class="bc-time-slot" onclick="selectTimeAndProceed('{$doc._id}', '{$doc.full_name}', '{$slot}')">{$slot}</div>
-                {/foreach}
+                <?php
+$_from = $_smarty_tpl->getSmarty()->getRuntime('Foreach')->init($_smarty_tpl, array('08:00 - 08:30','09:00 - 09:30','10:00 - 10:30','13:30 - 14:00','14:30 - 15:00','15:30 - 16:00'), 'slot');
+$foreach3DoElse = true;
+foreach ($_from ?? [] as $_smarty_tpl->getVariable('slot')->value) {
+$foreach3DoElse = false;
+?>
+                <div class="bc-time-slot" onclick="selectTimeAndProceed('<?php echo $_smarty_tpl->getValue('doc')['_id'];?>
+', '<?php echo $_smarty_tpl->getValue('doc')['full_name'];?>
+', '<?php echo $_smarty_tpl->getValue('slot');?>
+')"><?php echo $_smarty_tpl->getValue('slot');?>
+</div>
+                <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
               </div>
               <p class="bc-hint">Chọn <i class="fa-solid fa-hand-pointer"></i> và đặt (Phí đặt lịch 0đ)</p>
 
@@ -204,8 +269,10 @@
               </div>
             </div>
           </div>
-          {/foreach}
-        {else}
+          <?php
+}
+$_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
+        <?php } else { ?>
           <div class="bc-doctor-card">
             <div class="bc-doctor-left">
               <div class="bc-doctor-avatar"><img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=0284c7&color=fff" alt="Avatar"></div>
@@ -217,7 +284,9 @@
             </div>
             <div class="bc-doctor-right">
               <select class="bc-date-select" id="date_picker_demo">
-                <option value="{'today'|date_format:'%Y-%m-%d'}">Hôm nay - {'today'|date_format:'%d/%m'}</option>
+                <option value="<?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('today','%Y-%m-%d');?>
+">Hôm nay - <?php echo $_smarty_tpl->getSmarty()->getModifierCallback('date_format')('today','%d/%m');?>
+</option>
               </select>
               <div class="bc-schedule-heading"><i class="fa-solid fa-calendar-days"></i> LỊCH KHÁM</div>
               <div class="bc-time-grid">
@@ -226,7 +295,7 @@
               </div>
             </div>
           </div>
-        {/if}
+        <?php }?>
       </div>
     </div>
 
@@ -269,10 +338,12 @@
   </form>
 </div>
 
-{include file="layout/footer.tpl"}
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+?>
 
-<script>
-{literal}
+<?php echo '<script'; ?>
+>
+
   function nextToStep2() {
     if (!document.querySelector('input[name="specialty_id"]:checked')) {
       alert('Vui lòng chọn Chuyên khoa để tiếp tục.');
@@ -318,5 +389,7 @@
     }
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   } 
-{/literal}
-</script>
+
+<?php echo '</script'; ?>
+><?php }
+}

@@ -1,6 +1,5 @@
-{include file="layout/header.tpl" page_title="MediCare — Đặt lịch khám bệnh" active_page="home"}
+{include file="layout/header.tpl" page_title="MediCare — Hệ thống đặt lịch khám bệnh" active_page="home"}
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero__bg-shapes">
     <div class="shape shape--1"></div>
@@ -19,10 +18,12 @@
         <span class="text-accent">tiện lợi</span>
       </h1>
       <p class="hero__desc">
-        Kết nối bạn với hàng trăm bác sĩ chuyên khoa giàu kinh nghiệm.
-        Đặt lịch trực tuyến 24/7, nhận xác nhận ngay lập tức.
+        Kết nối bạn với đội ngũ bác sĩ chuyên gia giàu kinh nghiệm. 
+        Đặt lịch trực tuyến 24/7, nhận xác nhận và số thứ tự ngay lập tức.
       </p>
+      
       <form class="hero__search" action="{$BASE_URL}/" method="GET">
+        <input type="hidden" name="page" value="doctors">
         <div class="search-group">
           <div class="search-field">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -32,25 +33,24 @@
             <i class="fa-solid fa-location-dot"></i>
             <select name="location">
               <option value="">Tất cả khu vực</option>
-              <option value="q1">Quận 1</option>
-              <option value="q3">Quận 3</option>
-              <option value="q7">Quận 7</option>
-              <option value="binh-thanh">Bình Thạnh</option>
-              <option value="thu-duc">Thủ Đức</option>
+              <option value="hcm">TP. Hồ Chí Minh</option>
+              <option value="hn">Hà Nội</option>
+              <option value="dn">Đà Nẵng</option>
             </select>
           </div>
           <button type="submit" class="search-btn">Tìm kiếm</button>
         </div>
       </form>
+
       <div class="hero__chips">
         <span>Tìm nhanh:</span>
-        <a href="{$BASE_URL}/?page=doctors&amp;spec=tim-mach" class="chip">Tim mạch</a>
-        <a href="{$BASE_URL}/?page=doctors&amp;spec=nhi-khoa" class="chip">Nhi khoa</a>
-        <a href="{$BASE_URL}/?page=doctors&amp;spec=da-lieu" class="chip">Da liễu</a>
-        <a href="{$BASE_URL}/?page=doctors&amp;spec=nha-khoa" class="chip">Nha khoa</a>
-        <a href="{$BASE_URL}/?page=doctors&amp;spec=mat" class="chip">Mắt</a>
+        <a href="{$BASE_URL}/?page=book&spec=tim-mach" class="chip">Tim mạch</a>
+        <a href="{$BASE_URL}/?page=book&spec=nhi-khoa" class="chip">Nhi khoa</a>
+        <a href="{$BASE_URL}/?page=book&spec=da-lieu" class="chip">Da liễu</a>
+        <a href="{$BASE_URL}/?page=book&spec=mat" class="chip">Mắt</a>
       </div>
     </div>
+
     <div class="hero__visual" data-animate="fade-left">
       <div class="hero__card hero__card--main">
         <div class="doctor-avatar">
@@ -64,6 +64,7 @@
       </div>
     </div>
   </div>
+
   <div class="hero__statsbar">
     <div class="container">
       <div class="statsbar__grid">
@@ -79,30 +80,35 @@
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="section section--light services">
   <div class="container">
     <div class="section-header" data-animate="fade-up">
       <p class="section-eyebrow">Dịch vụ của chúng tôi</p>
       <h2 class="section-title">Chăm sóc sức khỏe <span class="text-accent">toàn diện</span></h2>
-      <p class="section-desc">Đội ngũ bác sĩ chuyên khoa đầu ngành sẵn sàng hỗ trợ bạn</p>
+      <p class="section-desc">Giải pháp y tế hiện đại giúp bạn kết nối với bác sĩ nhanh nhất</p>
     </div>
     <div class="services__grid" data-animate="stagger">
-      {foreach from=$services item=svc}
-      <a href="{$svc.url}" class="service-card">
-        <div class="service-card__icon" style="--icon-color: {$svc.color}">
-          <i class="{$svc.icon}"></i>
+      {if isset($services) && $services|@count > 0}
+        {foreach from=$services item=svc}
+        <a href="{$svc.url|default:'#'}" class="service-card">
+          <div class="service-card__icon" style="--icon-color: {$svc.color|default:'#0284c7'}">
+            <i class="{$svc.icon}"></i>
+          </div>
+          <h3 class="service-card__name">{$svc.name}</h3>
+          <p class="service-card__desc">{$svc.description}</p>
+          <span class="service-card__link">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        {/foreach}
+      {else}
+        <div class="service-card">
+          <div class="service-card__icon" style="--icon-color: #0284c7"><i class="fa-solid fa-calendar-check"></i></div>
+          <h3 class="service-card__name">Đặt lịch khám</h3>
+          <p class="service-card__desc">Đặt lịch hẹn trực tiếp hoặc từ xa với bác sĩ chuyên khoa.</p>
         </div>
-        <h3 class="service-card__name">{$svc.name}</h3>
-        <p class="service-card__desc">{$svc.description}</p>
-        <span class="service-card__link">Xem thêm <i class="fa-solid fa-arrow-right"></i></span>
-      </a>
-      {/foreach}
+      {/if}
     </div>
   </div>
 </section>
-
-<!-- SPECIALTIES -->
 <section class="section specialties">
   <div class="container">
     <div class="section-header" data-animate="fade-up">
@@ -110,20 +116,21 @@
       <h2 class="section-title">Tìm đúng <span class="text-accent">chuyên khoa</span></h2>
     </div>
     <div class="specialties__grid" data-animate="stagger">
-      {foreach from=$specialties item=spec}
-      <a href="{$spec.url}" class="spec-chip">
-        <i class="{$spec.icon}"></i>
-        <span>{$spec.name}</span>
-      </a>
-      {/foreach}
+      {if isset($specialties) && $specialties|@count > 0}
+        {foreach from=$specialties item=spec}
+        <a href="{$BASE_URL}/?page=book&spec_id={$spec._id}" class="spec-chip">
+          <i class="{$spec.icon|default:'fa-solid fa-stethoscope'}"></i>
+          <span>{$spec.name}</span>
+        </a>
+        {/foreach}
+      {/if}
     </div>
     <div class="text-center mt-3">
-      <a href="{$BASE_URL}/?page=doctors" class="btn-outline">Xem tất cả chuyên khoa <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="{$BASE_URL}/?page=book" class="btn-outline">Xem tất cả chuyên khoa <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
 
-<!-- DOCTORS -->
 <section class="section section--light doctors">
   <div class="container">
     <div class="section-header" data-animate="fade-up">
@@ -132,40 +139,41 @@
       <p class="section-desc">Được lựa chọn và kiểm duyệt kỹ lưỡng từ các bệnh viện uy tín</p>
     </div>
     <div class="doctors__grid" data-animate="stagger">
-      {foreach from=$featured_doctors item=doc}
-      <a href="{$BASE_URL}/?page=appointments&amp;id={$doc._id}" class="doctor-card">
-        <div class="doctor-card__img">
-          {if $doc.avatar}
-            <img src="{$doc.avatar}" alt="{$doc.full_name}" loading="lazy">
-          {else}
-            <div class="doctor-avatar__fallback"><i class="fa-solid fa-user-doctor"></i></div>
-          {/if}
-          {if $doc.is_featured}
-            <span class="doctor-card__badge">Nổi bật</span>
-          {/if}
-        </div>
-        <div class="doctor-card__body">
-          <p class="doctor-card__degree">{$doc.degree}</p>
-          <h3 class="doctor-card__name">{$doc.full_name}</h3>
-          <p class="doctor-card__specialty"><i class="fa-solid fa-circle-dot"></i> {$doc.specialty}</p>
-          <div class="doctor-card__meta">
-            <span class="rating"><i class="fa-solid fa-star"></i> {$doc.rating}</span>
-            <span class="reviews">{$doc.review_count} đánh giá</span>
+      {if isset($featured_doctors) && $featured_doctors|@count > 0}
+        {foreach from=$featured_doctors item=doc}
+        <a href="{$BASE_URL}/?page=book&doctor_id={$doc._id}" class="doctor-card">
+          <div class="doctor-card__img">
+            {if isset($doc.avatar) && $doc.avatar}
+              <img src="{$doc.avatar}" alt="{$doc.full_name}" loading="lazy">
+            {else}
+              <div class="doctor-avatar__fallback"><i class="fa-solid fa-user-doctor"></i></div>
+            {/if}
+            {if isset($doc.is_featured) && $doc.is_featured}
+              <span class="doctor-card__badge">Nổi bật</span>
+            {/if}
           </div>
-        </div>
-        <div class="doctor-card__footer">
-          <span class="btn-book-sm">Đặt lịch</span>
-        </div>
-      </a>
-      {/foreach}
+          <div class="doctor-card__body">
+            <p class="doctor-card__degree">{$doc.degree|default:'Bác sĩ'}</p>
+            <h3 class="doctor-card__name">{$doc.full_name}</h3>
+            <p class="doctor-card__specialty"><i class="fa-solid fa-circle-dot"></i> {$doc.specialty}</p>
+            <div class="doctor-card__meta">
+              <span class="rating"><i class="fa-solid fa-star"></i> {$doc.rating|default:'5.0'}</span>
+              <span class="reviews">{$doc.review_count|default:0} đánh giá</span>
+            </div>
+          </div>
+          <div class="doctor-card__footer">
+            <span class="btn-book-sm" style="background-color: #0284c7; color: white; padding: 8px 15px; border-radius: 6px; font-weight: 600; display: block; text-align: center;">Đặt lịch khám</span>
+          </div>
+        </a>
+        {/foreach}
+      {/if}
     </div>
     <div class="text-center mt-3">
-      <a href="{$BASE_URL}/?page=doctors" class="btn-outline">Xem tất cả bác sĩ <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="{$BASE_URL}/?page=book" class="btn-outline">Xem tất cả bác sĩ <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section class="section how-it-works">
   <div class="container">
     <div class="section-header" data-animate="fade-up">
@@ -176,69 +184,36 @@
       <div class="step-card">
         <div class="step-card__num">01</div>
         <div class="step-card__icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-        <h3>Tìm bác sĩ</h3>
-        <p>Tìm kiếm theo chuyên khoa, khu vực hoặc tên bác sĩ phù hợp với nhu cầu</p>
+        <h3>Tìm dịch vụ</h3>
+        <p>Chọn hình thức khám và chuyên khoa phù hợp với tình trạng của bạn</p>
       </div>
       <div class="step-connector"><i class="fa-solid fa-arrow-right"></i></div>
       <div class="step-card">
         <div class="step-card__num">02</div>
         <div class="step-card__icon"><i class="fa-regular fa-calendar-check"></i></div>
         <h3>Chọn lịch hẹn</h3>
-        <p>Xem lịch rảnh của bác sĩ và chọn thời gian khám phù hợp với bạn</p>
+        <p>Xem danh sách bác sĩ chuyên khoa và bấm chọn khung giờ khám trống</p>
       </div>
       <div class="step-connector"><i class="fa-solid fa-arrow-right"></i></div>
       <div class="step-card">
         <div class="step-card__num">03</div>
         <div class="step-card__icon"><i class="fa-solid fa-circle-check"></i></div>
-        <h3>Xác nhận &amp; đến khám</h3>
-        <p>Nhận xác nhận qua SMS/email, đến đúng giờ và nhận phiếu khám trước khi vào</p>
+        <h3>Xác nhận</h3>
+        <p>Kiểm tra thông tin, nhận mã QR check-in và đến khám đúng giờ hẹn</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="section section--light testimonials">
-  <div class="container">
-    <div class="section-header" data-animate="fade-up">
-      <p class="section-eyebrow">Đánh giá</p>
-      <h2 class="section-title">Bệnh nhân nói <span class="text-accent">gì về chúng tôi</span></h2>
-    </div>
-    <div class="testimonials__grid" data-animate="stagger">
-      {foreach from=$testimonials item=t}
-      <div class="review-card">
-        <div class="review-card__stars">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-        </div>
-        <p class="review-card__text">"{$t.content}"</p>
-        <div class="review-card__author">
-          <div class="review-avatar">{$t.name|truncate:1:""}</div>
-          <div>
-            <strong>{$t.name}</strong>
-            <span>{$t.specialty}</span>
-          </div>
-        </div>
-      </div>
-      {/foreach}
-    </div>
-  </div>
-</section>
-
-<!-- CTA BANNER -->
-<section class="cta-banner">
-  <div class="container cta-banner__inner" data-animate="fade-up">
+<section class="cta-banner" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 4rem 0; color: white; margin-top: 4rem;">
+  <div class="container cta-banner__inner" data-animate="fade-up" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
     <div class="cta-banner__text">
-      <h2>Sẵn sàng chăm sóc sức khỏe của bạn?</h2>
-      <p>Đặt lịch khám ngay hôm nay — nhanh chóng, dễ dàng, không phải chờ đợi lâu.</p>
+      <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Sẵn sàng chăm sóc sức khỏe của bạn?</h2>
+      <p style="font-size: 1.1rem; opacity: 0.9;">Đặt lịch khám ngay hôm nay — nhanh chóng, dễ dàng, không phải chờ đợi lâu.</p>
     </div>
     <div class="cta-banner__actions">
-      <a href="{$BASE_URL}/?page=appointments" class="btn-cta-primary">
-        <i class="fa-regular fa-calendar-check"></i> Đặt lịch ngay
-      </a>
-      <a href="{$BASE_URL}/?page=doctors" class="btn-cta-outline">
-        <i class="fa-solid fa-user-doctor"></i> Xem bác sĩ
+      <a href="{$BASE_URL}/?page=appointments" class="btn-cta-primary" style="background: white; color: #0284c7; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1);">
+        <i class="fa-regular fa-calendar-check"></i> ĐẶT LỊCH NGAY
       </a>
     </div>
   </div>
