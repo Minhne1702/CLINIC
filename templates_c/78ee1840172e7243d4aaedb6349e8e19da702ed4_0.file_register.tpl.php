@@ -1,4 +1,32 @@
-{include file="layout/header.tpl" page_title="Đăng ký — MediCare" active_page="register"}
+<?php
+/* Smarty version 5.8.0, created on 2026-04-09 06:58:12
+  from 'file:guest/register.tpl' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69d74e048920f9_26477553',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '78ee1840172e7243d4aaedb6349e8e19da702ed4' => 
+    array (
+      0 => 'guest/register.tpl',
+      1 => 1775717878,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:layout/header.tpl' => 1,
+    'file:layout/footer.tpl' => 1,
+  ),
+))) {
+function content_69d74e048920f9_26477553 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
+$_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
+$_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đăng ký — MediCare",'active_page'=>"register"), (int) 0, $_smarty_current_dir);
+?>
 
 <section class="auth-section">
   <div class="auth-container">
@@ -22,30 +50,36 @@
       <div class="form-card">
         <div class="form-card__header">
           <h2>Đăng ký tài khoản</h2>
-          <p>Đã có tài khoản? <a href="{$BASE_URL}/?page=login">Đăng nhập</a></p>
+          <p>Đã có tài khoản? <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?page=login">Đăng nhập</a></p>
         </div>
 
-        {if $error_message}
-          <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> {$error_message}</div>
-        {/if}
+        <?php if ($_smarty_tpl->getValue('error_message')) {?>
+          <div class="alert alert--danger"><i class="fa-solid fa-circle-exclamation"></i> <?php echo $_smarty_tpl->getValue('error_message');?>
+</div>
+        <?php }?>
 
-        <form action="{$BASE_URL}/?page=register" method="POST" class="appt-form">
+        <form action="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?page=register" method="POST" class="appt-form">
           <div class="form-row">
             <div class="form-group">
               <label>Họ và tên <span class="required">*</span></label>
               <div class="input-icon-wrap">
                 <i class="fa-regular fa-user"></i>
                 <input type="text" name="fullName" placeholder="Nguyễn Văn A" required
-                  value="{$form.fullName|default:''}">
+                  value="<?php echo (($tmp = $_smarty_tpl->getValue('form')['fullName'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+">
               </div>
             </div>
             <div class="form-group">
               <label>Số điện thoại <span class="required">*</span></label>
               <div class="input-icon-wrap">
                 <i class="fa-solid fa-phone"></i>
-                <input type="tel" name="phone" placeholder="0901 234 567" required pattern="^(0[3|5|7|8|9])[0-9]{8}$"
+                <input type="tel" name="phone" placeholder="0901 234 567" required pattern="^(0[3|5|7|8|9])[0-9]<?php echo 8;?>
+$"
                   title="Số điện thoại phải có 10 chữ số và bắt đầu bằng các đầu số VN (03, 05, 07, 08, 09)"
-                  value="{$form.phone|default:''}" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                  value="<?php echo (($tmp = $_smarty_tpl->getValue('form')['phone'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
               </div>
             </div>
           </div>
@@ -56,7 +90,8 @@
               <div class="input-icon-wrap" style="flex: 1;">
                 <i class="fa-regular fa-envelope"></i>
                 <input type="email" name="email" id="email_reg" placeholder="email@example.com" required
-                  value="{$form.email|default:''}">
+                  value="<?php echo (($tmp = $_smarty_tpl->getValue('form')['email'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+">
               </div>
               <button type="button" id="btn_send_otp" class="btn-submit"
                 style="width: auto; padding: 0 20px; margin-top: 0; white-space: nowrap;">
@@ -130,7 +165,8 @@
         </form>
 
         <div class="auth-divider"><span>hoặc</span></div>
-        <a href="{$BASE_URL}/?page=google-auth" class="btn-social">
+        <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?page=google-auth" class="btn-social">
           <svg width="18" height="18" viewBox="0 0 24 24">
             <path fill="#4285F4"
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -148,8 +184,25 @@
   </div>
 </section>
 
-{include file="layout/footer.tpl"}
+<?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
+?>
 
-{block name="extra_js"}
-  <script src="{$BASE_URL}/assets/js/auth.js"></script>
-{/block}
+<?php 
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_53699050269d74e048716c2_69699569', "extra_js");
+}
+/* {block "extra_js"} */
+class Block_53699050269d74e048716c2_69699569 extends \Smarty\Runtime\Block
+{
+public function callBlock(\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
+?>
+
+  <?php echo '<script'; ?>
+ src="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/assets/js/auth.js"><?php echo '</script'; ?>
+>
+<?php
+}
+}
+/* {/block "extra_js"} */
+}

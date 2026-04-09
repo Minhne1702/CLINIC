@@ -36,6 +36,11 @@ $userModel      = new UserModel($db);
 $authController = new AuthController($userModel, $smarty);
 $homeController = new HomeController($smarty);
 
+$page = $_GET['page'] ?? '';
+if ($page === 'send-otp-ajax') {
+    $authController->sendOTPAjax();
+    exit; 
+}
 // --- Logout ---
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     $authController->logout();
@@ -86,6 +91,9 @@ switch ($page) {
         break;
     case 'forgot-password':
         $authController->forgotPassword();
+        break;
+    case 'send-otp-ajax':
+        $authController->sendOTPAjax();
         break;
     case 'google-auth':
         $authController->googleLogin();
