@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 08:13:47
+/* Smarty version 5.8.0, created on 2026-04-10 13:54:21
   from 'file:cashier/advance.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d75fbb272184_86291936',
+  'unifunc' => 'content_69d9010de40589_53835226',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '1eb2144413a6737c8e8b72e532ed880a7d5081cd' => 
+    '2f4a0f3f469ede4dbb416d5a9ed2b61d6d771431' => 
     array (
       0 => 'cashier/advance.tpl',
-      1 => 1775696496,
+      1 => 1775696150,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d75fbb272184_86291936 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\cashier';
+function content_69d9010de40589_53835226 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\cashier';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Tạm ứng",'active_page'=>"advance"), (int) 0, $_smarty_current_dir);
 ?>
 <div class="page-toolbar">

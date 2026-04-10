@@ -3,7 +3,7 @@
 class HomeController
 {
     private $smarty;
-    private $db;
+    private $db; // Bây giờ sẽ là đối tượng PDO
 
     public function __construct($smarty, $db = null)
     {
@@ -31,19 +31,28 @@ class HomeController
         }
 
         try {
-            $cursor = $this->db->selectCollection('users')->find(
-                ['role' => 'doctor', 'isActive' => true],
-                ['limit' => 4, 'sort' => ['is_featured' => -1, 'createdAt' => -1]]
-            );
+            // Giả định bảng của bạn tên là 'users' 
+            // và thông tin profile được lưu ở các cột phẳng (flat columns) hoặc join bảng
+            // Ở đây tôi viết theo hướng các cột nằm cùng bảng 'users' để giữ logic đơn giản
+            $sql = "SELECT * FROM users 
+                    WHERE role = :role AND isActive = :active 
+                    ORDER BY is_featured DESC, createdAt DESC 
+                    LIMIT 4";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                'role'   => 'doctor',
+                'active' => 1 // true trong MySQL thường là 1
+            ]);
 
             $doctors = [];
-            foreach ($cursor as $doc) {
-                $profile = isset($doc['doctorProfile']) ? $doc['doctorProfile'] : [];
+            while ($doc = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                // Giả lập lại cấu trúc mảng cũ để không phải sửa file .tpl
                 $doctors[] = [
-                    '_id'          => (string) $doc['_id'],
-                    'full_name'    => $doc['full_name'] ?? $doc['fullName'] ?? $doc['name'] ?? 'Bác sĩ',
-                    'degree'       => $profile['degree'] ?? 'Bác sĩ',
-                    'specialty'    => $profile['specialty'] ?? $profile['specialtyId'] ?? '',
+                    '_id'          => $doc['id'], // MySQL thường dùng 'id'
+                    'full_name'    => $doc['full_name'] ?? $doc['fullName'] ?? 'Bác sĩ',
+                    'degree'       => $doc['degree'] ?? 'Bác sĩ',
+                    'specialty'    => $doc['specialty'] ?? '',
                     'rating'       => $doc['rating'] ?? '5.0',
                     'review_count' => $doc['review_count'] ?? 0,
                     'avatar'       => $doc['avatar'] ?? '',
@@ -51,7 +60,8 @@ class HomeController
                 ];
             }
             return $doctors;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            error_log("Lỗi SQL ở getFeaturedDoctors: " . $e->getMessage());
             return [];
         }
     }

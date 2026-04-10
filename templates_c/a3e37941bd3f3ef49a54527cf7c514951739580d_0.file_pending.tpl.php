@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 08:03:54
+/* Smarty version 5.8.0, created on 2026-04-10 13:54:18
   from 'file:cashier/pending.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d75d6a11ef50_01364701',
+  'unifunc' => 'content_69d9010a6b3829_79757146',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'c34e89687c55d75b47f69cefdbef7912188af110' => 
+    'a3e37941bd3f3ef49a54527cf7c514951739580d' => 
     array (
       0 => 'cashier/pending.tpl',
-      1 => 1775611356,
+      1 => 1775610517,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d75d6a11ef50_01364701 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\cashier';
+function content_69d9010a6b3829_79757146 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\cashier';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Chờ thanh toán",'active_page'=>"pending"), (int) 0, $_smarty_current_dir);
 ?>
 <div class="page-toolbar">

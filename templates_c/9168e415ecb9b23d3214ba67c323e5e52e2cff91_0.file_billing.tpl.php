@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 08:20:06
+/* Smarty version 5.8.0, created on 2026-04-10 13:54:17
   from 'file:cashier/billing.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d761360813c5_10740500',
+  'unifunc' => 'content_69d90109572069_57090216',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '67680aea8aea12f38c7f0474baa6fc436acb2b42' => 
+    '9168e415ecb9b23d3214ba67c323e5e52e2cff91' => 
     array (
       0 => 'cashier/billing.tpl',
-      1 => 1775722804,
+      1 => 1775782839,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d761360813c5_10740500 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\cashier';
+function content_69d90109572069_57090216 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\cashier';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Lập hóa đơn",'active_page'=>"billing"), (int) 0, $_smarty_current_dir);
 ?>
 

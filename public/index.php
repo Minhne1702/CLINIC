@@ -26,15 +26,18 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../src/Models/UserModel.php';
 require_once __DIR__ . '/../src/Models/DrugModel.php';
 require_once __DIR__ . '/../src/Models/PrescriptionModel.php';
-require_once __DIR__ . '/../src/Models/BillModel.php';
+require_once __DIR__ . '/../src/Models/InvoiceModel.php';
+require_once __DIR__ . '/../src/Models/InvoiceItemModel.php';
+require_once __DIR__ . '/../src/Models/PaymentModel.php';
 require_once __DIR__ . '/../src/Controllers/AuthControllers/AuthController.php';
 require_once __DIR__ . '/../src/Controllers/HomeController.php';
 
 // 7. Khởi tạo Database và Controllers
-$db = (new Database())->getDb();
+$dbConnection = new Database();
+$db = $dbConnection->getDb();
 $userModel      = new UserModel($db);
 $authController = new AuthController($userModel, $smarty);
-$homeController = new HomeController($smarty);
+$homeController = new HomeController($smarty, $db);
 
 $page = $_GET['page'] ?? '';
 if ($page === 'send-otp-ajax') {

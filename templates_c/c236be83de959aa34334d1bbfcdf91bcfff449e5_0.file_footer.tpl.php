@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 00:58:09
+/* Smarty version 5.8.0, created on 2026-04-10 13:52:41
   from 'file:layout/footer.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d6f9a167f894_64520425',
+  'unifunc' => 'content_69d900a9c67464_48743672',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_69d6f9a167f894_64520425 (\Smarty\Template $_smarty_tpl) {
+function content_69d900a9c67464_48743672 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 $_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)===null||$tmp==='' ? 'guest' ?? null : $tmp), false, NULL);?>
@@ -50,7 +50,7 @@ $_smarty_tpl->assign('current_role', (($tmp = $_SESSION['user']['role'] ?? null)
 <?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_48277183869d6f9a15508d5_62417598', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_186705481469d900a9c5d626_98164232', "extra_js");
 ?>
 
 </body>
@@ -66,7 +66,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_48277183869d6
 /assets/js/admin.js"><?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_96350557369d6f9a1679073_77230540', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_110514435769d900a9c64288_91081941', "extra_js");
 ?>
 
 </body>
@@ -168,7 +168,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_96350557369d6
 /assets/js/main.js"><?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_183422533869d6f9a167e6d6_84445526', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_74794284169d900a9c66648_09874625', "extra_js");
 ?>
 
 
@@ -199,7 +199,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_183422533869d
 <?php }
 }
 /* {block "extra_js"} */
-class Block_48277183869d6f9a15508d5_62417598 extends \Smarty\Runtime\Block
+class Block_186705481469d900a9c5d626_98164232 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
@@ -207,7 +207,7 @@ $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 }
 /* {/block "extra_js"} */
 /* {block "extra_js"} */
-class Block_96350557369d6f9a1679073_77230540 extends \Smarty\Runtime\Block
+class Block_110514435769d900a9c64288_91081941 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
@@ -215,7 +215,7 @@ $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';
 }
 /* {/block "extra_js"} */
 /* {block "extra_js"} */
-class Block_183422533869d6f9a167e6d6_84445526 extends \Smarty\Runtime\Block
+class Block_74794284169d900a9c66648_09874625 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\layout';

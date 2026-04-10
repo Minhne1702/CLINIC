@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 08:30:09
+/* Smarty version 5.8.0, created on 2026-04-10 13:52:45
   from 'file:pharmacist/prescriptions.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d76391e312e0_15665659',
+  'unifunc' => 'content_69d900adda98a5_33152684',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '657c4ebba178b8d5bf88d21b46e81d6d91bce1f3' => 
+    'ef6d2f909fb0dd72c838df4428afc3c3c404a948' => 
     array (
       0 => 'pharmacist/prescriptions.tpl',
-      1 => 1775696496,
+      1 => 1775696150,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d76391e312e0_15665659 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\pharmacist';
+function content_69d900adda98a5_33152684 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\pharmacist';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đơn thuốc đến",'active_page'=>"prescriptions"), (int) 0, $_smarty_current_dir);
 ?>
 <div class="page-toolbar">

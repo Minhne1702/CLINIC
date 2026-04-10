@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 08:29:25
+/* Smarty version 5.8.0, created on 2026-04-10 13:52:39
   from 'file:pharmacist/dashboard.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d763654a6342_28459821',
+  'unifunc' => 'content_69d900a7ddfd78_58918272',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '6fc2c0a4b5230ac202f5db64ae9eaca507623377' => 
+    'caf425c2d21ef33ecf717603b4154bbf58cd8a20' => 
     array (
       0 => 'pharmacist/dashboard.tpl',
-      1 => 1775720404,
+      1 => 1775782839,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d763654a6342_28459821 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\pharmacist';
+function content_69d900a7ddfd78_58918272 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\pharmacist';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Tổng quan",'active_page'=>"dashboard"), (int) 0, $_smarty_current_dir);
 ?>
 

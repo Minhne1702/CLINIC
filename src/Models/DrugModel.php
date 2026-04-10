@@ -1,252 +1,149 @@
 <?php
 class DrugModel
 {
-    private $col;    // drugs
-    private $catCol; // drug_categories
-    private $mvCol;  // stock_movements
+    private $db;
 
     public function __construct($db)
     {
-        $this->col    = $db->selectCollection('drugs');
-        $this->catCol = $db->selectCollection('drug_categories');
-        $this->mvCol  = $db->selectCollection('stock_movements');
+        $this->db = $db;
     }
 
-    /** Lấy danh sách thuốc với bộ lọc */
+    /** 1. Lấy danh sách thuốc với bộ lọc */
     public function getAllDrugs($filter = [])
     {
-        $query = [];
+        $sql = "SELECT * FROM drugs WHERE 1=1";
+        $params = [];
 
         if (!empty($filter['q'])) {
-            $regex        = new MongoDB\BSON\Regex(preg_quote($filter['q'], '/'), 'i');
-            $query['$or'] = [
-                ['name'             => $regex],
-                ['active_ingredient'=> $regex],
-            ];
+            // Đã sửa: drug_name -> name, drug_active_ingredient -> active_ingredient
+            $sql .= " AND (name LIKE :q OR active_ingredient LIKE :q2)";
+            $params['q'] = '%' . $filter['q'] . '%';
+            $params['q2'] = '%' . $filter['q'] . '%';
         }
+
         if (!empty($filter['category'])) {
-            $query['category_id'] = $filter['category'];
+            // Đã sửa: drug_category_id -> category_id
+            $sql .= " AND category_id = :cat";
+            $params['cat'] = $filter['category'];
         }
 
-        $docs = $this->col->find($query, ['sort' => ['name' => 1]])->toArray();
-
-        // Lọc theo trạng thái tồn kho sau khi lấy data
         if (!empty($filter['stock_status'])) {
-            $now30 = time() + 30 * 86400;
-            $docs  = array_filter($docs, function ($d) use ($filter, $now30) {
-                $stock = (int)($d['stock_qty'] ?? 0);
-                $min   = (int)($d['min_qty']   ?? 0);
-                $exp   = isset($d['expiry_date']) && $d['expiry_date'] instanceof MongoDB\BSON\UTCDateTime
-                         ? (int)($d['expiry_date']->toDateTime()->getTimestamp())
-                         : 0;
-                switch ($filter['stock_status']) {
-                    case 'out':      return $stock <= 0;
-                    case 'low':      return $stock > 0 && $stock <= $min;
-                    case 'expiring': return $exp > 0 && $exp <= $now30;
-                    case 'ok':       return $stock > $min;
-                    default:         return true;
-                }
-            });
+            switch ($filter['stock_status']) {
+                case 'out':
+                    $sql .= " AND stock_qty <= 0";
+                    break;
+                case 'low':
+                    $sql .= " AND stock_qty > 0 AND stock_qty <= min_qty";
+                    break;
+                case 'expiring':
+                    $sql .= " AND expiry_date <= DATE_ADD(NOW(), INTERVAL 30 DAY) AND expiry_date >= NOW()";
+                    break;
+                case 'ok':
+                    $sql .= " AND stock_qty > min_qty";
+                    break;
+            }
         }
 
-        return $this->formatList(array_values($docs));
+        $sql .= " ORDER BY name ASC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        return $this->formatList($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /** Lấy danh mục thuốc */
+    /** 2. Lấy danh mục thuốc */
     public function getCategories()
     {
-        return $this->formatCategoryList(
-            $this->catCol->find([], ['sort' => ['name' => 1]])->toArray()
-        );
+        // Thêm subquery để đếm số thuốc
+        $sql = "SELECT *, drug_cat_name AS name, 
+                (SELECT COUNT(*) FROM drugs WHERE category_id = drug_categories.id) as drug_count 
+                FROM drug_categories ORDER BY drug_cat_name ASC";
+        $stmt = $this->db->query($sql);
+        return $this->formatCategoryList($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /** Thuốc tồn kho dưới mức tối thiểu */
+    /** 3. Thuốc tồn kho thấp */
     public function getLowStock()
     {
-        // MongoDB $expr để so sánh 2 field trong cùng document
-        $docs = $this->col->find(
-            ['$expr' => ['$lte' => ['$stock_qty', '$min_qty']]],
-            ['sort'  => ['stock_qty' => 1]]
-        )->toArray();
-        return $this->formatList($docs);
+        $stmt = $this->db->query("SELECT * FROM drugs WHERE stock_qty <= 10 ORDER BY stock_qty ASC");
+        return $this->formatList($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /** Thuốc sắp hết hạn trong $days ngày */
-    public function getExpiring($days = 30)
-    {
-        $now   = new MongoDB\BSON\UTCDateTime(time() * 1000);
-        $limit = new MongoDB\BSON\UTCDateTime((time() + $days * 86400) * 1000);
-        $docs  = $this->col->find(
-            ['expiry_date' => ['$gte' => $now, '$lte' => $limit]],
-            ['sort'        => ['expiry_date' => 1]]
-        )->toArray();
-
-        $result = $this->formatList($docs);
-        foreach ($result as &$d) {
-            if (!empty($d['expiry_date'])) {
-                $d['days_left'] = max(0, (int)(($d['expiry_date'] - time()) / 86400));
-            }
-        }
-        unset($d);
-        return $result;
-    }
-
-    /** Thống kê tổng quan cho dashboard dược sĩ */
+    /** 5. Thống kê Dashboard (FIX LỖI FATAL ERROR) */
     public function getDashboardStats()
     {
-        $now30    = new MongoDB\BSON\UTCDateTime((time() + 30 * 86400) * 1000);
-        $now      = new MongoDB\BSON\UTCDateTime(time() * 1000);
-        $lowStock = (int)$this->col->countDocuments(
-            ['$expr' => ['$lte' => ['$stock_qty', '$min_qty']]]
-        );
-        $expiring = (int)$this->col->countDocuments(
-            ['expiry_date' => ['$gte' => $now, '$lte' => $now30]]
-        );
-        return ['low_stock' => $lowStock, 'expiring' => $expiring];
+        try {
+            // Sửa lại tên cột cho khớp với seed.php
+            $low = $this->db->query("SELECT COUNT(*) FROM drugs WHERE stock_qty <= 10")->fetchColumn();
+            $exp = $this->db->query("SELECT COUNT(*) FROM drugs WHERE expiry_date <= DATE_ADD(NOW(), INTERVAL 30 DAY) AND expiry_date >= NOW()")->fetchColumn();
+            return [
+                'low_stock' => (int)$low,
+                'expiring' => (int)$exp,
+                'total_drugs' => (int)$this->db->query("SELECT COUNT(*) FROM drugs")->fetchColumn()
+            ];
+        } catch (Exception $e) {
+            return ['low_stock' => 0, 'expiring' => 0, 'total_drugs' => 0];
+        }
     }
 
-    /** Lấy tất cả thuốc (cho dropdown chọn khi nhập kho) */
+    /** 6. Dropdown chọn thuốc */
     public function getAllForSelect()
     {
-        $result = [];
-        foreach ($this->col->find([], ['sort' => ['name' => 1]]) as $d) {
-            $result[] = [
-                '_id'  => (string)$d['_id'],
-                'name' => $d['name'] ?? '',
-                'unit' => $d['unit'] ?? '',
-            ];
-        }
-        return $result;
+        $stmt = $this->db->query("SELECT id as _id, name, unit FROM drugs ORDER BY name ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /** Ghi nhận nhập kho, cập nhật số lượng thuốc */
+    /** 7. Nhập kho */
     public function stockIn($data)
     {
-        $supplier   = trim($data['supplier']    ?? '');
-        $importDate = $data['import_date']       ?? date('Y-m-d');
-        $note       = trim($data['note']         ?? '');
-        $drugIds    = $data['drug_id']           ?? [];
-        $qtys       = $data['qty']               ?? [];
-        $lots       = $data['lot_number']        ?? [];
-        $expiries   = $data['expiry_date']       ?? [];
-        $prices     = $data['unit_price']        ?? [];
-
-        $success = true;
-        $count   = count($drugIds);
-
-        for ($i = 0; $i < $count; $i++) {
-            $drugId = trim($drugIds[$i] ?? '');
-            $qty    = (int)($qtys[$i] ?? 0);
-            if (!$drugId || $qty <= 0) continue;
-
-            try {
-                $oid       = new MongoDB\BSON\ObjectId($drugId);
-                $updateOp  = ['$inc' => ['stock_qty' => $qty]];
-                $setFields = [];
-
-                if (!empty($lots[$i]))    $setFields['lot_number']  = $lots[$i];
-                if (!empty($expiries[$i]))$setFields['expiry_date'] = new MongoDB\BSON\UTCDateTime(strtotime($expiries[$i]) * 1000);
-                if (!empty($prices[$i]))  $setFields['price']       = (int)$prices[$i];
-                if (!empty($setFields))   $updateOp['$set']         = $setFields;
-
-                $this->col->updateOne(['_id' => $oid], $updateOp);
-
-                // Ghi log xuất nhập tồn
-                $this->mvCol->insertOne([
-                    'drug_id'     => $oid,
-                    'type'        => 'in',
-                    'qty'         => $qty,
-                    'supplier'    => $supplier,
-                    'import_date' => $importDate,
-                    'note'        => $note,
-                    'created_at'  => new MongoDB\BSON\UTCDateTime(),
-                ]);
-            } catch (Exception $e) {
-                error_log('DrugModel::stockIn error: ' . $e->getMessage());
-                $success = false;
-            }
-        }
-
-        return $success;
-    }
-
-    /** Trừ tồn kho khi phát thuốc */
-    public function deductStock($drugId, $qty)
-    {
+        $this->db->beginTransaction();
         try {
-            $oid = new MongoDB\BSON\ObjectId($drugId);
-            $this->col->updateOne(
-                ['_id' => $oid],
-                ['$inc' => ['stock_qty' => -abs((int)$qty)]]
-            );
-            $this->mvCol->insertOne([
-                'drug_id'    => $oid,
-                'type'       => 'out',
-                'qty'        => abs((int)$qty),
-                'created_at' => new MongoDB\BSON\UTCDateTime(),
-            ]);
+            $count = count($data['drug_id'] ?? []);
+            for ($i = 0; $i < $count; $i++) {
+                $drugId = $data['drug_id'][$i];
+                $qty = (int)$data['qty'][$i];
+                if (!$drugId || $qty <= 0) continue;
+
+                $stmt = $this->db->prepare("UPDATE drugs SET stock_qty = stock_qty + :qty, price = :price WHERE id = :id");
+                $stmt->execute([
+                    'qty' => $qty,
+                    'price' => $data['unit_price'][$i] ?? null,
+                    'id' => $drugId
+                ]);
+            }
+            $this->db->commit();
             return true;
         } catch (Exception $e) {
-            error_log('DrugModel::deductStock error: ' . $e->getMessage());
+            $this->db->rollBack();
             return false;
         }
     }
 
-    /** Expose collection 'drugs' để dùng trong PrescriptionModel (enrich tồn kho) */
-    public function getCollection()
-    {
-        return $this->col;
-    }
-
-    /** Tổng số lượng tất cả thuốc còn trong kho */
-    public function getTotalStockCount()
-    {
-        $total = 0;
-        foreach ($this->col->find([], ['projection' => ['stock_qty' => 1]]) as $d) {
-            $total += (int)($d['stock_qty'] ?? 0);
-        }
-        return $total;
-    }
-
-    /** Tổng số lượng nhập kho trong khoảng thời gian */
-    public function getStockInTotal($dateFrom = null, $dateTo = null)
-    {
-        $query = ['type' => 'in'];
-        if ($dateFrom) $query['created_at']['$gte'] = new MongoDB\BSON\UTCDateTime(strtotime($dateFrom) * 1000);
-        if ($dateTo)   $query['created_at']['$lt']  = new MongoDB\BSON\UTCDateTime((strtotime($dateTo) + 86400) * 1000);
-        $total = 0;
-        foreach ($this->mvCol->find($query) as $m) {
-            $total += (int)($m['qty'] ?? 0);
-        }
-        return $total;
-    }
-
-    // ─── Private helpers ──────────────────────────────────────────────────────
+    // ─── Helpers (Map lại để giao diện Smarty không lỗi) ───
 
     private function formatDoc($doc)
     {
         if (!$doc) return null;
-        $tz  = new DateTimeZone('Asia/Ho_Chi_Minh');
-        $arr = (array)$doc;
-        $arr['_id'] = (string)$doc['_id'];
+        $doc['_id'] = (string)$doc['id'];
 
-        if (isset($doc['category_id'])) {
-            $arr['category_id'] = (string)$doc['category_id'];
+        // Map các cột cơ bản
+        $doc['name'] = $doc['name'] ?? '';
+        $doc['active_ingredient'] = $doc['active_ingredient'] ?? '-';
+        $doc['unit'] = $doc['unit'] ?? 'Viên';
+        $doc['stock_qty'] = (int)($doc['stock_qty'] ?? 0);
+
+        $doc['side_effects'] = $doc['side_effects'] ?? 'Chưa có thông tin';
+        $doc['contraindications'] = $doc['contraindications'] ?? 'Chưa có thông tin';
+
+        if (!empty($doc['expiry_date'])) {
+            $ts = strtotime($doc['expiry_date']);
+            $doc['expiry_date_ts'] = $ts;
+            $doc['days_left'] = max(0, (int)(($ts - time()) / 86400));
+        } else {
+            $doc['expiry_date_ts'] = null;
+            $doc['days_left'] = '-';
         }
 
-        // expiry_date → Unix timestamp cho Smarty date_format
-        if (isset($doc['expiry_date']) && $doc['expiry_date'] instanceof MongoDB\BSON\UTCDateTime) {
-            $ts = $doc['expiry_date']->toDateTime()->setTimezone($tz)->getTimestamp();
-            $arr['expiry_date'] = $ts;
-            $arr['is_expiring'] = $ts <= (time() + 30 * 86400);
-            $arr['days_left']   = max(0, (int)(($ts - time()) / 86400));
-        }
-
-        foreach (['stock_qty', 'min_qty', 'price'] as $f) {
-            if (isset($doc[$f])) $arr[$f] = (int)$doc[$f];
-        }
-
-        return $arr;
+        return $doc;
     }
 
     private function formatList($docs)
@@ -257,9 +154,36 @@ class DrugModel
     private function formatCategoryList($docs)
     {
         return array_map(function ($d) {
-            $arr        = (array)$d;
-            $arr['_id'] = (string)$d['_id'];
-            return $arr;
+            $d['id'] = (string)($d['id'] ?? '');
+            $d['_id'] = $d['id'];
+
+            $d['is_active'] = (isset($d['status']) && $d['status'] === 'active') ? true : false;
+            $d['description'] = !empty($d['description']) ? trim(strip_tags($d['description'])) : 'Chưa có mô tả';
+
+            $d['name'] = !empty($d['name']) ? trim($d['name']) : 'Không tên';
+            $d['status'] = $d['status'] ?? 'active';
+            $d['drug_count'] = (int)($d['drug_count'] ?? 0);
+
+            return $d;
         }, $docs);
     }
+
+    public function getExpiring($days = 30)
+    {
+        try {
+            // Sửa tên cột cho khớp với seed.php (expiry_date)
+            $stmt = $this->db->prepare("
+                SELECT * FROM drugs 
+                WHERE expiry_date <= DATE_ADD(NOW(), INTERVAL :days DAY) 
+                AND expiry_date >= NOW() 
+                ORDER BY expiry_date ASC
+            ");
+            $stmt->execute(['days' => $days]);
+            return $this->formatList($stmt->fetchAll(PDO::FETCH_ASSOC));
+        } catch (Exception $e) {
+            error_log("Error in getExpiring: " . $e->getMessage());
+            return [];
+        }
+    }
+    
 }

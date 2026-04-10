@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 08:13:48
+/* Smarty version 5.8.0, created on 2026-04-10 13:54:22
   from 'file:cashier/insurance.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d75fbc79a872_35790080',
+  'unifunc' => 'content_69d9010eee2853_52910589',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'd61aaad35ab6eb9a9eda51df8b6a890237d73816' => 
+    'c08f371a766b3c044ac1b2e2e45c3e4fe47b44e0' => 
     array (
       0 => 'cashier/insurance.tpl',
-      1 => 1775696496,
+      1 => 1775696150,
       2 => 'file',
     ),
   ),
@@ -22,8 +22,8 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d75fbc79a872_35790080 (\Smarty\Template $_smarty_tpl) {
-$_smarty_current_dir = 'C:\\Users\\THANH TRI\\CLINIC\\templates\\cashier';
+function content_69d9010eee2853_52910589 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\cashier';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"BHYT",'active_page'=>"insurance"), (int) 0, $_smarty_current_dir);
 ?>
 <div class="page-toolbar">

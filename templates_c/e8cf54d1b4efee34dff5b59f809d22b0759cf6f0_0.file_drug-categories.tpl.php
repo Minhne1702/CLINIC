@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 08:54:36
+/* Smarty version 5.8.0, created on 2026-04-10 13:52:48
   from 'file:admin/drug-categories.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d7694ceb8bc5_29362152',
+  'unifunc' => 'content_69d900b0b7d328_76179320',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e8cf54d1b4efee34dff5b59f809d22b0759cf6f0' => 
     array (
       0 => 'admin/drug-categories.tpl',
-      1 => 1775610517,
+      1 => 1775828760,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d7694ceb8bc5_29362152 (\Smarty\Template $_smarty_tpl) {
+function content_69d900b0b7d328_76179320 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\admin';
 $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Nhóm thuốc",'active_page'=>"drug-categories"), (int) 0, $_smarty_current_dir);
 ?>
@@ -40,7 +40,8 @@ $_smarty_tpl->renderSubTemplate("file:layout/sidebar.tpl", $_smarty_tpl->cache_i
 </div>
 
 <?php if ($_smarty_tpl->getValue('success_message')) {?><div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> <?php echo $_smarty_tpl->getValue('success_message');?>
-</div><?php }?>
+</div>
+<?php }?>
 
 <div class="admin-card">
   <div class="admin-card__body p-0">
@@ -62,37 +63,69 @@ $foreach0DoElse = true;
 foreach ($_from ?? [] as $_smarty_tpl->getVariable('cat')->value) {
 $foreach0DoElse = false;
 ?>
-        <tr>
-          <td><span class="code-tag"><?php echo (($tmp = $_smarty_tpl->getValue('cat')['code'] ?? null)===null||$tmp==='' ? '—' ?? null : $tmp);?>
+          <tr>
+            <td><span class="code-tag"><?php echo (($tmp = $_smarty_tpl->getValue('cat')['code'] ?? null)===null||$tmp==='' ? '—' ?? null : $tmp);?>
 </span></td>
-          <td><strong><?php echo $_smarty_tpl->getValue('cat')['name'];?>
+
+            <td><strong><?php echo (($tmp = $_smarty_tpl->getValue('cat')['name'] ?? null)===null||$tmp==='' ? 'Không tên' ?? null : $tmp);?>
 </strong></td>
-          <td><span class="text-muted" style="font-size:13px"><?php echo (($tmp = $_smarty_tpl->getSmarty()->getModifierCallback('truncate')($_smarty_tpl->getValue('cat')['description'],60,'...') ?? null)===null||$tmp==='' ? '—' ?? null : $tmp);?>
-</span></td>
-          <td><span class="badge badge--blue"><?php echo (($tmp = $_smarty_tpl->getValue('cat')['drug_count'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
+
+            <td><span class="text-muted" style="font-size:13px"><?php echo (($tmp = $_smarty_tpl->getSmarty()->getModifierCallback('truncate')($_smarty_tpl->getValue('cat')['description'],60,'...') ?? null)===null||$tmp==='' ? '—' ?? null : $tmp);?>
+</span>
+            </td>
+
+            <td><span class="badge badge--blue"><?php echo (($tmp = $_smarty_tpl->getValue('cat')['drug_count'] ?? null)===null||$tmp==='' ? 0 ?? null : $tmp);?>
  thuốc</span></td>
-          <td><?php if ($_smarty_tpl->getValue('cat')['is_active']) {?><span class="badge badge--success">Hoạt động</span><?php } else { ?><span class="badge badge--danger">Ẩn</span><?php }?></td>
-          <td>
-            <div class="table-actions">
-              <button class="action-btn" onclick="editCat('<?php echo $_smarty_tpl->getValue('cat')['_id'];?>
-','<?php echo $_smarty_tpl->getValue('cat')['name'];?>
-','<?php echo $_smarty_tpl->getValue('cat')['code'];?>
-','<?php echo $_smarty_tpl->getValue('cat')['description'];?>
-')" title="Sửa"><i class="fa-solid fa-pen"></i></button>
-              <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
-/?role=admin&page=drug-categories&action=toggle&id=<?php echo $_smarty_tpl->getValue('cat')['_id'];?>
-" class="action-btn" title="Bật/Tắt"><i class="fa-solid fa-power-off"></i></a>
-              <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
-/?role=admin&page=drug-categories&action=delete&id=<?php echo $_smarty_tpl->getValue('cat')['_id'];?>
-" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa nhóm thuốc này?')"><i class="fa-solid fa-trash"></i></a>
-            </div>
-          </td>
-        </tr>
+
+            <td>
+              <?php if ($_smarty_tpl->getValue('cat')['is_active']) {?>
+                <span class="badge badge--success">Hoạt động</span>
+              <?php } else { ?>
+                <span class="badge badge--danger">Ẩn</span>
+              <?php }?>
+            </td>
+
+            <td>
+              <div class="table-actions">
+                <button class="action-btn"
+                  onclick="editCat('<?php echo (($tmp = $_smarty_tpl->getValue('cat')['_id'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+', '<?php echo (($tmp = strtr((string)$_smarty_tpl->getValue('cat')['name'], array("\\" => "\\\\", "'" => "\\'", "\"" => "\\\"", "\r" => "\\r", 
+						"\n" => "\\n", "</" => "<\/", "<!--" => "<\!--", "<s" => "<\s", "<S" => "<\S",
+						"`" => "\\`", "\${" => "\\\$\{")) ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+', '<?php echo (($tmp = strtr((string)$_smarty_tpl->getValue('cat')['code'], array("\\" => "\\\\", "'" => "\\'", "\"" => "\\\"", "\r" => "\\r", 
+						"\n" => "\\n", "</" => "<\/", "<!--" => "<\!--", "<s" => "<\s", "<S" => "<\S",
+						"`" => "\\`", "\${" => "\\\$\{")) ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+', '<?php echo (($tmp = strtr((string)$_smarty_tpl->getValue('cat')['description'], array("\\" => "\\\\", "'" => "\\'", "\"" => "\\\"", "\r" => "\\r", 
+						"\n" => "\\n", "</" => "<\/", "<!--" => "<\!--", "<s" => "<\s", "<S" => "<\S",
+						"`" => "\\`", "\${" => "\\\$\{")) ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+')"
+                  title="Sửa">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?role=admin&page=drug-categories&action=toggle&id=<?php echo (($tmp = $_smarty_tpl->getValue('cat')['_id'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+"
+                  class="action-btn" title="Bật/Tắt">
+                  <i class="fa-solid fa-power-off"></i>
+                </a>
+
+                <a href="<?php echo $_smarty_tpl->getValue('BASE_URL');?>
+/?role=admin&page=drug-categories&action=delete&id=<?php echo (($tmp = $_smarty_tpl->getValue('cat')['_id'] ?? null)===null||$tmp==='' ? '' ?? null : $tmp);?>
+"
+                  class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa nhóm thuốc này?')">
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
         <?php
 }
 if ($foreach0DoElse) {
 ?>
-        <tr><td colspan="6" class="table-empty">Chưa có nhóm thuốc nào</td></tr>
+          <tr>
+            <td colspan="6" class="table-empty">Chưa có nhóm thuốc nào</td>
+          </tr>
         <?php
 }
 $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
@@ -136,17 +169,19 @@ $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
 </div>
 
 <?php $_smarty_tpl->renderSubTemplate("file:layout/footer.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), (int) 0, $_smarty_current_dir);
-echo '<script'; ?>
+?>
+
+<?php echo '<script'; ?>
 >
-function editCat(id, name, code, desc) {
-  document.getElementById('modalDrugCatTitle').textContent = 'Sửa nhóm thuốc';
-  document.getElementById('cat_id').value = id;
-  document.getElementById('cat_name').value = name;
-  document.getElementById('cat_code').value = code;
-  document.getElementById('cat_desc').value = desc;
-  openModal('modalDrugCat');
-}
+  function editCat(id, name, code, desc) {
+    // Reset tiêu đề và đổ dữ liệu
+    document.getElementById('modalDrugCatTitle').textContent = 'Sửa nhóm thuốc';
+    document.getElementById('cat_id').value = id;
+    document.getElementById('cat_name').value = name;
+    document.getElementById('cat_code').value = code;
+    document.getElementById('cat_desc').value = desc;
+    openModal('modalDrugCat');
+  }
 <?php echo '</script'; ?>
->
-<?php }
+><?php }
 }
