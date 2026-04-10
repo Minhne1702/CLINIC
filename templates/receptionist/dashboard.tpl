@@ -1,13 +1,19 @@
 {include file="layout/sidebar.tpl" page_title="Tổng quan" active_page="dashboard"}
 
-<div class="patient-welcome" style="background:linear-gradient(135deg,#065f46 0%,#10b981 100%)">
+<div class="patient-welcome" style="background:linear-gradient(135deg,#065f46 0%,#10b981 100%); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
   <div class="patient-welcome__text">
     <h2>Xin chào, <span style="color:#a7f3d0">{$current_user_name|default:"Lễ tân"}</span> 🏥</h2>
     <p>Hôm nay {$smarty.now|date_format:"%d/%m/%Y"} — <strong style="color:#fff">{$stats.today_checkins|default:0}</strong> bệnh nhân đã check-in</p>
   </div>
-  <a href="{$BASE_URL}/?role=receptionist&page=checkin" class="btn-admin-primary" style="background:#fff;color:#065f46">
-    <i class="fa-solid fa-qrcode"></i> Check-in bệnh nhân
-  </a>
+  
+  <div class="quick-actions" style="display: flex; gap: 0.5rem;">
+    <a href="{$BASE_URL}/?role=receptionist&page=walk-in" class="btn-admin-primary" style="background:#f59e0b;color:#fff; border:none;">
+      <i class="fa-solid fa-user-plus"></i> Đăng ký trực tiếp
+    </a>
+    <a href="{$BASE_URL}/?role=receptionist&page=checkin" class="btn-admin-primary" style="background:#fff;color:#065f46;">
+      <i class="fa-solid fa-qrcode"></i> Quét mã / Check-in
+    </a>
+  </div>
 </div>
 
 <div class="patient-stats">
@@ -17,10 +23,11 @@
   <div class="patient-stat-card"><div class="patient-stat-icon" style="--c:#8b5cf6"><i class="fa-solid fa-user-plus"></i></div><div><p>BN mới hôm nay</p><strong>{$stats.new_patients|default:0}</strong></div></div>
 </div>
 
-<div class="dashboard-grid">
-  <div class="admin-card admin-card--lg">
+<div class="dashboard-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: stretch;">
+  
+  <div class="admin-card admin-card--lg" style="height: 100%; display: flex; flex-direction: column;">
     <div class="admin-card__header"><h3><i class="fa-solid fa-list-ol"></i> Hàng chờ hiện tại</h3><a href="{$BASE_URL}/?role=receptionist&page=queue" class="btn-link">Xem đầy đủ</a></div>
-    <div class="admin-card__body p-0">
+    <div class="admin-card__body p-0" style="flex: 1; overflow-y: auto;">
       <table class="admin-table">
         <thead><tr><th>STT</th><th>Bệnh nhân</th><th>Bác sĩ</th><th>Ưu tiên</th><th>Check-in lúc</th><th>Trạng thái</th></tr></thead>
         <tbody>
@@ -39,18 +46,20 @@
       </table>
     </div>
   </div>
-  <div class="admin-card">
+
+  <div class="admin-card" style="height: 100%; display: flex; flex-direction: column;">
     <div class="admin-card__header"><h3><i class="fa-solid fa-calendar-check"></i> Lịch hẹn sắp tới</h3><a href="{$BASE_URL}/?role=receptionist&page=appointments" class="btn-link">Xem tất cả</a></div>
-    <div class="admin-card__body p-0">
+    <div class="admin-card__body p-0" style="flex: 1; overflow-y: auto;">
       {foreach from=$upcoming_appointments item=apt}
-      <div class="appt-item">
-        <div class="appt-item__date"><strong>{$apt.time}</strong><span>{$apt.date|date_format:"%d/%m"}</span></div>
+      <div class="appt-item" style="border-bottom: 1px solid #eee; padding: 1rem;">
+        <div class="appt-item__date"><strong>{$apt.time}</strong> <span>{$apt.date|date_format:"%d/%m"}</span></div>
         <div class="appt-item__info"><strong>{$apt.patient_name}</strong><p>{$apt.doctor_name} · {$apt.specialty}</p></div>
         <span class="badge badge--{if $apt.status=='confirmed'}blue{else}warning{/if}">{if $apt.status=='confirmed'}Xác nhận{else}Chờ{/if}</span>
       </div>
-      {foreachelse}<div class="empty-state" style="padding:2rem"><i class="fa-regular fa-calendar"></i><p>Không có lịch hẹn</p></div>
+      {foreachelse}<div class="empty-state" style="padding:2rem; text-align:center; color:#94a3b8;"><i class="fa-regular fa-calendar" style="font-size:2rem; margin-bottom:0.5rem;"></i><p>Không có lịch hẹn</p></div>
       {/foreach}
     </div>
   </div>
+
 </div>
 {include file="layout/footer.tpl"}
