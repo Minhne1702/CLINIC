@@ -22,7 +22,7 @@ class AuthController
 
             if ($user) {
                 $_SESSION['user'] = [
-                    'id' => (string)$user['_id'],
+                    'id' => $user['id'],
                     'email' => $user['email'],
                     'fullName' => $user['fullName'],
                     'role' => $user['role'],
@@ -41,11 +41,10 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_register'])) {
             $email = trim($_POST['email'] ?? '');
             $userOtp = trim($_POST['otp'] ?? '');
-            $userOtp = trim($_POST['otp'] ?? '');
             $phone = trim($_POST['phone'] ?? '');
 
             if (!preg_match('/^(0[3|5|7|8|9])[0-9]{8}$/', $phone)) {
-                $this->smarty->assign('error_message', 'Số điện thoại không hợp lệ (phải có 10 chữ số và đúng đầu số VN)!');
+                $this->smarty->assign('error_message', 'Số điện thoại không hợp lệ!');
                 $this->smarty->assign('form', $_POST);
                 $this->smarty->display('guest/register.tpl');
                 return;
@@ -66,17 +65,16 @@ class AuthController
                     'phone'     => $_POST['phone'],
                     'email'     => $email,
                     'password'  => $_POST['password'],
-                    'role'      => 'patient',
-                    'createdAt' => new \MongoDB\BSON\UTCDateTime()
+                    'role'      => 'patient'
                 ];
 
-                $userId = $this->userModel->createUser($userData);
+                $userId = $this->userModel->registerUser($userData);
 
                 if ($userId) {
                     unset($_SESSION['register_otp'], $_SESSION['register_email'], $_SESSION['otp_expire']);
 
                     $_SESSION['user'] = [
-                        'id'       => (string)$userId,
+                        'id'       => $userId,
                         'email'    => $email,
                         'fullName' => $_POST['fullName'],
                         'role'     => 'patient',
@@ -107,28 +105,37 @@ class AuthController
         $client->addScope("email");
         $client->addScope("profile");
 
-        $httpClient = new \GuzzleHttp\Client([
-            'verify' => false
-        ]);
+        $httpClient = new \GuzzleHttp\Client(['verify' => false]);
         $client->setHttpClient($httpClient);
 
+        // 1. Chuyển hướng người dùng sang Google
         if (!isset($_GET['code'])) {
             $authUrl = $client->createAuthUrl();
             header("Location: " . $authUrl);
             exit;
         }
 
-        else {
+        // 2. Xử lý khi Google trả mã code về URL
+        try {
+            // Đây là dòng gây ra lỗi Fatal Error nếu không có try-catch
             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+
+            // Kiểm tra xem có lỗi trong mảng trả về không
+            if (isset($token['error'])) {
+                throw new \Exception("Google API Error: " . ($token['error_description'] ?? $token['error']));
+            }
+
             $client->setAccessToken($token);
 
-            $googleService = new Google\Service\Oauth2($client);
+            // Lấy thông tin user
+            $googleService = new \Google\Service\Oauth2($client);
             $data = $googleService->userinfo->get();
 
             $email = $data->email;
             $fullName = $data->name;
             $googleId = $data->id;
 
+            // Tìm user trong Database MySQL
             $user = $this->userModel->findUserByEmail($email);
 
             if (!$user) {
@@ -137,23 +144,33 @@ class AuthController
                     'email' => $email,
                     'googleId' => $googleId,
                     'role' => 'patient',
-                    'createdAt' => new \MongoDB\BSON\UTCDateTime()
+                    'avatar' => $data->picture
                 ];
                 $this->userModel->registerUser($newUser);
                 $user = $this->userModel->findUserByEmail($email);
             }
 
+            // Lưu Session cho user
             $_SESSION['user'] = [
-                'id'       => (string)$user['_id'],
+                'id'       => $user['id'],
                 'email'    => $user['email'],
                 'fullName' => $user['fullName'],
                 'role'     => $user['role'],
             ];
 
-            header("Location: index.php?page=home");
+            header("Location: index.php?page=dashboard");
+            exit;
+        } catch (\Exception $e) {
+            // Ghi lại log lỗi để bạn kiểm tra trong file log của XAMPP
+            error_log("Lỗi Google Login: " . $e->getMessage());
+
+            // Thay vì hiện lỗi Fatal, ta quay lại trang Login và báo lỗi thân thiện
+            $this->smarty->assign('error_message', 'Đăng nhập thất bại hoặc phiên làm việc đã hết hạn. Vui lòng thử lại.');
+            $this->smarty->display('guest/login.tpl');
             exit;
         }
     }
+
     public function forgotPassword()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_forgot'])) {
@@ -161,25 +178,25 @@ class AuthController
             $user = $this->userModel->findUserByEmail($email);
 
             if ($user) {
-                if (!isset($user['password'])) {
+                if (empty($user['password']) && !empty($user['googleId'])) {
                     $message = "Tài khoản này đăng nhập bằng Google!";
                     $status = 'error';
                 } else {
                     $newPassword = substr(str_shuffle('abcdefghjkmnpqrstuvwxyz23456789'), 0, 8);
                     $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
 
-                    $this->userModel->updateProfile((string)$user['_id'], ['password' => $hashedPassword]);
+                    $this->userModel->updateProfile($user['id'], ['password' => $hashedPassword]); // FIXED: _id -> id
 
                     if ($this->sendEmail($email, $newPassword)) {
                         $message = "Mật khẩu mới đã được gửi vào Email của bạn!";
                         $status = 'success';
                     } else {
-                        $message = "Lỗi hệ thống không thể gửi mail. Vui lòng thử lại sau!";
+                        $message = "Lỗi gửi mail!";
                         $status = 'error';
                     }
                 }
             } else {
-                $message = "Email này không tồn tại trên hệ thống!";
+                $message = "Email này không tồn tại!";
                 $status = 'error';
             }
             $this->smarty->assign('message', $message);

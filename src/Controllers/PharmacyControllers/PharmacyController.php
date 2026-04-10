@@ -5,7 +5,7 @@ class PharmacyController
     private $drugModel;
     private $prescriptionModel;
 
-    public function __construct($smarty, $db = null) // $db dùng để khởi tạo models bên dưới
+    public function __construct($smarty, $db = null)
     {
         $this->smarty = $smarty;
 
@@ -20,14 +20,14 @@ class PharmacyController
         }
 
         $user = $_SESSION['user'];
-        $name = $user['fullName'] ?? $user['full_name'] ?? $user['name'] ?? $user['username'] ?? 'Dược sĩ';
+        $name = $user['fullName'] ?? 'Dược sĩ';
         $this->smarty->assign('current_user_name', $name);
         $this->smarty->assign('current_user_role', 'pharmacist');
         $this->smarty->assign('notification_count', 0);
 
-        $newRxCount = $this->prescriptionModel
-            ? $this->prescriptionModel->getDashboardStats()['new_rx']
-            : 0;
+        // FIX LỖI: Sử dụng đúng key 'pending_dispense' từ PrescriptionModel
+        $stats = $this->prescriptionModel ? $this->prescriptionModel->getDashboardStats() : null;
+        $newRxCount = $stats['pending_dispense'] ?? 0;
         $this->smarty->assign('new_rx_count', $newRxCount);
     }
 
@@ -35,17 +35,39 @@ class PharmacyController
     {
         $page = $_GET['page'] ?? 'dashboard';
         switch ($page) {
-            case 'dashboard':       $this->dashboard();      break;
-            case 'prescriptions':   $this->prescriptions();  break;
-            case 'dispensing':      $this->dispensing();     break;
-            case 'inventory':       $this->inventory();      break;
-            case 'stock-in':        $this->stockIn();        break;
-            case 'low-stock':       $this->lowStock();       break;
-            case 'expiring':        $this->expiring();       break;
-            case 'drugs':           $this->drugs();          break;
-            case 'drug-categories': $this->drugCategories(); break;
-            case 'reports':         $this->reports();        break;
-            default:                $this->dashboard();      break;
+            case 'dashboard':
+                $this->dashboard();
+                break;
+            case 'prescriptions':
+                $this->prescriptions();
+                break;
+            case 'dispensing':
+                $this->dispensing();
+                break;
+            case 'inventory':
+                $this->inventory();
+                break;
+            case 'stock-in':
+                $this->stockIn();
+                break;
+            case 'low-stock':
+                $this->lowStock();
+                break;
+            case 'expiring':
+                $this->expiring();
+                break;
+            case 'drugs':
+                $this->drugs();
+                break;
+            case 'drug-categories':
+                $this->drugCategories();
+                break;
+            case 'reports':
+                $this->reports();
+                break;
+            default:
+                $this->dashboard();
+                break;
         }
     }
 
@@ -53,18 +75,19 @@ class PharmacyController
 
     private function dashboard()
     {
-        $rxStats   = $this->prescriptionModel ? $this->prescriptionModel->getDashboardStats()  : ['new_rx' => 0, 'dispensed_today' => 0];
-        $drugStats = $this->drugModel         ? $this->drugModel->getDashboardStats()           : ['low_stock' => 0, 'expiring' => 0];
+        // FIX LỖI: Đồng bộ key 'pending_dispense' và 'completed_today'
+        $rxStats   = $this->prescriptionModel ? $this->prescriptionModel->getDashboardStats() : ['pending_dispense' => 0, 'completed_today' => 0];
+        $drugStats = $this->drugModel         ? $this->drugModel->getDashboardStats()         : ['low_stock' => 0, 'expiring' => 0];
 
         $stats = [
-            'new_rx'          => $rxStats['new_rx'],
-            'dispensed_today' => $rxStats['dispensed_today'],
-            'low_stock'       => $drugStats['low_stock'],
-            'expiring'        => $drugStats['expiring'],
+            'new_rx'          => $rxStats['pending_dispense'] ?? 0,
+            'dispensed_today' => $rxStats['completed_today'] ?? 0,
+            'low_stock'       => $drugStats['low_stock'] ?? 0,
+            'expiring'        => $drugStats['expiring'] ?? 0,
         ];
 
         $newPrescriptions = $this->prescriptionModel ? $this->prescriptionModel->getNewPrescriptions(10) : [];
-        $lowStockDrugs    = $this->drugModel         ? $this->drugModel->getLowStock()                    : [];
+        $lowStockDrugs    = $this->drugModel         ? $this->drugModel->getLowStock()                 : [];
 
         $this->smarty->assign('stats',             $stats);
         $this->smarty->assign('new_prescriptions', $newPrescriptions);
@@ -82,8 +105,9 @@ class PharmacyController
             'date'   => $_GET['date']   ?? '',
         ];
 
-        $prescriptions = $this->prescriptionModel ? $this->prescriptionModel->getPrescriptions($filter)    : [];
-        $count         = $this->prescriptionModel ? $this->prescriptionModel->getCountByStatus()            : ['all' => 0, 'pending' => 0, 'dispensing' => 0, 'done' => 0];
+        $prescriptions = $this->prescriptionModel ? $this->prescriptionModel->getPrescriptions($filter) : [];
+        // Map lại key cho CountByStatus
+        $count = $this->prescriptionModel ? $this->prescriptionModel->getCountByStatus() : ['all' => 0, 'pending' => 0, 'dispensing' => 0, 'done' => 0];
 
         $this->smarty->assign('prescriptions', $prescriptions);
         $this->smarty->assign('count',         $count);
@@ -101,45 +125,41 @@ class PharmacyController
             $rxId = $_POST['prescription_id'] ?? null;
 
             if ($rxId && $this->prescriptionModel) {
-                $drugCol = $this->drugModel ? $this->drugModel->getCollection() : null;
-                $rx      = $this->prescriptionModel->getPrescriptionById($rxId, $drugCol);
+                // Sửa: Truyền true để lấy kèm thông tin thuốc từ MySQL
+                $rx = $this->prescriptionModel->getPrescriptionById($rxId, true);
 
                 if ($rx) {
-                    // Trừ tồn kho cho từng thuốc
+                    // Trừ tồn kho
                     if ($this->drugModel && !empty($rx['drugs'])) {
                         foreach ($rx['drugs'] as $drug) {
-                            if (!empty($drug['drug_id']) && !empty($drug['qty'])) {
-                                $this->drugModel->deductStock($drug['drug_id'], (int)$drug['qty']);
+                            $dId = $drug['drug_id'] ?? null;
+                            $qty = $drug['qty'] ?? 0;
+                            if ($dId && $qty > 0) {
+                                $this->drugModel->deductStock($dId, $qty);
                             }
                         }
                     }
 
-                    $user        = $_SESSION['user'];
-                    $pharmacistId   = (string)($user['_id'] ?? '');
-                    $pharmacistName = $user['fullName'] ?? $user['full_name'] ?? $user['username'] ?? 'Dược sĩ';
+                    $user = $_SESSION['user'];
+                    $pharmacistId   = $user['id'] ?? 0;
+                    $pharmacistName = $user['fullName'] ?? 'Dược sĩ';
 
-                    // Cập nhật trạng thái đơn thuốc → done
+                    // Cập nhật trạng thái → done
                     $this->prescriptionModel->updateStatus($rxId, 'done', [
-                        'dispensed_at'   => new MongoDB\BSON\UTCDateTime(),
+                        'dispensed_at'   => date('Y-m-d H:i:s'),
                         'dispensed_by'   => $pharmacistId,
-                        'dispensed_name' => $pharmacistName,
+                        'dispensed_name' => $pharmacistName
                     ]);
 
-                    $this->smarty->assign('success_message', 'Đã phát thuốc thành công. Gọi bệnh nhân đến nhận.');
-                } else {
-                    $this->smarty->assign('error_message', 'Không tìm thấy đơn thuốc.');
+                    $this->smarty->assign('success_message', 'Đã phát thuốc thành công.');
                 }
             }
-            $rxId = null; // Hiện thông báo, không load lại đơn
+            $rxId = null;
         }
 
         $prescription = null;
         if ($rxId && $this->prescriptionModel) {
-            $drugCol      = $this->drugModel ? $this->drugModel->getCollection() : null;
-            $prescription = $this->prescriptionModel->getPrescriptionById($rxId, $drugCol);
-            if (!$prescription) {
-                $this->smarty->assign('error_message', 'Không tìm thấy đơn thuốc.');
-            }
+            $prescription = $this->prescriptionModel->getPrescriptionById($rxId, true);
         }
 
         $this->smarty->assign('prescription', $prescription);
@@ -156,14 +176,14 @@ class PharmacyController
             'stock_status' => $_GET['stock_status'] ?? '',
         ];
 
-        $drugs          = $this->drugModel ? $this->drugModel->getAllDrugs($filter)  : [];
-        $drugCategories = $this->drugModel ? $this->drugModel->getCategories()        : [];
-        $drugStats      = $this->drugModel ? $this->drugModel->getDashboardStats()    : ['low_stock' => 0, 'expiring' => 0];
+        $drugs          = $this->drugModel ? $this->drugModel->getAllDrugs($filter) : [];
+        $drugCategories = $this->drugModel ? $this->drugModel->getCategories()       : [];
+        $drugStats      = $this->drugModel ? $this->drugModel->getDashboardStats()   : ['low_stock' => 0, 'expiring' => 0];
 
-        $this->smarty->assign('drugs',          $drugs);
-        $this->smarty->assign('drug_categories',$drugCategories);
-        $this->smarty->assign('stats',          $drugStats);
-        $this->smarty->assign('filter',         $filter);
+        $this->smarty->assign('drugs',           $drugs);
+        $this->smarty->assign('drug_categories', $drugCategories);
+        $this->smarty->assign('stats',           $drugStats);
+        $this->smarty->assign('filter',          $filter);
         $this->smarty->display('pharmacist/inventory.tpl');
     }
 
@@ -184,10 +204,9 @@ class PharmacyController
             }
         }
 
-        // Nếu có drug_id từ URL (click "Nhập thêm" từ tồn kho), pre-select thuốc đó
         $preselectedDrugId = $_GET['drug_id'] ?? null;
-
         $drugOptions = $this->drugModel ? $this->drugModel->getAllForSelect() : [];
+
         $this->smarty->assign('drug_options_json', json_encode($drugOptions));
         $this->smarty->assign('preselected_drug_id', $preselectedDrugId);
         $this->smarty->assign('form', [
@@ -216,7 +235,7 @@ class PharmacyController
         $this->smarty->display('pharmacist/expiring.tpl');
     }
 
-    // ─── Danh mục thuốc (read-only) ───────────────────────────────────────────
+    // ─── Danh mục thuốc ───────────────────────────────────────────
 
     private function drugs()
     {
@@ -227,17 +246,17 @@ class PharmacyController
         ];
 
         $drugs          = $this->drugModel ? $this->drugModel->getAllDrugs($filter)  : [];
-        $drugCategories = $this->drugModel ? $this->drugModel->getCategories()        : [];
-        $lowStockCount  = $this->drugModel ? $this->drugModel->getDashboardStats()['low_stock'] : 0;
+        $drugCategories = $this->drugModel ? $this->drugModel->getCategories()         : [];
+        $drugStats      = $this->drugModel ? $this->drugModel->getDashboardStats()    : ['low_stock' => 0];
 
         $this->smarty->assign('drugs',           $drugs);
         $this->smarty->assign('drug_categories', $drugCategories);
-        $this->smarty->assign('low_stock_count', $lowStockCount);
+        $this->smarty->assign('low_stock_count', $drugStats['low_stock'] ?? 0);
         $this->smarty->assign('filter',          $filter);
         $this->smarty->display('admin/drugs.tpl');
     }
 
-    // ─── Nhóm thuốc (read-only) ───────────────────────────────────────────────
+    // ─── Nhóm thuốc ───────────────────────────────────────────────
 
     private function drugCategories()
     {
@@ -264,19 +283,25 @@ class PharmacyController
             'date_to'   => $dateTo,
         ];
 
-        $report    = ['total_dispensed' => 0, 'total_qty_out' => 0, 'total_qty_in' => 0, 'total_stock' => 0];
+        $report   = ['total_dispensed' => 0, 'total_qty_out' => 0, 'total_qty_in' => 0, 'total_stock' => 0];
         $topDrugs  = [];
 
-        if ($this->prescriptionModel) {
-            $data              = $this->prescriptionModel->getReportStats($dateFrom, $dateTo);
-            $report['total_dispensed'] = $data['stats']['total_dispensed'];
-            $report['total_qty_out']   = $data['stats']['total_qty_out'];
-            $topDrugs                  = $data['top_drugs'];
+        // Kiểm tra hàm tồn tại trước khi gọi để tránh lỗi Fatal
+        if ($this->prescriptionModel && method_exists($this->prescriptionModel, 'getReportStats')) {
+            $data = $this->prescriptionModel->getReportStats($dateFrom, $dateTo);
+            $report['total_dispensed'] = $data['stats']['total_dispensed'] ?? 0;
+            $report['total_qty_out']   = $data['stats']['total_qty_out'] ?? 0;
+            $topDrugs                  = $data['top_drugs'] ?? [];
         }
 
+        // Các hàm phụ trợ thống kê cho DrugModel
         if ($this->drugModel) {
-            $report['total_qty_in'] = $this->drugModel->getStockInTotal($dateFrom, $dateTo);
-            $report['total_stock']  = $this->drugModel->getTotalStockCount();
+            if (method_exists($this->drugModel, 'getStockInTotal')) {
+                $report['total_qty_in'] = $this->drugModel->getStockInTotal($dateFrom, $dateTo);
+            }
+            if (method_exists($this->drugModel, 'getTotalStockCount')) {
+                $report['total_stock']  = $this->drugModel->getTotalStockCount();
+            }
         }
 
         $this->smarty->assign('report',    $report);
@@ -284,6 +309,4 @@ class PharmacyController
         $this->smarty->assign('top_drugs', $topDrugs);
         $this->smarty->display('pharmacist/reports.tpl');
     }
-
 }
-

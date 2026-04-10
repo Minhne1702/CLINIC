@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 06:58:12
+/* Smarty version 5.8.0, created on 2026-04-10 13:55:34
   from 'file:guest/register.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d74e048920f9_26477553',
+  'unifunc' => 'content_69d90156df4582_53916619',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -22,7 +22,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d74e048920f9_26477553 (\Smarty\Template $_smarty_tpl) {
+function content_69d90156df4582_53916619 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Đăng ký — MediCare",'active_page'=>"register"), (int) 0, $_smarty_current_dir);
@@ -188,10 +188,10 @@ $"
 ?>
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_53699050269d74e048716c2_69699569', "extra_js");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_153451366169d90156dd9d14_37311237', "extra_js");
 }
 /* {block "extra_js"} */
-class Block_53699050269d74e048716c2_69699569 extends \Smarty\Runtime\Block
+class Block_153451366169d90156dd9d14_37311237 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';

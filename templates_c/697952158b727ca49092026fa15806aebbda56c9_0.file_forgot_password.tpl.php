@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 5.8.0, created on 2026-04-09 02:26:20
+/* Smarty version 5.8.0, created on 2026-04-10 13:55:45
   from 'file:guest/forgot_password.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.8.0',
-  'unifunc' => 'content_69d70e4c3dc6f7_79137094',
+  'unifunc' => 'content_69d901610e4ff2_53594669',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -22,7 +22,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
     'file:layout/footer.tpl' => 1,
   ),
 ))) {
-function content_69d70e4c3dc6f7_79137094 (\Smarty\Template $_smarty_tpl) {
+function content_69d901610e4ff2_53594669 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\Users\\Admin\\Music\\CLINIC\\templates\\guest';
 $_smarty_tpl->renderSubTemplate("file:layout/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('page_title'=>"Quên mật khẩu — MediCare",'active_page'=>''), (int) 0, $_smarty_current_dir);
 ?>

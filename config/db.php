@@ -1,23 +1,29 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-
 class Database
 {
-    private $client;
-    private $db;
+    private $host = "127.0.0.1";
+    private $db_name = "Clinic";
+    private $username = "root";
+    private $password = "123456";
+    private $conn;
 
     public function __construct()
     {
         try {
-            $this->client = new MongoDB\Client("mongodb://127.0.0.1:27017");
-            $this->db = $this->client->selectDatabase('Projects');
-        } catch (Exception $e) {
-            die("Lỗi kết nối MongoDB: " . $e->getMessage());
+            $this->conn = new PDO(
+                "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8",
+                $this->username,
+                $this->password
+            );
+
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Lỗi kết nối MySQL: " . $e->getMessage());
         }
     }
 
     public function getDb()
     {
-        return $this->db;
+        return $this->conn;
     }
 }

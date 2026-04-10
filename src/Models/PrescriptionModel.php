@@ -1,211 +1,180 @@
 <?php
 class PrescriptionModel
 {
-    private $col;
+    private $db;
 
     public function __construct($db)
     {
-        $this->col = $db->selectCollection('prescriptions');
+        $this->db = $db;
     }
 
-    /**
-     * Lấy danh sách đơn thuốc với bộ lọc.
-     * Pharmacist chỉ thấy các trạng thái: pending (chờ phát), dispensing, done.
-     */
+    /** Lấy thống kê cho Dashboard Dược sĩ */
+    public function getDashboardStats()
+    {
+        try {
+            $today = date('Y-m-d');
+            $stmt = $this->db->prepare("
+                SELECT 
+                    COUNT(CASE WHEN status = 'paid' THEN 1 END) as pending_dispense,
+                    COUNT(CASE WHEN status = 'done' AND DATE(created_at) = ? THEN 1 END) as completed_today,
+                    COUNT(CASE WHEN status = 'dispensing' THEN 1 END) as processing
+                FROM prescriptions
+            ");
+            $stmt->execute([$today]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Error in getDashboardStats: " . $e->getMessage());
+            return ['pending_dispense' => 0, 'completed_today' => 0, 'processing' => 0];
+        }
+    }
+
+    public function getNewPrescriptions($limit = 10)
+    {
+        try {
+            // Sửa cột: pres_status -> status
+            $stmt = $this->db->prepare("SELECT * FROM prescriptions WHERE status = 'paid' ORDER BY created_at DESC LIMIT :limit");
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $this->formatList($stmt->fetchAll(PDO::FETCH_ASSOC));
+        } catch (Exception $e) {
+            error_log("Error in getNewPrescriptions: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    /** Lấy danh sách đơn thuốc với bộ lọc */
     public function getPrescriptions($filter = [])
     {
-        $query = [];
+        $sql = "SELECT * FROM prescriptions WHERE 1=1";
+        $params = [];
 
-        // Nếu không có filter status → hiện tất cả trừ cancelled
         if (!empty($filter['status'])) {
-            $query['status'] = $filter['status'];
+            $sql .= " AND status = :status";
+            $params['status'] = $filter['status'];
         } else {
-            $query['status'] = ['$in' => ['pending', 'dispensing', 'done']];
+            $sql .= " AND status IN ('pending', 'paid', 'dispensing', 'done')";
         }
 
         if (!empty($filter['q'])) {
-            $regex        = new MongoDB\BSON\Regex(preg_quote($filter['q'], '/'), 'i');
-            $query['$or'] = [
-                ['patient_name' => $regex],
-                ['patient_code' => $regex],
-                ['code'         => $regex],
-                ['doctor_name'  => $regex],
-            ];
+            // Sửa cột: pres_patient_name -> patient_name, pres_code -> code...
+            $sql .= " AND (patient_name LIKE :q OR code LIKE :q3 OR doctor_name LIKE :q4)";
+            $search = '%' . $filter['q'] . '%';
+            $params['q'] = $search;
+            $params['q3'] = $search;
+            $params['q4'] = $search;
         }
 
         if (!empty($filter['date'])) {
-            $start = new MongoDB\BSON\UTCDateTime(strtotime($filter['date']) * 1000);
-            $end   = new MongoDB\BSON\UTCDateTime((strtotime($filter['date']) + 86400) * 1000);
-            $query['created_at'] = ['$gte' => $start, '$lt' => $end];
+            $sql .= " AND DATE(created_at) = :date";
+            $params['date'] = $filter['date'];
         }
 
-        return $this->formatList(
-            $this->col->find($query, ['sort' => ['created_at' => -1]])->toArray()
-        );
+        $sql .= " ORDER BY created_at DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+
+        return $this->formatList($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /** Đếm đơn thuốc theo trạng thái */
-    public function getCountByStatus()
-    {
-        $counts = ['all' => 0, 'pending' => 0, 'dispensing' => 0, 'done' => 0];
-        foreach (['pending', 'dispensing', 'done'] as $s) {
-            $c = (int)$this->col->countDocuments(['status' => $s]);
-            $counts[$s]   = $c;
-            $counts['all'] += $c;
-        }
-        return $counts;
-    }
-
-    /**
-     * Lấy chi tiết đơn thuốc, tùy chọn enrich stock từ collection drugs.
-     *
-     * @param string    $id
-     * @param MongoDB\Collection|null $drugCol  — collection 'drugs' để lấy tồn kho
-     */
+    /** Lấy chi tiết đơn thuốc và kiểm tra tồn kho */
     public function getPrescriptionById($id, $drugCol = null)
     {
         try {
-            $doc = $this->col->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+            $stmt = $this->db->prepare("SELECT * FROM prescriptions WHERE id = :id LIMIT 1");
+            $stmt->execute(['id' => $id]);
+            $doc = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!$doc) return null;
 
             $arr = $this->formatDoc($doc);
 
-            // Enrich tồn kho cho từng thuốc
             if ($drugCol !== null && !empty($arr['drugs'])) {
                 foreach ($arr['drugs'] as &$drug) {
                     if (empty($drug['drug_id'])) continue;
-                    try {
-                        $drugDoc = $drugCol->findOne(['_id' => new MongoDB\BSON\ObjectId($drug['drug_id'])]);
-                        if ($drugDoc) {
-                            $drug['stock_qty']        = (int)($drugDoc['stock_qty']        ?? 0);
-                            $drug['active_ingredient'] = $drugDoc['active_ingredient']      ?? ($drug['active_ingredient'] ?? '');
-                            $drug['concentration']     = $drugDoc['concentration']          ?? ($drug['concentration']     ?? '');
-                        }
-                    } catch (Exception $e) {
-                        // drug_id không hợp lệ, bỏ qua
+
+                    // Khớp với bảng drugs: stock_qty, name (không dùng tiền tố drug_)
+                    $stmtD = $this->db->prepare("SELECT stock_qty, name FROM drugs WHERE id = ?");
+                    $stmtD->execute([$drug['drug_id']]);
+                    $drugInfo = $stmtD->fetch(PDO::FETCH_ASSOC);
+
+                    if ($drugInfo) {
+                        $drug['stock_qty'] = (int)$drugInfo['stock_qty'];
+                        $drug['name'] = $drugInfo['name'];
                     }
                 }
                 unset($drug);
             }
-
             return $arr;
         } catch (Exception $e) {
             return null;
         }
     }
 
-    /** Cập nhật trạng thái đơn thuốc */
+    /** Cập nhật trạng thái */
     public function updateStatus($id, $status, $extra = [])
     {
         try {
-            return $this->col->updateOne(
-                ['_id' => new MongoDB\BSON\ObjectId($id)],
-                ['$set' => array_merge(['status' => $status], $extra)]
-            );
+            $fields = "status = :status";
+            $params = ['status' => $status, 'id' => $id];
+
+            foreach ($extra as $key => $val) {
+                $fields .= ", $key = :$key";
+                $params[$key] = $val;
+            }
+
+            $stmt = $this->db->prepare("UPDATE prescriptions SET $fields WHERE id = :id");
+            return $stmt->execute($params);
         } catch (Exception $e) {
             return false;
         }
     }
 
-    /** Thống kê cho dashboard dược sĩ */
-    public function getDashboardStats()
-    {
-        $todayStart = new MongoDB\BSON\UTCDateTime(strtotime('today') * 1000);
-        $todayEnd   = new MongoDB\BSON\UTCDateTime(strtotime('tomorrow') * 1000);
-        return [
-            'new_rx'          => (int)$this->col->countDocuments(['status' => 'pending']),
-            'dispensed_today' => (int)$this->col->countDocuments([
-                'status'       => 'done',
-                'dispensed_at' => ['$gte' => $todayStart, '$lt' => $todayEnd],
-            ]),
-        ];
-    }
-
-    /** Lấy đơn thuốc mới nhất (pending + dispensing) cho dashboard */
-    public function getNewPrescriptions($limit = 10)
-    {
-        return $this->formatList(
-            $this->col->find(
-                ['status' => ['$in' => ['pending', 'dispensing']]],
-                ['sort' => ['created_at' => -1], 'limit' => $limit]
-            )->toArray()
-        );
-    }
-
-    /** Thống kê báo cáo nhà thuốc */
-    public function getReportStats($dateFrom = null, $dateTo = null)
-    {
-        $query = ['status' => 'done'];
-        if ($dateFrom) $query['dispensed_at']['$gte'] = new MongoDB\BSON\UTCDateTime(strtotime($dateFrom) * 1000);
-        if ($dateTo)   $query['dispensed_at']['$lt']  = new MongoDB\BSON\UTCDateTime((strtotime($dateTo) + 86400) * 1000);
-
-        $docs           = $this->col->find($query)->toArray();
-        $totalDispensed = count($docs);
-        $totalQtyOut    = 0;
-        $drugMap        = [];
-
-        foreach ($docs as $rx) {
-            foreach ($rx['drugs'] ?? [] as $drug) {
-                $qty         = (int)($drug['qty'] ?? 0);
-                $totalQtyOut += $qty;
-                $key         = (string)($drug['drug_id'] ?? $drug['name'] ?? '');
-                if (!isset($drugMap[$key])) {
-                    $drugMap[$key] = [
-                        'name'               => $drug['name']          ?? '?',
-                        'category_name'      => $drug['category_name'] ?? '—',
-                        'unit'               => $drug['unit']          ?? '',
-                        'total_qty'          => 0,
-                        'prescription_count' => 0,
-                    ];
-                }
-                $drugMap[$key]['total_qty']          += $qty;
-                $drugMap[$key]['prescription_count'] += 1;
-            }
-        }
-
-        usort($drugMap, fn($a, $b) => $b['total_qty'] - $a['total_qty']);
-
-        return [
-            'stats'     => ['total_dispensed' => $totalDispensed, 'total_qty_out' => $totalQtyOut],
-            'top_drugs' => array_slice(array_values($drugMap), 0, 10),
-        ];
-    }
-
-    // ─── Private helpers ──────────────────────────────────────────────────────
+    // ─── Helpers ───
 
     private function formatDoc($doc)
     {
         if (!$doc) return null;
-        $tz  = new DateTimeZone('Asia/Ho_Chi_Minh');
-        $arr = (array)$doc;
-        $arr['_id'] = (string)$doc['_id'];
+        $doc['_id'] = (string)$doc['id'];
+
+        // Map status để giao diện Smarty không bị lỗi
+        $doc['status'] = $doc['status'];
 
         foreach (['created_at', 'dispensed_at'] as $f) {
-            if (isset($doc[$f]) && $doc[$f] instanceof MongoDB\BSON\UTCDateTime) {
-                $arr[$f] = $doc[$f]->toDateTime()->setTimezone($tz)->getTimestamp();
+            if (!empty($doc[$f])) {
+                $doc[$f] = strtotime($doc[$f]);
             }
         }
 
-        // Chuyển drugs thành mảng PHP thuần
-        if (isset($doc['drugs'])) {
-            $drugs = [];
-            foreach ($doc['drugs'] as $d) {
-                $di = (array)$d;
-                if (isset($d['drug_id'])) $di['drug_id'] = (string)$d['drug_id'];
-                if (isset($d['qty']))     $di['qty']     = (int)$d['qty'];
-                $drugs[] = $di;
-            }
-            $arr['drugs'] = $drugs;
-        }
-
-        // Fallback drug_count nếu không có trong document
-        $arr['drug_count'] = (int)($doc['drug_count'] ?? count($arr['drugs'] ?? []));
-
-        return $arr;
+        // Sửa cột: pres_drugs_json -> drugs_json
+        $doc['drugs'] = json_decode($doc['drugs_json'] ?? '[]', true);
+        return $doc;
     }
 
     private function formatList($docs)
     {
         return array_map([$this, 'formatDoc'], $docs);
+    }
+    public function getCountByStatus()
+    {
+        try {
+            $stmt = $this->db->query("
+                SELECT 
+                    COUNT(*) as total,
+                    COUNT(CASE WHEN status = 'paid' THEN 1 END) as pending,
+                    COUNT(CASE WHEN status = 'dispensing' THEN 1 END) as dispensing,
+                    COUNT(CASE WHEN status = 'done' THEN 1 END) as done
+                FROM prescriptions
+            ");
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return [
+                'all'        => $data['total'] ?? 0,
+                'pending'    => $data['pending'] ?? 0,
+                'dispensing' => $data['dispensing'] ?? 0,
+                'done'       => $data['done'] ?? 0
+            ];
+        } catch (Exception $e) {
+            return ['all' => 0, 'pending' => 0, 'dispensing' => 0, 'done' => 0];
+        }
     }
 }

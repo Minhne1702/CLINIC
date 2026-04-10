@@ -12,7 +12,8 @@
   </div>
 </div>
 
-{if $success_message}<div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>{/if}
+{if $success_message}<div class="alert alert--success"><i class="fa-solid fa-circle-check"></i> {$success_message}</div>
+{/if}
 
 <div class="admin-card">
   <div class="admin-card__body p-0">
@@ -29,22 +30,48 @@
       </thead>
       <tbody>
         {foreach from=$drug_categories item=cat}
-        <tr>
-          <td><span class="code-tag">{$cat.code|default:'—'}</span></td>
-          <td><strong>{$cat.name}</strong></td>
-          <td><span class="text-muted" style="font-size:13px">{$cat.description|truncate:60:'...'|default:'—'}</span></td>
-          <td><span class="badge badge--blue">{$cat.drug_count|default:0} thuốc</span></td>
-          <td>{if $cat.is_active}<span class="badge badge--success">Hoạt động</span>{else}<span class="badge badge--danger">Ẩn</span>{/if}</td>
-          <td>
-            <div class="table-actions">
-              <button class="action-btn" onclick="editCat('{$cat._id}','{$cat.name}','{$cat.code}','{$cat.description}')" title="Sửa"><i class="fa-solid fa-pen"></i></button>
-              <a href="{$BASE_URL}/?role=admin&page=drug-categories&action=toggle&id={$cat._id}" class="action-btn" title="Bật/Tắt"><i class="fa-solid fa-power-off"></i></a>
-              <a href="{$BASE_URL}/?role=admin&page=drug-categories&action=delete&id={$cat._id}" class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa nhóm thuốc này?')"><i class="fa-solid fa-trash"></i></a>
-            </div>
-          </td>
-        </tr>
+          <tr>
+            <td><span class="code-tag">{$cat.code|default:'—'}</span></td>
+
+            <td><strong>{$cat.name|default:'Không tên'}</strong></td>
+
+            <td><span class="text-muted" style="font-size:13px">{$cat.description|truncate:60:'...'|default:'—'}</span>
+            </td>
+
+            <td><span class="badge badge--blue">{$cat.drug_count|default:0} thuốc</span></td>
+
+            <td>
+              {if $cat.is_active}
+                <span class="badge badge--success">Hoạt động</span>
+              {else}
+                <span class="badge badge--danger">Ẩn</span>
+              {/if}
+            </td>
+
+            <td>
+              <div class="table-actions">
+                <button class="action-btn"
+                  onclick="editCat('{$cat._id|default:''}', '{$cat.name|escape:'javascript'|default:''}', '{$cat.code|escape:'javascript'|default:''}', '{$cat.description|escape:'javascript'|default:''}')"
+                  title="Sửa">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <a href="{$BASE_URL}/?role=admin&page=drug-categories&action=toggle&id={$cat._id|default:''}"
+                  class="action-btn" title="Bật/Tắt">
+                  <i class="fa-solid fa-power-off"></i>
+                </a>
+
+                <a href="{$BASE_URL}/?role=admin&page=drug-categories&action=delete&id={$cat._id|default:''}"
+                  class="action-btn action-btn--danger" title="Xóa" onclick="return confirm('Xóa nhóm thuốc này?')">
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
         {foreachelse}
-        <tr><td colspan="6" class="table-empty">Chưa có nhóm thuốc nào</td></tr>
+          <tr>
+            <td colspan="6" class="table-empty">Chưa có nhóm thuốc nào</td>
+          </tr>
         {/foreach}
       </tbody>
     </table>
@@ -85,13 +112,15 @@
 </div>
 
 {include file="layout/footer.tpl"}
+
 <script>
-function editCat(id, name, code, desc) {
-  document.getElementById('modalDrugCatTitle').textContent = 'Sửa nhóm thuốc';
-  document.getElementById('cat_id').value = id;
-  document.getElementById('cat_name').value = name;
-  document.getElementById('cat_code').value = code;
-  document.getElementById('cat_desc').value = desc;
-  openModal('modalDrugCat');
-}
+  function editCat(id, name, code, desc) {
+    // Reset tiêu đề và đổ dữ liệu
+    document.getElementById('modalDrugCatTitle').textContent = 'Sửa nhóm thuốc';
+    document.getElementById('cat_id').value = id;
+    document.getElementById('cat_name').value = name;
+    document.getElementById('cat_code').value = code;
+    document.getElementById('cat_desc').value = desc;
+    openModal('modalDrugCat');
+  }
 </script>
