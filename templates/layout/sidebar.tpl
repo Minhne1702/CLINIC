@@ -1,94 +1,5 @@
-{assign var="role" value=$current_user_role|default:''}
+{assign var="role" value=$current_user_role|default:$smarty.session.role|default:''}
 
-{* ===================================================
-   PATIENT PORTAL — Top navigation (không dùng sidebar)
-   =================================================== *}
-{if $role == 'patient'}
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{$page_title|default:"MediCare — Cổng bệnh nhân"}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="{$BASE_URL}/assets/css/admin.css">
-  {block name="extra_css"}{/block}
-</head>
-<body class="patient-portal">
-
-<!-- ===== PATIENT TOP NAV ===== -->
-<header class="patient-topnav" id="patientTopnav">
-  <div class="patient-topnav__inner">
-
-    <a href="{$BASE_URL}/?page=dashboard" class="patient-topnav__logo">
-      <div class="sidebar__logo-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-      <span class="sidebar__logo-name">MediCare</span>
-    </a>
-
-    <nav class="patient-topnav__nav" id="patientNav">
-      <a href="{$BASE_URL}/?page=dashboard"     class="patient-nav-link {if $active_page == 'dashboard'}active{/if}">
-        <i class="fa-solid fa-house-medical"></i><span>Tổng quan</span>
-      </a>
-      <a href="{$BASE_URL}/?page=book"          class="patient-nav-link {if $active_page == 'book'}active{/if}">
-        <i class="fa-regular fa-calendar-plus"></i><span>Đặt lịch</span>
-      </a>
-      <a href="{$BASE_URL}/?page=appointments"  class="patient-nav-link {if $active_page == 'appointments'}active{/if}">
-        <i class="fa-solid fa-calendar-check"></i><span>Lịch hẹn</span>
-      </a>
-      <a href="{$BASE_URL}/?page=records"       class="patient-nav-link {if $active_page == 'records'}active{/if}">
-        <i class="fa-solid fa-folder-open"></i><span>Bệnh án</span>
-      </a>
-      <a href="{$BASE_URL}/?page=prescriptions" class="patient-nav-link {if $active_page == 'prescriptions'}active{/if}">
-        <i class="fa-solid fa-prescription"></i><span>Đơn thuốc</span>
-      </a>
-      <a href="{$BASE_URL}/?page=test-results"  class="patient-nav-link {if $active_page == 'test-results'}active{/if}">
-        <i class="fa-solid fa-flask"></i><span>Xét nghiệm</span>
-      </a>
-    </nav>
-
-    <div class="patient-topnav__right">
-      <a href="{$BASE_URL}/?page=notifications" class="topnav-btn" title="Thông báo">
-        <i class="fa-regular fa-bell"></i>
-        {if $notification_count > 0}
-        <span class="badge badge--danger">{$notification_count}</span>
-        {/if}
-      </a>
-      <a href="{$BASE_URL}/?page=profile" class="patient-topnav__user">
-        <div class="topnav-avatar">{$current_user_name|default:"?"|truncate:1:""}</div>
-        <span class="patient-topnav__username">{$current_user_name|default:"Bệnh nhân"}</span>
-      </a>
-      <a href="{$BASE_URL}/?action=logout" class="topnav-logout" title="Đăng xuất">
-        <i class="fa-solid fa-right-from-bracket"></i>
-      </a>
-      <button class="btn-hamburger" id="patientMenuToggle" aria-label="Mở menu">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-    </div>
-
-  </div>
-
-  <!-- Mobile menu -->
-  <div class="patient-mobile-nav" id="patientMobileNav">
-    <a href="{$BASE_URL}/?page=dashboard"     class="patient-nav-link {if $active_page == 'dashboard'}active{/if}"><i class="fa-solid fa-house-medical"></i> Tổng quan</a>
-    <a href="{$BASE_URL}/?page=book"          class="patient-nav-link {if $active_page == 'book'}active{/if}"><i class="fa-regular fa-calendar-plus"></i> Đặt lịch</a>
-    <a href="{$BASE_URL}/?page=appointments"  class="patient-nav-link {if $active_page == 'appointments'}active{/if}"><i class="fa-solid fa-calendar-check"></i> Lịch hẹn</a>
-    <a href="{$BASE_URL}/?page=records"       class="patient-nav-link {if $active_page == 'records'}active{/if}"><i class="fa-solid fa-folder-open"></i> Bệnh án</a>
-    <a href="{$BASE_URL}/?page=prescriptions" class="patient-nav-link {if $active_page == 'prescriptions'}active{/if}"><i class="fa-solid fa-prescription"></i> Đơn thuốc</a>
-    <a href="{$BASE_URL}/?page=test-results"  class="patient-nav-link {if $active_page == 'test-results'}active{/if}"><i class="fa-solid fa-flask"></i> Xét nghiệm</a>
-    <a href="{$BASE_URL}/?page=profile"       class="patient-nav-link {if $active_page == 'profile'}active{/if}"><i class="fa-solid fa-id-card"></i> Hồ sơ</a>
-    <a href="{$BASE_URL}/?action=logout"      class="patient-nav-link"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a>
-  </div>
-</header>
-
-<main class="main-content patient-portal-content">
-
-{* ===================================================
-   ADMIN / DOCTOR / RECEPTIONIST / CASHIER / PHARMACIST
-   — Sidebar layout
-   =================================================== *}
-{else}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -99,12 +10,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="{$BASE_URL}/assets/css/admin.css">
+  
+  <style>
+    .sidebar--patient .sidebar__link { padding: 0.85rem 1.25rem; font-size: 1.05rem; margin-bottom: 0.35rem; border-radius: 8px; }
+    .sidebar--patient .sidebar__link i { font-size: 1.15rem; width: 26px; }
+    .btn-book-sidebar { display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff !important; padding: 0.85rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 1rem; box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.2); transition: all 0.2s; }
+    .btn-book-sidebar:hover { transform: translateY(-2px); box-shadow: 0 6px 8px -1px rgba(2, 132, 199, 0.3); }
+  </style>
+
   {block name="extra_css"}{/block}
 </head>
-<body>
+<body class="{if $role == 'patient'}patient-portal{/if}">
 
-<!-- ===== SIDEBAR ===== -->
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar {if $role == 'patient'}sidebar--patient{/if}" id="sidebar">
 
   <div class="sidebar__logo">
     <div class="sidebar__logo-icon"><i class="fa-solid fa-heart-pulse"></i></div>
@@ -116,6 +34,7 @@
         {elseif $role == 'receptionist'}Lễ tân
         {elseif $role == 'cashier'}Thu ngân
         {elseif $role == 'pharmacist'}Dược sĩ
+        {elseif $role == 'patient'}Cổng Bệnh Nhân
         {else}HMS{/if}
       </span>
     </div>
@@ -126,8 +45,38 @@
 
   <nav class="sidebar__nav">
 
+    {* ===== PATIENT ===== *}
+    {if $role == 'patient'}
+      <a href="{$BASE_URL}/?page=book" class="btn-book-sidebar">
+        <i class="fa-solid fa-calendar-plus"></i> Đặt lịch khám ngay
+      </a>
+
+      <div class="sidebar__section-label">Bảng điều khiển</div>
+      <a href="{$BASE_URL}/?page=dashboard" class="sidebar__link {if $active_page == 'dashboard'}active{/if}">
+        <i class="fa-solid fa-house-medical"></i><span>Tổng quan</span>
+      </a>
+
+      <div class="sidebar__section-label">Hồ sơ y tế của tôi</div>
+      <a href="{$BASE_URL}/?page=appointments" class="sidebar__link {if $active_page == 'appointments'}active{/if}">
+        <i class="fa-solid fa-calendar-check"></i><span>Lịch hẹn</span>
+      </a>
+      <a href="{$BASE_URL}/?page=records" class="sidebar__link {if $active_page == 'records'}active{/if}">
+        <i class="fa-solid fa-folder-open"></i><span>Bệnh án</span>
+      </a>
+      <a href="{$BASE_URL}/?page=prescriptions" class="sidebar__link {if $active_page == 'prescriptions'}active{/if}">
+        <i class="fa-solid fa-prescription"></i><span>Đơn thuốc</span>
+      </a>
+      <a href="{$BASE_URL}/?page=test-results" class="sidebar__link {if $active_page == 'test-results'}active{/if}">
+        <i class="fa-solid fa-flask"></i><span>Xét nghiệm</span>
+      </a>
+
+      <div class="sidebar__section-label">Tài khoản</div>
+      <a href="{$BASE_URL}/?page=profile" class="sidebar__link {if $active_page == 'profile'}active{/if}">
+        <i class="fa-solid fa-id-card"></i><span>Hồ sơ cá nhân</span>
+      </a>
+
     {* ===== ADMIN ===== *}
-    {if $role == 'admin'}
+    {elseif $role == 'admin'}
       <div class="sidebar__section-label">Tổng quan</div>
       <a href="{$BASE_URL}/?page=dashboard"      class="sidebar__link {if $active_page == 'dashboard'}active{/if}"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
 
@@ -227,7 +176,6 @@
 
   </nav>
 
-  <!-- Footer user info -->
   <div class="sidebar__footer">
     <div class="sidebar__avatar">{$current_user_name|default:"?"|truncate:1:""}</div>
     <div class="sidebar__user-info">
@@ -238,6 +186,7 @@
         {elseif $role == 'receptionist'}Lễ tân
         {elseif $role == 'cashier'}Thu ngân
         {elseif $role == 'pharmacist'}Dược sĩ
+        {elseif $role == 'patient'}Bệnh nhân
         {/if}
       </span>
     </div>
@@ -248,10 +197,8 @@
 
 </aside>
 
-<!-- ===== MAIN WRAPPER ===== -->
 <div class="admin-main" id="adminMain">
 
-  <!-- TOP NAV -->
   <header class="admin-topnav">
     <div class="admin-topnav__left">
       <button class="btn-hamburger" id="mobileSidebarToggle">
@@ -264,6 +211,7 @@
           {elseif $role == 'receptionist'}Lễ tân
           {elseif $role == 'cashier'}Thu ngân
           {elseif $role == 'pharmacist'}Dược sĩ
+          {elseif $role == 'patient'}Cổng Bệnh Nhân
           {/if}
         </span>
         <i class="fa-solid fa-chevron-right"></i>
@@ -273,7 +221,7 @@
     <div class="admin-topnav__right">
       <button class="topnav-btn" title="Thông báo">
         <i class="fa-regular fa-bell"></i>
-        {if $notification_count > 0}
+        {if isset($notification_count) && $notification_count > 0}
         <span class="badge badge--danger">{$notification_count}</span>
         {/if}
       </button>
@@ -287,7 +235,4 @@
     </div>
   </header>
 
-  <!-- PAGE CONTENT -->
   <div class="admin-content">
-
-{/if}
